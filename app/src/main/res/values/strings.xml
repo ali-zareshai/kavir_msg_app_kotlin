@@ -3,4 +3,7 @@
     <string name="save">ذخیره</string>
     <string name="login">لاگین</string>
     <string name="username">نام کاربری</string>
+    <string name="register">ثبت نام</string>
+    <string name="name">نام </string>
+    <string name="email">ایمیل</string>
 </resources>
