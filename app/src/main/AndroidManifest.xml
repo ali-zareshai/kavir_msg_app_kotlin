@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shafa.ali.kavir_msg">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.MainActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -23,11 +25,12 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".RegisterActivity"
-                android:configChanges="orientation|screenSize"
-                android:noHistory="true"
-                android:screenOrientation="portrait"
-                android:theme="@style/FullscreenTheme"/>
+            android:name=".activity.RegisterActivity"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".activity.QrCodeScanerActivity"></activity>
     </application>
 
 </manifest>

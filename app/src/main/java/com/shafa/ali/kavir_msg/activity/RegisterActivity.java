@@ -1,9 +1,11 @@
-package com.shafa.ali.kavir_msg;
+package com.shafa.ali.kavir_msg.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.shafa.ali.kavir_msg.R;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener
 {

@@ -1,23 +1,29 @@
-package com.shafa.ali.kavir_msg;
+package com.shafa.ali.kavir_msg.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.shafa.ali.kavir_msg.R;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
     private TextView register;
+    private ImageView qrcodeImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         register =(TextView)findViewById(R.id.registerText);
+        qrcodeImg =(ImageView)findViewById(R.id.qrcode);
         register.setOnClickListener(this);
-
+        qrcodeImg.setOnClickListener(this);
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -26,6 +32,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent i2 = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i2);
                 overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                break;
+            case R.id.qrcode:
+                Intent i = new Intent(LoginActivity.this,QrCodeScanerActivity.class);
+                startActivity(i);
         }
     }
 }
