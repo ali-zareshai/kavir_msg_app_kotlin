@@ -9,8 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
+import com.shafa.ali.kavir_msg.utility.CircleTransform;
+import com.shafa.ali.kavir_msg.utility.Setting;
 
 import java.util.List;
 
@@ -37,6 +41,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         holder.title.setText(categoryModel.getTitle());
         holder.description.setText(categoryModel.getDescription());
         holder.postCount.setText(String.valueOf(categoryModel.getPost_count()));
+        Glide.with(context)
+                .load(Setting.CATEGORY_IMAGES_URL+categoryModel.getSlug()+".png")
+                .override(90, 90)
+                .centerCrop()
+                .crossFade()
+                .transform(new CircleTransform(context))
+                .error(R.drawable.no_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.imageCategory);
+
     }
 
 

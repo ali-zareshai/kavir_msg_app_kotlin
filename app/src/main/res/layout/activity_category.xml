@@ -4,25 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/catstile"
     tools:context=".activity.CategoryActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swip_category"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:elevation="5dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <customviews.CustomTextView3
+                    android:layout_width="wrap_content"
+                    android:text="@string/select_category"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:shadowColor="@color/counterColor"
+
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
                 android:id="@+id/category_recyclerview"
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
                 android:layout_height="match_parent"/>
 
-        </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
 

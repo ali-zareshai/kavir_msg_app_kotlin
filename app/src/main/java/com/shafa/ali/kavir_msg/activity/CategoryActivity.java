@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -30,12 +31,16 @@ public class CategoryActivity extends AppCompatActivity {
     private RecyclerView categoryRecycler;
     private CategoryAdapter categoryAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Toolbar mTopToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         categoryRecycler =(RecyclerView)findViewById(R.id.category_recyclerview);
+
+        mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+//        setSupportActionBar(mTopToolbar);
         ///
         layoutManager = new LinearLayoutManager(this);
         categoryRecycler.setLayoutManager(layoutManager);

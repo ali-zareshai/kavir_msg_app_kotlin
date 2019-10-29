@@ -6,4 +6,5 @@
     <string name="register">ثبت نام</string>
     <string name="name">نام </string>
     <string name="email">ایمیل</string>
+    <string name="select_category">انتخاب شاخه</string>
 </resources>
