@@ -7,4 +7,5 @@
     <string name="name">نام </string>
     <string name="email">ایمیل</string>
     <string name="select_category">انتخاب شاخه</string>
+    <string name="select_sub_category">انتخاب زیرشاخه</string>
 </resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/catstile"
+    tools:context=".activity.SubCategoryActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:elevation="5dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <customviews.CustomTextView3
+                    android:layout_width="wrap_content"
+                    android:text="@string/select_sub_category"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:shadowColor="@color/counterColor"
+
+                    android:layout_height="wrap_content" />
+                <android.support.v7.widget.AppCompatImageButton
+                    android:layout_width="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/back_btn"
+                    android:src="@drawable/ic_arrow_back_black_24dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_height="50dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:id="@+id/sub_category_recyclerview"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>

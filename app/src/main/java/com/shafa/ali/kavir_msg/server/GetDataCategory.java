@@ -8,6 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface GetDataCategory {
-    @GET("test.php")
+    @GET("test.php?type=cat")
     Call<List<CategoryModel>> getAllCategorys();
 }
