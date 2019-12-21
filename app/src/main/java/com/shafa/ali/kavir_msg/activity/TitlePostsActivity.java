@@ -26,7 +26,8 @@ import retrofit2.Retrofit;
 
 public class TitlePostsActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
-    private ImageButton backBtn;
+    private ImageButton backBtn,nextPageBtn,prePageBtn;
+    private TextView pageNumberTv;
     private String slugName;
     private int pageNumber = 1;
     private TiltlePostsModel tiltlePostsModel;
@@ -38,7 +39,13 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         recyclerView =(RecyclerView)findViewById(R.id.posts_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         TextView slugTitle = (TextView)findViewById(R.id.slug_title);
+        nextPageBtn =(ImageButton)findViewById(R.id.next_page);
+        prePageBtn =(ImageButton)findViewById(R.id.pre_page);
+        pageNumberTv = (TextView)findViewById(R.id.page_number);
+
         backBtn.setOnClickListener(this);
+        prePageBtn.setOnClickListener(this);
+        nextPageBtn.setOnClickListener(this);
 
         slugName = getIntent().getExtras().getString("slug");
         slugTitle.setText(slugName);// set name slug in toolbar
@@ -71,6 +78,17 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void setPage() {
+        pageNumberTv.setText(String.valueOf(pageNumber));
+        if (tiltlePostsModel.getPages().equals(String.valueOf(pageNumber))){
+            nextPageBtn.setVisibility(View.GONE);
+        }else {
+            nextPageBtn.setVisibility(View.VISIBLE);
+        }
+        if (pageNumber == 1){
+            prePageBtn.setVisibility(View.GONE);
+        }else {
+            prePageBtn.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -85,6 +103,14 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
             case R.id.back_btn:
                 onBackPressed();
                 finish();
+                break;
+            case R.id.next_page:
+                pageNumber++;
+                getDataFromServer();
+                break;
+            case R.id.pre_page:
+                pageNumber--;
+                getDataFromServer();
                 break;
         }
     }

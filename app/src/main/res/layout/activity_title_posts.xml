@@ -55,9 +55,41 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:id="@+id/posts_recyclerview"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/c900"
+            android:layout_alignParentBottom="true"
+            android:layout_height="?attr/actionBarSize">
+            <ImageButton
+                android:layout_width="70dp"
+                android:src="@drawable/ic_chevron_left_black_24dp"
+                android:background="@color/c900"
+                android:scaleType="fitCenter"
+                android:id="@+id/pre_page"
+                android:layout_alignParentLeft="true"
+                android:layout_height="match_parent"/>
+            <ImageButton
+                android:layout_width="70dp"
+                android:src="@drawable/ic_chevron_right_black_24dp"
+                android:background="@color/c900"
+                android:scaleType="fitCenter"
+                android:id="@+id/next_page"
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent"/>
+            <customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="21dp"
+                android:id="@+id/page_number"
+                android:padding="5dp"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
