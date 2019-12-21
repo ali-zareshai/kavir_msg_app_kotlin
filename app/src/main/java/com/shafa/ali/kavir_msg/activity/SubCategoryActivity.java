@@ -1,6 +1,7 @@
 package com.shafa.ali.kavir_msg.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +39,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private Bundle bundle;
     private String parentId;
     private ImageButton backBtn;
+    private List<SubCategoryModel> subCategoryModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +68,14 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
             public void onResponse(Call<List<SubCategoryModel>> call, Response<List<SubCategoryModel>> response) {
 //                Log.e("msg",response.body().toString());
                 if (response.isSuccessful()){
-                    generateDataList(response.body());
+                    subCategoryModels = response.body();
+                    generateDataList(subCategoryModels);
                 }
 
             }
 
             @Override
             public void onFailure(Call<List<SubCategoryModel>> call, Throwable t) {
-//                Log.e("msg1",t.getLocalizedMessage());
                 Log.e("msg2",t.getMessage());
                 Toast.makeText(SubCategoryActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -84,14 +86,16 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         @Override
         public void onClick(View view, final int position) {
             //Values are passing to activity & to fragment as well
-            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position,
-                    Toast.LENGTH_SHORT).show();
+            String slug = subCategoryModels.get(position).getSlug();
+            Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
+            intent.putExtra("slug",slug);
+            startActivity(intent);
+//            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
         }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(SubCategoryActivity.this, "Long press on position :"+position,
-                        Toast.LENGTH_LONG).show();
+//                Toast.makeText(SubCategoryActivity.this, "Long press on position :"+position,Toast.LENGTH_LONG).show();
             }}));
 
     }

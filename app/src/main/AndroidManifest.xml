@@ -13,13 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.TitlePostsActivity"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar"/>
         <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"/>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activity.RegisterActivity"
             android:configChanges="orientation|screenSize"
@@ -44,8 +50,7 @@
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar"
-            />
+            android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>
