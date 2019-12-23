@@ -14,11 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.TitlePostsActivity"
+            android:name=".activity.PostActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"/>
+        <activity
+            android:name=".activity.TitlePostsActivity"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar" />
         <activity android:name=".activity.MainActivity" />
         <activity
             android:name=".activity.LoginActivity"

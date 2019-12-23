@@ -1,6 +1,7 @@
 package com.shafa.ali.kavir_msg.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.TitleAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
+import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
@@ -53,6 +55,21 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         recyclerView.setLayoutManager(layoutManager);
 
         getDataFromServer();
+
+        recyclerView.addOnItemTouchListener(new TitlePostsActivity.RecyclerTouchListener(this, recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                TiltlePostsModel.PostsModel postsModel = tiltlePostsModel.getPostsModels().get(position);
+                Intent intent = new Intent(TitlePostsActivity.this,PostActivity.class);
+                intent.putExtra("postId",postsModel.getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
     }
 
