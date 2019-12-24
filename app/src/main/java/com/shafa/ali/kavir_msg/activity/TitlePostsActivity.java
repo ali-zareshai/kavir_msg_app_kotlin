@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.TitleAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
@@ -33,6 +34,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     private String slugName;
     private int pageNumber = 1;
     private TiltlePostsModel tiltlePostsModel;
+    private SpinKitView loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         nextPageBtn =(ImageButton)findViewById(R.id.next_page);
         prePageBtn =(ImageButton)findViewById(R.id.pre_page);
         pageNumberTv = (TextView)findViewById(R.id.page_number);
+        loading =(SpinKitView)findViewById(R.id.spin_title_post);
 
         backBtn.setOnClickListener(this);
         prePageBtn.setOnClickListener(this);
@@ -84,6 +87,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                     TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
                     recyclerView.setAdapter(titleAdapter);
                     setPage();
+                    loading.setVisibility(View.GONE);
                 }
             }
 

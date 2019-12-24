@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
 import com.shafa.ali.kavir_msg.adapters.SubCategoryAdapter;
@@ -40,6 +41,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private String parentId;
     private ImageButton backBtn;
     private List<SubCategoryModel> subCategoryModels;
+    private SpinKitView loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_sub_category);
         subCategoryRecycler =(RecyclerView)findViewById(R.id.sub_category_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
+        loading =(SpinKitView)findViewById(R.id.spin_sub_cat);
         backBtn.setOnClickListener(this);
         /////////
         bundle = getIntent().getExtras();
@@ -70,6 +73,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                 if (response.isSuccessful()){
                     subCategoryModels = response.body();
                     generateDataList(subCategoryModels);
+                    loading.setVisibility(View.GONE);
                 }
 
             }

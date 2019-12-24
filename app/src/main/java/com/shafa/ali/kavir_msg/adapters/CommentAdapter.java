@@ -42,6 +42,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> 
         holder.dateTv.setText(commentModel.getDate());
     }
 
+
     @Override
     public int getItemCount() {
         return commentModelList.size();
@@ -49,6 +50,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> 
 
     class Holder extends RecyclerView.ViewHolder{
         private TextView titleTv,contentTv,dateTv;
+
         public Holder(View itemView) {
             super(itemView);
             titleTv = (TextView)itemView.findViewById(R.id.title_comment_card);

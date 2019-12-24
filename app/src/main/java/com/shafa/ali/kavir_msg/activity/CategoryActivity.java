@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
@@ -34,13 +35,14 @@ public class CategoryActivity extends AppCompatActivity {
     private CategoryAdapter categoryAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private Toolbar mTopToolbar;
+    private SpinKitView loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         categoryRecycler =(RecyclerView)findViewById(R.id.category_recyclerview);
-
+        loading = (SpinKitView)findViewById(R.id.spin_cat);
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(mTopToolbar);
         ///
@@ -57,6 +59,7 @@ public class CategoryActivity extends AppCompatActivity {
 //                Log.e("msg",response.body().toString());
                 if (response.isSuccessful()){
                     generateDataList(response.body());
+                    loading.setVisibility(View.GONE);
                 }
 
             }
