@@ -42,6 +42,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
         }
         holder.autherTv.setText(postsModel.getAuthor());
         holder.dateTv.setText(postsModel.getDate());
+        holder.commentCountTv.setText(postsModel.getCommentCount());
 
     }
 
@@ -51,13 +52,14 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        private TextView titleTv,contentTv,autherTv,dateTv;
+        private TextView titleTv,contentTv,autherTv,dateTv,commentCountTv;
         public Holder(View itemView) {
             super(itemView);
             titleTv = (TextView)itemView.findViewById(R.id.title_card);
             contentTv = (TextView)itemView.findViewById(R.id.content_card);
             autherTv =(TextView)itemView.findViewById(R.id.auther_card);
             dateTv =(TextView)itemView.findViewById(R.id.date_card);
+            commentCountTv = (TextView)itemView.findViewById(R.id.comment_count_card);
         }
     }
 }

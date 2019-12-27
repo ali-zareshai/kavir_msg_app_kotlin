@@ -80,7 +80,6 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onFailure(Call<List<SubCategoryModel>> call, Throwable t) {
-                Log.e("msg2",t.getMessage());
                 Toast.makeText(SubCategoryActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

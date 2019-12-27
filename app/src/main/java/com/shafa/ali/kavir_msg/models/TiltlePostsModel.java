@@ -46,7 +46,18 @@ public class TiltlePostsModel {
         @SerializedName("author")
         private String author;
 
+        @SerializedName("comment")
+        private String commentCount;
+
         public PostsModel() {
+        }
+
+        public String getCommentCount() {
+            return commentCount;
+        }
+
+        public void setCommentCount(String commentCount) {
+            this.commentCount = commentCount;
         }
 
         public String getId() {
