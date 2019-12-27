@@ -9,4 +9,6 @@
     <string name="select_category">انتخاب شاخه</string>
     <string name="select_sub_category">انتخاب زیرشاخه</string>
     <string name="posts">پست ها</string>
+    <string name="add_comment">  نظر جدید</string>
+    <string name="comments">نظرات</string>
 </resources>
