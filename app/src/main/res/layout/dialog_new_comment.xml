@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <customviews.CustomEditText2
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"
+            android:hint="@string/name"
+            android:lines="1"
+            android:id="@+id/name_comment_dialog"
+            android:layout_height="wrap_content"/>
+        <customviews.CustomEditText2
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"
+            android:hint="@string/email"
+            android:lines="1"
+            android:inputType="textEmailAddress"
+            android:id="@+id/email_comment_dialog"
+            android:layout_height="wrap_content"/>
+        <customviews.CustomEditText2
+            android:layout_width="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:padding="10dp"
+            android:hint="@string/comment"
+            android:lines="5"
+            android:minLines="5"
+            android:maxLines="5"
+            android:inputType="textEmailAddress"
+            android:id="@+id/comment_comment_dialog"
+            android:layout_height="wrap_content"/>
+        <customview.CustomButtonRectangle
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:text="@string/send"
+            android:id="@+id/submit_comment_dialog"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

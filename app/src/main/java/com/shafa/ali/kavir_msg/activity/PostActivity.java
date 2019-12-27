@@ -20,6 +20,7 @@ import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 
+import customview.CustomCommentModal;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +36,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private ScrollView scrollviewPost;
     private SpinKitView loading;
     private ImageButton backBtn;
+    private ImageButton sendComment,showComments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         getIntents();
         fetchData();
         backBtn.setOnClickListener(this);
+        sendComment.setOnClickListener(this);
+        showComments.setOnClickListener(this);
     }
 
     private void fetchData() {
@@ -67,6 +71,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private void setViews() {
         dateTv.setText(postModel.getDate());
         autherTv.setText(postModel.getAuthor());
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData("<html dir=\"rtl\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"/>"+postModel.getContent()+"</html>","text/html","UTF-8");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             titleTv.setText(Html.fromHtml(postModel.getTitle(),Html.FROM_HTML_MODE_COMPACT));
@@ -75,14 +80,17 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             titleTv.setText(Html.fromHtml(postModel.getTitle()));
 //            contentTv.setText(Html.fromHtml(postModel.getContent()));
         }
-        ///////////// set comment ////////////
+        scrollviewPost.setVisibility(View.VISIBLE);
+        loading.setVisibility(View.GONE);
+
+    }
+
+    private void setCommentRecycleView(){
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         commentRv.setLayoutManager(layoutManager);
         commentAdapter = new CommentAdapter(postModel.getCommentModelList(),this);
         commentRv.setAdapter(commentAdapter);
-        /////////
-        scrollviewPost.setVisibility(View.VISIBLE);
-        loading.setVisibility(View.GONE);
+        commentRv.setVisibility(View.VISIBLE);
 
     }
 
@@ -100,6 +108,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         scrollviewPost =(ScrollView)findViewById(R.id.scrollview_post);
         loading =(SpinKitView)findViewById(R.id.spin_post);
         backBtn = (ImageButton)findViewById(R.id.back_post_btn);
+        sendComment =(ImageButton) findViewById(R.id.add_new_comment);
+        showComments=(ImageButton) findViewById(R.id.show_comment);
+
     }
 
     @Override
@@ -113,6 +124,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.back_btn:
                 onBackPressed();
+                break;
+            case R.id.show_comment:
+                setCommentRecycleView();
+                break;
+            case R.id.add_new_comment:
+                CustomCommentModal.showNewComment(this,postId);
                 break;
 
         }

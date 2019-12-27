@@ -11,4 +11,8 @@
     <string name="posts">پست ها</string>
     <string name="add_comment">  نظر جدید</string>
     <string name="comments">نظرات</string>
+    <string name="comment">نظر</string>
+    <string name="send">ارسال</string>
+    <string name="full_all_fields">همه فیلدها را پر کنید</string>
+    <string name="success_send_comment">نظر با موفقیت ارسال شد</string>
 </resources>
