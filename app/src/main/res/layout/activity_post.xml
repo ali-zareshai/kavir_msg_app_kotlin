@@ -30,8 +30,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <android.support.v7.widget.AppCompatImageButton
+                <ImageButton
                     android:layout_width="50dp"
+                    android:padding="15dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
                     android:id="@+id/back_post_btn"
@@ -145,7 +146,7 @@
                         android:padding="2dp"
                         android:orientation="horizontal"
                         android:layout_marginRight="15dp"
-
+                        android:layoutDirection="rtl"
                         android:layout_height="match_parent">
                         <ImageButton
                             android:layout_width="wrap_content"
@@ -168,7 +169,7 @@
                         android:orientation="horizontal"
                         android:padding="2dp"
                         android:layout_marginLeft="15dp"
-
+                        android:layoutDirection="rtl"
                         android:layout_height="match_parent">
                         <ImageButton
                             android:layout_width="wrap_content"

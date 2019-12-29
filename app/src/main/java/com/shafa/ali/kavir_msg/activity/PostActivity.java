@@ -122,14 +122,14 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.back_btn:
-                onBackPressed();
+            case R.id.back_post_btn:
+                finish();
                 break;
             case R.id.show_comment:
                 setCommentRecycleView();
                 break;
             case R.id.add_new_comment:
-                CustomCommentModal.showNewComment(this,postId);
+                new CustomCommentModal().showNewComment(this,postId);
                 break;
 
         }
