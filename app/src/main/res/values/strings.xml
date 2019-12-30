@@ -15,4 +15,6 @@
     <string name="send">ارسال</string>
     <string name="full_all_fields">همه فیلدها را پر کنید</string>
     <string name="success_send_comment">نظر با موفقیت ارسال شد</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
 </resources>
