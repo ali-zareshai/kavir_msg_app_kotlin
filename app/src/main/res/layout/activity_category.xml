@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="end">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,6 +30,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <FrameLayout
+                    android:id="@+id/drawer_button"
+                    android:layout_width="50dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:fitsSystemWindows="true"
+                    android:layout_alignParentRight="true"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:src="@drawable/ic_dehaze_black_24dp" />
+                </FrameLayout>
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
                     android:text="@string/select_category"
@@ -37,9 +51,8 @@
                     android:textSize="20dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="75dp"
                     android:shadowColor="@color/counterColor"
-
                     android:layout_height="wrap_content" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
@@ -59,9 +72,11 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
+        app:itemTextColor="#1d3f4c"
+        app:itemIconTint="#cd4312"
         app:menu="@menu/activity_main_drawer" />
 
 

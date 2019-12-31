@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +43,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private RecyclerView.LayoutManager layoutManager;
     private Toolbar mTopToolbar;
     private SpinKitView loading;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +58,30 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         categoryRecycler.setLayoutManager(layoutManager);
 
         //***************************
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mTopToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        toggle.setDrawerIndicatorEnabled(false);
+        drawer.addDrawerListener(toggle);
+
+        toggle.syncState();
         //////***************************************
+        findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open right drawer
+
+                if (drawer.isDrawerOpen(GravityCompat.END)) {
+                    drawer.closeDrawer(GravityCompat.END);
+                }
+                else
+                    drawer.openDrawer(GravityCompat.END);
+            }
+        });
 
         //
         /*Create handle for the RetrofitInstance interface*/
@@ -110,6 +127,16 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void generateDataList(List<CategoryModel> categoryModelList){
         Log.e("category list",categoryModelList.toString());
         categoryAdapter =new CategoryAdapter(getApplicationContext(),categoryModelList);
@@ -130,8 +157,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(Gravity.END);
         return true;
     }
 
