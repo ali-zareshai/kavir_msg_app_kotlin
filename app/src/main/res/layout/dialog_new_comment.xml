@@ -18,6 +18,7 @@
             android:padding="10dp"
             android:hint="@string/name"
             android:lines="1"
+            android:textDirection="rtl"
             android:id="@+id/name_comment_dialog"
             android:layout_height="wrap_content"/>
         <customviews.CustomEditText2
@@ -28,6 +29,7 @@
             android:padding="10dp"
             android:hint="@string/email"
             android:lines="1"
+            android:textDirection="rtl"
             android:inputType="textEmailAddress"
             android:id="@+id/email_comment_dialog"
             android:layout_height="wrap_content"/>
@@ -38,6 +40,7 @@
             android:layout_marginTop="15dp"
             android:padding="10dp"
             android:hint="@string/comment"
+            android:textDirection="rtl"
             android:lines="5"
             android:minLines="5"
             android:maxLines="5"
