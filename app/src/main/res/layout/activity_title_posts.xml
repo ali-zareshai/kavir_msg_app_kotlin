@@ -42,7 +42,7 @@
             <customviews.CustomTextView3
                 android:layout_width="wrap_content"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="14dp"
                 android:id="@+id/slug_title"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"

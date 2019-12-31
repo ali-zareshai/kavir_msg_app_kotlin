@@ -37,7 +37,14 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
                     android:shadowColor="@color/counterColor"
-
+                    android:layout_height="wrap_content" />
+                <customviews.CustomTextView3
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="14dp"
+                    android:id="@+id/parent_cat_tv"
+                    android:layout_centerInParent="true"
+                    android:shadowColor="@color/counterColor"
                     android:layout_height="wrap_content" />
                 <android.support.v7.widget.AppCompatImageButton
                     android:layout_width="50dp"

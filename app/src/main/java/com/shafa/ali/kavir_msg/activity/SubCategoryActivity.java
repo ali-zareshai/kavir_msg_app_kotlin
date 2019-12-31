@@ -12,6 +12,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -55,6 +56,8 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         bundle = getIntent().getExtras();
         if (bundle!=null){
             parentId = bundle.getString("parentId");
+            String parentName = bundle.getString("parentName");
+            ((TextView)findViewById(R.id.parent_cat_tv)).setText(parentName);
         }
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 //        setSupportActionBar(mTopToolbar);

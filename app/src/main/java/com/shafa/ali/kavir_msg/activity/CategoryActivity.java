@@ -109,12 +109,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         categoryRecycler.addOnItemTouchListener(new RecyclerTouchListener(this,
                 categoryRecycler, new ClickListener() {    @Override
         public void onClick(View view, final int position) {
-            TextView textView =(TextView)view.findViewById(R.id.id_category);
-            String id =textView.getText().toString().trim();
+            TextView idTv =(TextView)view.findViewById(R.id.id_category);
+            TextView nameTv   = (TextView)view.findViewById(R.id.name_category);
+            String id =idTv.getText().toString().trim();
             Intent intent =new Intent(CategoryActivity.this,SubCategoryActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("parentId",id);
-            Log.e("parent id:::::::", id);
+            bundle.putString("parentName",nameTv.getText().toString());
             intent.putExtras(bundle);
             startActivity(intent);
         }
