@@ -25,7 +25,7 @@
                     android:src="@drawable/usrusr"
                     android:layout_gravity="center"/>
                 <customviews.CustomEditText2
-                    android:id="@+id/usrusr"
+                    android:id="@+id/usernameEd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
@@ -52,7 +52,7 @@
                     android:src="@drawable/ic_vpn_key_black_24dp"
                     android:layout_gravity="center"/>
                 <customviews.CustomEditText2
-                    android:id="@+id/pswrdd"
+                    android:id="@+id/passwordEd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColorHint="#d9e5f3"
@@ -103,7 +103,7 @@
         android:textDirection="rtl">
 
         <customviews.CustomTextView
-            android:id="@+id/lin"
+            android:id="@+id/loginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"

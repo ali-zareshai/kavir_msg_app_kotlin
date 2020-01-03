@@ -17,4 +17,6 @@
     <string name="success_send_comment">نظر با موفقیت ارسال شد</string>
     <string name="navigation_drawer_open">open</string>
     <string name="navigation_drawer_close">close</string>
+    <string name="error_in_connection">اشکال در ارتباط</string>
+    <string name="user_or_pass_is_wrong">نام کاربری یا پسورد اشتباه است</string>
 </resources>
