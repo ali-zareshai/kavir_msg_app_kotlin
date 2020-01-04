@@ -19,6 +19,7 @@ import com.shafa.ali.kavir_msg.adapters.CommentAdapter;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
+import com.shafa.ali.kavir_msg.utility.SaveItem;
 
 import customview.CustomCommentModal;
 import retrofit2.Call;
@@ -52,7 +53,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private void fetchData() {
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
-        getPostsServer.getPost(postId).enqueue(new Callback<PostModel>() {
+        getPostsServer.getPost(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),postId).enqueue(new Callback<PostModel>() {
             @Override
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
                 if (response.isSuccessful()){

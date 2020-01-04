@@ -21,6 +21,7 @@ import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
+import com.shafa.ali.kavir_msg.utility.SaveItem;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,7 +80,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     private void getDataFromServer() {
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
-        getPostsServer.getTiltlePosts(slugName,String.valueOf(pageNumber)).enqueue(new Callback<TiltlePostsModel>() {
+        getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber)).enqueue(new Callback<TiltlePostsModel>() {
             @Override
             public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
                 if (response.isSuccessful()){

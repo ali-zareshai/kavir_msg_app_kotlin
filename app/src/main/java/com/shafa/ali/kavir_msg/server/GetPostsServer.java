@@ -5,13 +5,14 @@ import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Query;
 
 public interface GetPostsServer {
     @GET("post-title.php")
-    Call<TiltlePostsModel> getTiltlePosts(@Query("slug") String slug, @Query("page") String page);
+    Call<TiltlePostsModel> getTiltlePosts(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page);
 
     @GET("post.php")
-    Call<PostModel> getPost(@Query("id") String postId);
+    Call<PostModel> getPost(@Query ("cookie") String cookieValue,@Query("id") String postId);
 
 }
