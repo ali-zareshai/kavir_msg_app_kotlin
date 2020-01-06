@@ -102,7 +102,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
 //                Log.e("msg1",t.getLocalizedMessage());
-                Log.e("msg2",t.getMessage());
+//                Log.e("msg2",t.getMessage());
                 Toast.makeText(CategoryActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
