@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
+import net.igenius.customcheckbox.CustomCheckBox;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +31,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView register,loginBtn;
     private ImageView qrcodeImg;
     private EditText userNameEdit,passwordEdit;
+    private CustomCheckBox saveLoginCk;
+    private ProgressBar progressBarLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +43,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         qrcodeImg =(ImageView)findViewById(R.id.qrcode);
         userNameEdit =(EditText)findViewById(R.id.usernameEd);
         passwordEdit =(EditText)findViewById(R.id.passwordEd);
+        saveLoginCk =(CustomCheckBox)findViewById(R.id.save_pass_ckb);
+        progressBarLogin =(ProgressBar)findViewById(R.id.progress_login);
         register.setOnClickListener(this);
         loginBtn.setOnClickListener(this);
         qrcodeImg.setOnClickListener(this);
         Toast.makeText(this, Utility.getUniqueIMEIId(this), Toast.LENGTH_LONG).show();
+        /////////////// set save user pass
+        userNameEdit.setText(SaveItem.getItem(this,SaveItem.USERNAME_LOGIN,""));
+        passwordEdit.setText(SaveItem.getItem(this,SaveItem.PASSWORD_LOGIN,""));
     }
 
 
@@ -64,6 +74,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    private void saveUsername(String userName,String password) {
+        if (saveLoginCk.isChecked()){
+            SaveItem.setItem(this,SaveItem.USERNAME_LOGIN,userName);
+            SaveItem.setItem(this,SaveItem.PASSWORD_LOGIN,password);
+        }
+    }
+
     private void loginProcess() {
         if (!checkUserPass()){
             MDToast.makeText(this,getString(R.string.full_all_fields),2500,MDToast.TYPE_ERROR).show();
@@ -81,7 +98,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return true;
     }
 
-    private void loginUser(String username,String password){
+    private void loginUser(final String username, final String password){
+        progressBarLogin.setVisibility(View.VISIBLE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.loginUser(username,password).enqueue(new Callback<LoginModel>() {
@@ -90,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (response.isSuccessful()){
                     if (response.body().getResult().equalsIgnoreCase("success")){
                         saveLoginData(response.body());
+                        saveUsername(username,password);
                         loginToMainPage();
                     }else {
                         MDToast.makeText(getApplicationContext(),getString(R.string.user_or_pass_is_wrong),2500,MDToast.TYPE_WARNING).show();
@@ -98,11 +117,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     MDToast.makeText(getApplicationContext(),getString(R.string.error_in_connection),2500,MDToast.TYPE_WARNING).show();
 
                 }
+                progressBarLogin.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
                 Log.e("onFailure:",t.getMessage());
+                progressBarLogin.setVisibility(View.GONE);
                 MDToast.makeText(getApplicationContext(),getString(R.string.error_in_connection),2500,MDToast.TYPE_WARNING).show();
             }
         });

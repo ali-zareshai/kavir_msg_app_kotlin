@@ -69,6 +69,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
+                android:id="@+id/save_line"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp">
@@ -96,25 +97,48 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
         android:gravity="bottom"
-
         android:orientation="vertical"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
         android:textDirection="rtl">
-
-        <customviews.CustomTextView
-            android:id="@+id/loginBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginBottom="50dp"
-            android:background="#009a9a"
             android:gravity="center"
-            android:letterSpacing="0.2"
-            android:padding="16dp"
-            android:text="@string/login"
-            android:textColor="#d9e5f3"
-            android:textStyle="bold" />
+
+            android:layout_height="wrap_content">
+
+            <customviews.CustomTextView
+                android:id="@+id/loginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#009a9a"
+                android:letterSpacing="0.2"
+                android:padding="16dp"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textColor="#d9e5f3"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/progress_login"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/loginBtn"
+                android:layout_alignTop="@+id/loginBtn"
+                android:indeterminate="true"
+                android:elevation="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="50dp"
+                android:indeterminateTint="@android:color/holo_blue_dark"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+
         <customviews.CustomTextView
             android:layout_width="wrap_content"
             android:id="@+id/registerText"
