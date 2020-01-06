@@ -79,6 +79,8 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void getDataFromServer() {
+        loading.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
         getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber)).enqueue(new Callback<TiltlePostsModel>() {
@@ -90,6 +92,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                     recyclerView.setAdapter(titleAdapter);
                     setPage();
                     loading.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
             }
 
