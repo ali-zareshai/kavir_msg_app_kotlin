@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 public class TitlePostsActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
     private ImageButton backBtn,nextPageBtn,prePageBtn;
-    private TextView pageNumberTv;
+    private TextView pageNumberTv,totalPageTv;
     private String slugName;
     private int pageNumber = 1;
     private TiltlePostsModel tiltlePostsModel;
@@ -47,6 +47,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         nextPageBtn =(ImageButton)findViewById(R.id.next_page);
         prePageBtn =(ImageButton)findViewById(R.id.pre_page);
         pageNumberTv = (TextView)findViewById(R.id.page_number);
+        totalPageTv =(TextView)findViewById(R.id.total_page_number);
         loading =(SpinKitView)findViewById(R.id.spin_title_post);
 
         backBtn.setOnClickListener(this);
@@ -101,6 +102,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
     private void setPage() {
         pageNumberTv.setText(String.valueOf(pageNumber));
+        totalPageTv.setText(tiltlePostsModel.getPages());
         if (tiltlePostsModel.getPages().equals(String.valueOf(pageNumber))){
             nextPageBtn.setVisibility(View.GONE);
         }else {
