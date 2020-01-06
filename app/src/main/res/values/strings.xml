@@ -20,4 +20,5 @@
     <string name="error_in_connection">اشکال در ارتباط</string>
     <string name="user_or_pass_is_wrong">نام کاربری یا پسورد اشتباه است</string>
     <string name="password">رمز عبور</string>
+    <string name="mobile">موبایل</string>
 </resources>
