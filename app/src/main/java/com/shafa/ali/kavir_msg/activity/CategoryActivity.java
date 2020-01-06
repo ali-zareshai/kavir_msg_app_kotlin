@@ -28,6 +28,7 @@ import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
+import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.List;
@@ -87,7 +88,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         /*Create handle for the RetrofitInstance interface*/
         Retrofit retrofit=RetrofitClientInstance.getRetrofitInstance();
         GetDataCategory getDataService=retrofit.create(GetDataCategory.class);
-        getDataService.getAllCategorys().enqueue(new Callback<List<CategoryModel>>() {
+        getDataService.getAllCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,"")).enqueue(new Callback<List<CategoryModel>>() {
             @Override
             public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
 //                Log.e("msg",response.body().toString());

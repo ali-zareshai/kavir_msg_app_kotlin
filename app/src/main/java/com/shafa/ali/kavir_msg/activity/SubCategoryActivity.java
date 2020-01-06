@@ -25,6 +25,7 @@ import com.shafa.ali.kavir_msg.models.SubCategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.server.GetDataSubCategory;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
+import com.shafa.ali.kavir_msg.utility.SaveItem;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         /*Create handle for the RetrofitInstance interface*/
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
-        getDataService.getAllSubCategorys(parentId).enqueue(new Callback<List<SubCategoryModel>>() {
+        getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentId).enqueue(new Callback<List<SubCategoryModel>>() {
             @Override
             public void onResponse(Call<List<SubCategoryModel>> call, Response<List<SubCategoryModel>> response) {
 //                Log.e("msg",response.body().toString());
