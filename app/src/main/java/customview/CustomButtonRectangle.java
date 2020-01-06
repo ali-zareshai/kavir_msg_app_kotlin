@@ -17,7 +17,7 @@ public class CustomButtonRectangle extends Button {
     }
 
     private void init(Context context) {
-        Typeface type2 = Typeface.createFromAsset(context.getAssets(),"fonts/Vazir.ttf");
+        Typeface type2 = Typeface.createFromAsset(context.getAssets(),"fonts/sans.ttf");
         this.setTypeface(type2);
         this.setBackgroundResource(R.drawable.clicked_button);
         this.setTextColor(Color.WHITE);
