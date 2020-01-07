@@ -93,10 +93,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         @Override
         public void onClick(View view, final int position) {
             //Values are passing to activity & to fragment as well
-            String slug = subCategoryModels.get(position).getSlug();
-            Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
-            intent.putExtra("slug",slug);
-            startActivity(intent);
+            startTitlePostCategory(subCategoryModels.get(position).getSlug());
 //            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
         }
 
@@ -105,6 +102,12 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 //                Toast.makeText(SubCategoryActivity.this, "Long press on position :"+position,Toast.LENGTH_LONG).show();
             }}));
 
+    }
+
+    private void startTitlePostCategory(String slug){
+        Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
+        intent.putExtra("slug",slug);
+        startActivity(intent);
     }
 
     private void generateDataList(List<SubCategoryModel> subCategoryModelList) {

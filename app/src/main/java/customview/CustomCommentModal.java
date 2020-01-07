@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.google.gson.JsonObject;
 import com.shafa.ali.kavir_msg.R;
@@ -38,8 +40,16 @@ public class CustomCommentModal {
         final EditText nameEdit = (EditText)commentDialog.findViewById(R.id.name_comment_dialog);
         final EditText emailEdit= (EditText)commentDialog.findViewById(R.id.email_comment_dialog);
         final EditText commentEdit= (EditText)commentDialog.findViewById(R.id.comment_comment_dialog);
+        ImageButton closeBtn =(ImageButton)commentDialog.findViewById(R.id.close_toolbar_btn);
 
-        Button sendBtn =(Button)commentDialog.findViewById(R.id.submit_comment_dialog);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commentDialog.dismiss();
+            }
+        });
+
+        RelativeLayout sendBtn =(RelativeLayout) commentDialog.findViewById(R.id.submit_comment_dialog);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override

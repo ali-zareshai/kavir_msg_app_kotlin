@@ -28,7 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView titleTv,dateTv,autherTv;
+    private TextView titleTv,dateTv,autherTv,commentTv;
     private RecyclerView commentRv;
     private WebView webView;
     private String postId;
@@ -72,6 +72,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private void setViews() {
         dateTv.setText(postModel.getDate());
         autherTv.setText(postModel.getAuthor());
+        commentTv.setText(getString(R.string.comments)+"("+postModel.getCommentModelList().size()+")");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData("<html dir=\"rtl\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"/>"+postModel.getContent()+"</html>","text/html","UTF-8");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -111,6 +112,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         backBtn = (ImageButton)findViewById(R.id.back_post_btn);
         sendComment =(ImageButton) findViewById(R.id.add_new_comment);
         showComments=(ImageButton) findViewById(R.id.show_comment);
+        commentTv = (TextView)findViewById(R.id.count_comment);
 
     }
 
