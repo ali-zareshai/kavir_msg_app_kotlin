@@ -1,12 +1,21 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageButton;
@@ -18,8 +27,10 @@ import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CommentAdapter;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
+import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import customview.CustomCommentModal;
 import retrofit2.Call;
@@ -48,7 +59,47 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         backBtn.setOnClickListener(this);
         sendComment.setOnClickListener(this);
         showComments.setOnClickListener(this);
+
+        Toolbar mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(mTopToolbar);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.post_menu, menu);
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem mi = menu.getItem(i);
+            applyFontToMenuItem(mi);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.open_in_browser:
+                openInWeb();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openInWeb() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(postModel.getUrl()));
+        startActivity(browserIntent);
+    }
+
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypeFaceSpan("", font, Color.BLACK), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
+    }
+
+
 
     private void fetchData() {
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
@@ -129,7 +180,12 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.show_comment:
-                setCommentRecycleView();
+                if (postModel.getCommentModelList().size()>0){
+                    setCommentRecycleView();
+                }else{
+                    MDToast.makeText(this,getString(R.string.no_post),2500,MDToast.TYPE_INFO).show();
+                }
+
                 break;
             case R.id.add_new_comment:
                 new CustomCommentModal().showNewComment(this,postId);
