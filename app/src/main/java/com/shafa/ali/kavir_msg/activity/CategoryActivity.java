@@ -46,10 +46,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private SpinKitView loading;
     private DrawerLayout drawer;
 
+    public static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        context = this;
         categoryRecycler =(RecyclerView)findViewById(R.id.category_recyclerview);
         loading = (SpinKitView)findViewById(R.id.spin_cat);
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -151,8 +154,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         // Handle navigation view item clicks here.
         int id = menuItem.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.login) {
+            startActivity(new Intent(CategoryActivity.this,LoginActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

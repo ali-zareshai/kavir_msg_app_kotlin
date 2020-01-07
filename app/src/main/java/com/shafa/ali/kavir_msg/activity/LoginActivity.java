@@ -109,7 +109,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (response.body().getResult().equalsIgnoreCase("success")){
                         saveLoginData(response.body());
                         saveUsername(username,password);
-                        loginToMainPage();
+                        CategoryActivity categoryActivity = (CategoryActivity)CategoryActivity.context;
+                        categoryActivity.finish();
+                        startActivity(new Intent(LoginActivity.this,CategoryActivity.class));
+                        MDToast.makeText(getApplicationContext(),getString(R.string.welcome),2500,MDToast.TYPE_SUCCESS).show();
+                        finish();
                     }else {
                         MDToast.makeText(getApplicationContext(),getString(R.string.user_or_pass_is_wrong),2500,MDToast.TYPE_WARNING).show();
                     }
@@ -122,17 +126,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<LoginModel> call, Throwable t) {
-                Log.e("onFailure:",t.getMessage());
+//                Log.e("onFailure:",t.getMessage());
                 progressBarLogin.setVisibility(View.GONE);
                 MDToast.makeText(getApplicationContext(),getString(R.string.error_in_connection),2500,MDToast.TYPE_WARNING).show();
             }
         });
     }
 
-    private void loginToMainPage() {
-        Intent intent =new Intent(LoginActivity.this,CategoryActivity.class);
-        startActivity(intent);
-    }
+
 
     private void saveLoginData(LoginModel body) {
         SaveItem.setItem(this,SaveItem.USER_FIRST_NAME,body.getFirstName());

@@ -5,8 +5,8 @@
         android:id="@+id/top"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:title="Home" />
+            android:id="@+id/login"
+            android:title="@string/login" />
     </group>
 
     <group
