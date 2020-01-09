@@ -213,6 +213,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         post.setAuthor(postModel.getAuthor());
         post.setUrl(postModel.getUrl());
         realm.commitTransaction();
-        Log.e("commitTransaction:","ok");
+        MDToast.makeText(this,getString(R.string.add_to_list),2500,MDToast.TYPE_SUCCESS).show();
+        saveBtn.setImageResource(R.drawable.ic_schedule_black);
+
     }
 }
