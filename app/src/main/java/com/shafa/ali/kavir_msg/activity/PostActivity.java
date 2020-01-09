@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CommentAdapter;
+import com.shafa.ali.kavir_msg.db.models.Post;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
@@ -33,6 +34,7 @@ import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import customview.CustomCommentModal;
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,7 +50,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private ScrollView scrollviewPost;
     private SpinKitView loading;
     private ImageButton backBtn;
-    private ImageButton sendComment,showComments;
+    private ImageButton sendComment,showComments,saveBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         backBtn.setOnClickListener(this);
         sendComment.setOnClickListener(this);
         showComments.setOnClickListener(this);
+        saveBtn.setOnClickListener(this);
 
         Toolbar mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
@@ -164,6 +168,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         sendComment =(ImageButton) findViewById(R.id.add_new_comment);
         showComments=(ImageButton) findViewById(R.id.show_comment);
         commentTv = (TextView)findViewById(R.id.count_comment);
+        saveBtn =(ImageButton)findViewById(R.id.save_post_btn);
 
     }
 
@@ -190,7 +195,24 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.add_new_comment:
                 new CustomCommentModal().showNewComment(this,postId);
                 break;
+            case R.id.save_post_btn:
+                saveCurrentPost();
+                break;
 
         }
+    }
+
+    private void saveCurrentPost() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Post post = realm.createObject(Post.class);
+        post.setId(postModel.getId());
+        post.setTitle(postModel.getTitle());
+        post.setContent(postModel.getContent());
+        post.setDate(postModel.getDate());
+        post.setAuthor(postModel.getAuthor());
+        post.setUrl(postModel.getUrl());
+        realm.commitTransaction();
+        Log.e("commitTransaction:","ok");
     }
 }
