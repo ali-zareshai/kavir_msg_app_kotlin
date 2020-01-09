@@ -1,5 +1,7 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
+import com.shafa.ali.kavir_msg.fragments.CategoryFragment;
+import com.shafa.ali.kavir_msg.fragments.ReadyReadFragment;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
@@ -40,6 +44,7 @@ import retrofit2.Retrofit;
 
 public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar mTopToolbar;
+    private FragmentTransaction transaction;
     private DrawerLayout drawer;
 
     public static Context context;
@@ -80,6 +85,20 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+    private void loadFragment(Fragment fragmentNew) {
+        transaction = getFragmentManager().beginTransaction();
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
+        if (fragment!=null) {
+            getFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+        // load fragment
+        transaction.replace(R.id.fragment, fragmentNew);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+
+
     @Override
     public void onBackPressed() {
 
@@ -99,10 +118,11 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         if (id == R.id.login) {
             startActivity(new Intent(CategoryActivity.this,LoginActivity.class));
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.home_page) {
+            loadFragment(CategoryFragment.newInstance());
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.ready_read_page) {
+            loadFragment(ReadyReadFragment.newInstance());
         }
 
         drawer.closeDrawer(Gravity.END);

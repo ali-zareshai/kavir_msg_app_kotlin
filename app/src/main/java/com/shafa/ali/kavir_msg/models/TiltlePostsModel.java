@@ -30,7 +30,7 @@ public class TiltlePostsModel {
         this.postsModels = postsModels;
     }
 
-    public class PostsModel{
+    public static class PostsModel{
         @SerializedName("id")
         private String id;
 
