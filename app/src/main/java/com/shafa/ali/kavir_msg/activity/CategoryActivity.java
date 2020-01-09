@@ -39,11 +39,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private RecyclerView categoryRecycler;
-    private CategoryAdapter categoryAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private Toolbar mTopToolbar;
-    private SpinKitView loading;
     private DrawerLayout drawer;
 
     public static Context context;
@@ -53,13 +49,8 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         context = this;
-        categoryRecycler =(RecyclerView)findViewById(R.id.category_recyclerview);
-        loading = (SpinKitView)findViewById(R.id.spin_cat);
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
-        ///
-        layoutManager = new LinearLayoutManager(this);
-        categoryRecycler.setLayoutManager(layoutManager);
 
         //***************************
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -81,54 +72,11 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
                 if (drawer.isDrawerOpen(GravityCompat.END)) {
                     drawer.closeDrawer(GravityCompat.END);
-                }
-                else
+                } else
                     drawer.openDrawer(GravityCompat.END);
             }
         });
 
-        //
-        /*Create handle for the RetrofitInstance interface*/
-        Retrofit retrofit=RetrofitClientInstance.getRetrofitInstance();
-        GetDataCategory getDataService=retrofit.create(GetDataCategory.class);
-        getDataService.getAllCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,"")).enqueue(new Callback<List<CategoryModel>>() {
-            @Override
-            public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
-//                Log.e("msg",response.body().toString());
-                if (response.isSuccessful()){
-                    generateDataList(response.body());
-                    loading.setVisibility(View.GONE);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
-//                Log.e("msg1",t.getLocalizedMessage());
-//                Log.e("msg2",t.getMessage());
-                Toast.makeText(CategoryActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-        categoryRecycler.addOnItemTouchListener(new RecyclerTouchListener(this,
-                categoryRecycler, new ClickListener() {    @Override
-        public void onClick(View view, final int position) {
-            TextView idTv =(TextView)view.findViewById(R.id.id_category);
-            TextView nameTv   = (TextView)view.findViewById(R.id.name_category);
-            String id =idTv.getText().toString().trim();
-            Intent intent =new Intent(CategoryActivity.this,SubCategoryActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("parentId",id);
-            bundle.putString("parentName",nameTv.getText().toString());
-            intent.putExtras(bundle);
-            startActivity(intent);
-        }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Toast.makeText(CategoryActivity.this, "Long press on position :"+position,
-                        Toast.LENGTH_LONG).show();
-            }}));
 
     }
 
@@ -142,12 +90,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         }
     }
 
-    private void generateDataList(List<CategoryModel> categoryModelList){
-        Log.e("category list",categoryModelList.toString());
-        categoryAdapter =new CategoryAdapter(getApplicationContext(),categoryModelList);
-        categoryRecycler.setAdapter(categoryAdapter);
 
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -167,47 +110,5 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     }
 
 
-    private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-        private ClickListener clicklistener;
-        private GestureDetector gestureDetector;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final ClickListener clicklistener){
-
-            this.clicklistener=clicklistener;
-            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                    if(child!=null && clicklistener!=null){
-                        clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child=rv.findChildViewUnder(e.getX(),e.getY());
-            if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
-                clicklistener.onClick(child,rv.getChildAdapterPosition(child));
-            }
-
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-    }
 }
