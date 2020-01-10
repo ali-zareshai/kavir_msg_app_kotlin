@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class CategoryFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SpinKitView loading;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     public CategoryFragment() {
@@ -65,11 +67,24 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         categoryRecycler =(RecyclerView)view.findViewById(R.id.category_recyclerview);
         loading = (SpinKitView)view.findViewById(R.id.spin_cat);
+        swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swip_refresh_category);
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         categoryRecycler.setLayoutManager(layoutManager);
         getDataFromServer();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromServer();
+            }
+        });
 
         return view;
+    }
+
+    private void hideSwipRefresh(){
+        if (swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private void getDataFromServer() {
@@ -82,6 +97,7 @@ public class CategoryFragment extends Fragment {
                 if (response.isSuccessful()){
                     generateDataList(response.body());
                     loading.setVisibility(View.GONE);
+                    hideSwipRefresh();
                 }
 
             }

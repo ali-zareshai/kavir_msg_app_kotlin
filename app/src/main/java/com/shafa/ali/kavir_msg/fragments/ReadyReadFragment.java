@@ -3,6 +3,7 @@ package com.shafa.ali.kavir_msg.fragments;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class ReadyReadFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private SpinKitView loading;
     private List<Post> modelListDb;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     public ReadyReadFragment() {
@@ -71,12 +73,24 @@ public class ReadyReadFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ready_read, container, false);
         categoryRecycler =(RecyclerView)view.findViewById(R.id.ready_read_recyclerview);
         loading = (SpinKitView)view.findViewById(R.id.spin_cat);
+        swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swip_refresh_ready_red);
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         categoryRecycler.setLayoutManager(layoutManager);
         getDataFromDb();
         initRecycle();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getDataFromDb();
+            }
+        });
 
         return view;
+    }
+    private void hideSwipRefresh(){
+        if (swipeRefreshLayout.isRefreshing()){
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private void initRecycle() {
@@ -115,6 +129,7 @@ public class ReadyReadFragment extends Fragment {
         titleAdapter =new TitleAdapter(getActivity().getApplicationContext(),postsModels);
         categoryRecycler.setAdapter(titleAdapter);
         loading.setVisibility(View.GONE);
+        hideSwipRefresh();
     }
 
 
