@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CommentAdapter;
 import com.shafa.ali.kavir_msg.db.models.Post;
+import com.shafa.ali.kavir_msg.models.CommentModel;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
@@ -33,8 +35,11 @@ import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
+import java.util.ArrayList;
+
 import customview.CustomCommentModal;
 import io.realm.Realm;
+import io.realm.RealmList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +63,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_post);
         initViews();
         getIntents();
-        fetchData();
         backBtn.setOnClickListener(this);
         sendComment.setOnClickListener(this);
         showComments.setOnClickListener(this);
@@ -103,9 +107,23 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         mi.setTitle(mNewTitle);
     }
 
+    private void fetchDataDb(){
+        Realm realm = Realm.getDefaultInstance();
+        Post post = realm.where(Post.class).equalTo("id",postId).findFirst();
+        postModel = new PostModel();
+        postModel.setId(post.getId());
+        postModel.setTitle(post.getTitle());
+        postModel.setAuthor(post.getAuthor());
+        postModel.setContent(post.getContent());
+        postModel.setDate(post.getDate());
+        postModel.setUrl(post.getUrl());
+        postModel.setCommentModelList(new ArrayList<CommentModel>());
+        setViews();
+    }
 
 
-    private void fetchData() {
+
+    private void fetchDataNet() {
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
         getPostsServer.getPost(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),postId).enqueue(new Callback<PostModel>() {
@@ -153,6 +171,22 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getIntents() {
         postId = getIntent().getExtras().getString("postId");
+        if (getIntent().getExtras().getString("source").equalsIgnoreCase("net")){
+            fetchDataNet();
+            checkSaved();
+        }else {
+            fetchDataDb();
+            ((RelativeLayout)findViewById(R.id.rel_comments)).setVisibility(View.GONE);
+            saveBtn.setVisibility(View.GONE);
+        }
+    }
+
+    private void checkSaved() {
+        Realm realm = Realm.getDefaultInstance();
+        if (realm.where(Post.class).equalTo("id",postId).count()!=0){
+            saveBtn.setEnabled(false);
+            saveBtn.setImageResource(R.drawable.ic_schedule_black);
+        }
     }
 
     private void initViews() {
@@ -213,8 +247,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         post.setAuthor(postModel.getAuthor());
         post.setUrl(postModel.getUrl());
         realm.commitTransaction();
-        MDToast.makeText(this,getString(R.string.add_to_list),2500,MDToast.TYPE_SUCCESS).show();
-        saveBtn.setImageResource(R.drawable.ic_schedule_black);
+        MDToast.makeText(this,getString(R.string.add_to_list),3000,MDToast.TYPE_SUCCESS).show();
+        checkSaved();
 
     }
 }

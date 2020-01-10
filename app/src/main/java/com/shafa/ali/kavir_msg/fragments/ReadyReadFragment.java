@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.activity.PostActivity;
 import com.shafa.ali.kavir_msg.activity.SubCategoryActivity;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
 import com.shafa.ali.kavir_msg.adapters.TitleAdapter;
@@ -43,6 +44,7 @@ public class ReadyReadFragment extends Fragment {
     private TitleAdapter titleAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SpinKitView loading;
+    private List<Post> modelListDb;
 
 
     public ReadyReadFragment() {
@@ -72,15 +74,33 @@ public class ReadyReadFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         categoryRecycler.setLayoutManager(layoutManager);
         getDataFromDb();
+        initRecycle();
 
         return view;
     }
 
+    private void initRecycle() {
+        categoryRecycler.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(), categoryRecycler, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), PostActivity.class);
+                intent.putExtra("postId",modelListDb.get(position).getId());
+                intent.putExtra("source","db");
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+    }
+
     private void getDataFromDb() {
         Realm realm = Realm.getDefaultInstance();
-        List<Post> ModelList = realm.where(Post.class).findAll();
+        modelListDb = realm.where(Post.class).findAll();
         List<TiltlePostsModel.PostsModel> postsModels = new ArrayList<>();
-        for(Post post:ModelList){
+        for(Post post:modelListDb){
             TiltlePostsModel.PostsModel postModel = new TiltlePostsModel.PostsModel();
 
             postModel.setTitle(post.getTitle());

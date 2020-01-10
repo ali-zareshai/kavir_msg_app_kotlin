@@ -67,6 +67,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                 TiltlePostsModel.PostsModel postsModel = tiltlePostsModel.getPostsModels().get(position);
                 Intent intent = new Intent(TitlePostsActivity.this,PostActivity.class);
                 intent.putExtra("postId",postsModel.getId());
+                intent.putExtra("source","net");
                 startActivity(intent);
             }
 
