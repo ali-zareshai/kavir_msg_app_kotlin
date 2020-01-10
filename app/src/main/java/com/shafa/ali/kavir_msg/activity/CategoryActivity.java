@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,11 +16,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +37,7 @@ import com.shafa.ali.kavir_msg.fragments.ReadyReadFragment;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
+import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -47,6 +54,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private FragmentTransaction transaction;
     private DrawerLayout drawer;
     private TextView toolbarTitle;
+    private NavigationView navigationView;
 
     public static Context context;
 
@@ -64,7 +72,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mTopToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         toggle.setDrawerIndicatorEnabled(false);
@@ -84,7 +92,26 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+        setFontNavig();
 
+
+    }
+
+    private void setFontNavig() {
+        Menu m = navigationView.getMenu();
+        for (int i=0;i<m.size();i++) {
+            MenuItem mi = m.getItem(i);
+
+            //for aapplying a font to subMenu ...
+            SubMenu subMenu = mi.getSubMenu();
+            if (subMenu!=null && subMenu.size() >0 ) {
+                for (int j=0; j <subMenu.size();j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+            applyFontToMenuItem(mi);
+        }
     }
 
     private void loadFragment(Fragment fragmentNew) {
@@ -130,6 +157,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         drawer.closeDrawer(Gravity.END);
         return true;
+    }
+
+    private void applyFontToMenuItem(MenuItem mi) {
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/Vazir.ttf");
+        SpannableString mNewTitle = new SpannableString(mi.getTitle());
+        mNewTitle.setSpan(new CustomTypeFaceSpan("", font, Color.WHITE), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mi.setTitle(mNewTitle);
     }
 
 

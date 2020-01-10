@@ -16,7 +16,7 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/toolbar_color"
             android:elevation="5dp"
             >
             <RelativeLayout
@@ -68,10 +68,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
+        android:background="@color/g800"
         android:layoutDirection="rtl"
         app:headerLayout="@layout/nav_header_main"
-        app:itemTextColor="#1d3f4c"
-        app:itemIconTint="#cd4312"
+        app:itemTextColor="#FFFFFF"
+        app:itemIconTint="#FFFFFF"
         app:menu="@menu/activity_main_drawer" />
 
 

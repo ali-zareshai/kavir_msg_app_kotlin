@@ -22,7 +22,7 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="@color/toolbar_color"
             android:elevation="5dp"
             >
             <RelativeLayout
@@ -52,7 +52,7 @@
                     android:layout_alignParentLeft="true"
                     android:id="@+id/back_btn"
                     android:src="@drawable/ic_arrow_back_black_24dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/toolbar_color"
                     android:layout_height="50dp" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
