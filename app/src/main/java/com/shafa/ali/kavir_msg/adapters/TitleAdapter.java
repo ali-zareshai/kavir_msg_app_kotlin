@@ -7,6 +7,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shafa.ali.kavir_msg.R;
@@ -43,6 +44,9 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
         holder.autherTv.setText(postsModel.getAuthor());
         holder.dateTv.setText(postsModel.getDate());
         holder.commentCountTv.setText(postsModel.getCommentCount());
+        if (postsModel.getCommentCount().equalsIgnoreCase("0")){
+            holder.commentLinear.setVisibility(View.GONE);
+        }
 
     }
 
@@ -53,6 +57,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
 
     public class Holder extends RecyclerView.ViewHolder{
         private TextView titleTv,contentTv,autherTv,dateTv,commentCountTv;
+        private LinearLayout commentLinear;
         public Holder(View itemView) {
             super(itemView);
             titleTv = (TextView)itemView.findViewById(R.id.title_card);
@@ -60,6 +65,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
             autherTv =(TextView)itemView.findViewById(R.id.auther_card);
             dateTv =(TextView)itemView.findViewById(R.id.date_card);
             commentCountTv = (TextView)itemView.findViewById(R.id.comment_count_card);
+            commentLinear =(LinearLayout)itemView.findViewById(R.id.comment_count_liner);
         }
     }
 }

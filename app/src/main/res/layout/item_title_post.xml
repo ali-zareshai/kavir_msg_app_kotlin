@@ -80,6 +80,7 @@
                 android:background="@color/pink500"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:id="@+id/comment_count_liner"
                 android:layout_marginRight="25dp"
                 android:layout_height="wrap_content">
 

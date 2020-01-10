@@ -96,7 +96,7 @@ public class ReadyReadFragment extends Fragment {
         }));
     }
 
-    private void getDataFromDb() {
+    public void getDataFromDb() {
         Realm realm = Realm.getDefaultInstance();
         modelListDb = realm.where(Post.class).findAll();
         List<TiltlePostsModel.PostsModel> postsModels = new ArrayList<>();
@@ -108,11 +108,13 @@ public class ReadyReadFragment extends Fragment {
             postModel.setContent(post.getContent());
             postModel.setDate(post.getDate());
             postModel.setId(post.getId());
+            postModel.setCommentCount("0");
 
             postsModels.add(postModel);
         }
         titleAdapter =new TitleAdapter(getActivity().getApplicationContext(),postsModels);
         categoryRecycler.setAdapter(titleAdapter);
+        loading.setVisibility(View.GONE);
     }
 
 

@@ -46,6 +46,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private Toolbar mTopToolbar;
     private FragmentTransaction transaction;
     private DrawerLayout drawer;
+    private TextView toolbarTitle;
 
     public static Context context;
 
@@ -55,6 +56,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         setContentView(R.layout.activity_category);
         context = this;
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbarTitle =(TextView) findViewById(R.id.category_title);
         setSupportActionBar(mTopToolbar);
 
         //***************************
@@ -120,9 +122,10 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             startActivity(new Intent(CategoryActivity.this,LoginActivity.class));
         } else if (id == R.id.home_page) {
             loadFragment(CategoryFragment.newInstance());
-
+            toolbarTitle.setText(getString(R.string.home));
         } else if (id == R.id.ready_read_page) {
             loadFragment(ReadyReadFragment.newInstance());
+            toolbarTitle.setText(getString(R.string.redy_read));
         }
 
         drawer.closeDrawer(Gravity.END);

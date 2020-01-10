@@ -49,6 +49,16 @@
                     android:src="@drawable/ic_schedule_white"
                     android:background="@color/colorAccent"
                     android:layout_height="50dp" />
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:padding="15dp"
+                    android:layout_marginLeft="75dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/delete_post_btn"
+                    android:src="@drawable/ic_delete_black_24dp"
+                    android:background="@color/colorAccent"
+                    android:layout_height="50dp" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 

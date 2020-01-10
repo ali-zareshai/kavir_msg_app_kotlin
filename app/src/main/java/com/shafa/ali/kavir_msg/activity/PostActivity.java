@@ -27,6 +27,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CommentAdapter;
 import com.shafa.ali.kavir_msg.db.models.Post;
+import com.shafa.ali.kavir_msg.fragments.ReadyReadFragment;
 import com.shafa.ali.kavir_msg.models.CommentModel;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
@@ -54,8 +55,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private CommentAdapter commentAdapter;
     private ScrollView scrollviewPost;
     private SpinKitView loading;
-    private ImageButton backBtn;
-    private ImageButton sendComment,showComments,saveBtn;
+    private ImageButton backBtn,sendComment,showComments,saveBtn,deleteBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         sendComment.setOnClickListener(this);
         showComments.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+        deleteBtn.setOnClickListener(this);
 
         Toolbar mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
@@ -173,10 +174,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         postId = getIntent().getExtras().getString("postId");
         if (getIntent().getExtras().getString("source").equalsIgnoreCase("net")){
             fetchDataNet();
+            deleteBtn.setEnabled(false);
+            deleteBtn.setVisibility(View.GONE);
             checkSaved();
         }else {
             fetchDataDb();
             ((RelativeLayout)findViewById(R.id.rel_comments)).setVisibility(View.GONE);
+            saveBtn.setEnabled(false);
             saveBtn.setVisibility(View.GONE);
         }
     }
@@ -203,6 +207,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         showComments=(ImageButton) findViewById(R.id.show_comment);
         commentTv = (TextView)findViewById(R.id.count_comment);
         saveBtn =(ImageButton)findViewById(R.id.save_post_btn);
+        deleteBtn=(ImageButton)findViewById(R.id.delete_post_btn);
 
     }
 
@@ -232,7 +237,23 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.save_post_btn:
                 saveCurrentPost();
                 break;
+            case R.id.delete_post_btn:
+                deleteCurrentPost();
+                break;
 
+        }
+    }
+
+    private void deleteCurrentPost() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Boolean res =realm.where(Post.class).equalTo("id",postId).findAll().deleteAllFromRealm();
+        realm.commitTransaction();
+        if (res){
+            MDToast.makeText(this,getString(R.string.delete_success),2500,MDToast.TYPE_SUCCESS).show();
+            ((CategoryActivity)CategoryActivity.context).finish();
+            startActivity(new Intent(PostActivity.this,CategoryActivity.class));
+            onBackPressed();
         }
     }
 
