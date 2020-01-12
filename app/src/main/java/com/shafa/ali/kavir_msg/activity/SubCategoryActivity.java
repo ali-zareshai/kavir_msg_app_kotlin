@@ -27,6 +27,7 @@ import com.shafa.ali.kavir_msg.server.GetDataSubCategory;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -44,6 +45,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private ImageButton backBtn;
     private List<SubCategoryModel> subCategoryModels;
     private SpinKitView loading;
+    private String currentSlug =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,34 +68,17 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         layoutManager = new LinearLayoutManager(this);
         subCategoryRecycler.setLayoutManager(layoutManager);
 
-        //
-        /*Create handle for the RetrofitInstance interface*/
-        Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
-        GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
-        getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentId).enqueue(new Callback<List<SubCategoryModel>>() {
-            @Override
-            public void onResponse(Call<List<SubCategoryModel>> call, Response<List<SubCategoryModel>> response) {
-//                Log.e("msg",response.body().toString());
-                if (response.isSuccessful()){
-                    subCategoryModels = response.body();
-                    generateDataList(subCategoryModels);
-                    loading.setVisibility(View.GONE);
-                }
+        getSubCategoryFromServer(parentId);
 
-            }
-
-            @Override
-            public void onFailure(Call<List<SubCategoryModel>> call, Throwable t) {
-                Toast.makeText(SubCategoryActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
 
         subCategoryRecycler.addOnItemTouchListener(new SubCategoryActivity.RecyclerTouchListener(this,
                 subCategoryRecycler, new ClickListener() {
         @Override
         public void onClick(View view, final int position) {
             //Values are passing to activity & to fragment as well
-            startTitlePostCategory(subCategoryModels.get(position).getSlug());
+            currentSlug = subCategoryModels.get(position).getSlug();
+            getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
+//            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
 //            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
         }
 
@@ -104,6 +89,34 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    private  void getSubCategoryFromServer(String parentIdf){
+        Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
+        GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
+        getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentIdf).enqueue(new Callback<List<SubCategoryModel>>() {
+            @Override
+            public void onResponse(Call<List<SubCategoryModel>> call, Response<List<SubCategoryModel>> response) {
+//                Log.e("msg",response.body().toString());
+                if (response.isSuccessful()){
+                    subCategoryModels = new ArrayList<>();
+                    subCategoryModels = response.body();
+                    if (subCategoryModels.get(0).getId()==0){
+                        startTitlePostCategory(currentSlug);
+                    }else{
+                        generateDataList(subCategoryModels);
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<SubCategoryModel>> call, Throwable t) {
+                Log.e("Throwable:",t.toString());
+                Toast.makeText(SubCategoryActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void startTitlePostCategory(String slug){
         Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
         intent.putExtra("slug",slug);
@@ -111,8 +124,10 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void generateDataList(List<SubCategoryModel> subCategoryModelList) {
+        subCategoryAdapter = null;
         subCategoryAdapter =new SubCategoryAdapter(getApplicationContext(),subCategoryModelList);
         subCategoryRecycler.setAdapter(subCategoryAdapter);
+        loading.setVisibility(View.GONE);
     }
 
     @Override
