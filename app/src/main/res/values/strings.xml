@@ -27,6 +27,8 @@
     <string name="home">صفحه اصلی</string>
     <string name="redy_read">آماده مطالعه</string>
     <string name="delete_success">با موفقیت حذف شد</string>
+    <string name="keyword">کلید واژه ...</string>
+    <string name="search">جستجو</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

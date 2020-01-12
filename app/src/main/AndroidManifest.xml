@@ -14,12 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.SearchActivity"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar"/>
         <activity
             android:name=".activity.PostActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar"/>
+            android:theme="@style/NoActionBar" />
         <activity
             android:name=".activity.TitlePostsActivity"
             android:configChanges="orientation|screenSize"
@@ -32,8 +37,7 @@
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"/>
-
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activity.RegisterActivity"
             android:configChanges="orientation|screenSize"
@@ -49,10 +53,10 @@
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.SubCategoryActivity"
             android:configChanges="orientation|screenSize"

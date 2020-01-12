@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -55,6 +56,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawer;
     private TextView toolbarTitle;
     private NavigationView navigationView;
+    private FloatingActionButton searchBtn;
 
     public static Context context;
 
@@ -65,6 +67,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         context = this;
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbarTitle =(TextView) findViewById(R.id.category_title);
+        searchBtn =(FloatingActionButton)findViewById(R.id.search_btn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CategoryActivity.this,SearchActivity.class));
+            }
+        });
         setSupportActionBar(mTopToolbar);
 
         //***************************
