@@ -55,32 +55,52 @@
                 android:layoutDirection="rtl"
                 android:layout_below="@+id/content_card"
                 android:layout_height="40dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:background="@color/pink500"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_create_black_24dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content"/>
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
                     android:padding="5dp"
                     android:textDirection="rtl"
                     android:textSize="16dp"
-                    android:layout_centerVertical="true"
                     android:id="@+id/auther_card"
-                    android:layout_marginRight="15dp"
                     android:textColor="@color/white"
                     android:layout_height="match_parent"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:background="@color/pink500"
+                    android:orientation="horizontal"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:src="@drawable/ic_event_black_24dp"
+                        android:padding="5dp"
+                        android:layout_height="wrap_content"/>
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
                     android:padding="5dp"
                     android:textDirection="rtl"
-                    android:layout_centerInParent="true"
                     android:textSize="16dp"
                     android:id="@+id/date_card"
-                    android:layout_marginRight="25dp"
                     android:textColor="@color/white"
                     android:layout_height="match_parent"/>
+                </LinearLayout>
             <LinearLayout
                 android:layout_width="80dp"
                 android:layout_alignParentLeft="true"
                 android:background="@color/pink500"
                 android:orientation="horizontal"
-                android:gravity="center"
                 android:layout_centerVertical="true"
                 android:id="@+id/comment_count_liner"
                 android:layout_marginRight="15dp"

@@ -17,4 +17,6 @@
     <color name="toolbar_color">#d32f2f</color>
     <color name="deep700">#512DA8</color>
     <color name="tranport">#00FFFFFF</color>
+    <color name="g300">#F7D8D8D8</color>
+
 </resources>

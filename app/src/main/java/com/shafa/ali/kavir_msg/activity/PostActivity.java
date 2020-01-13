@@ -154,6 +154,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             titleTv.setText(Html.fromHtml(postModel.getTitle(),Html.FROM_HTML_MODE_COMPACT));
 //            contentTv.setText(Html.fromHtml(postModel.getContent(),Html.FROM_HTML_MODE_COMPACT));
         } else {
+            Log.e("titleTv:",postModel.getTitle());
             titleTv.setText(Html.fromHtml(postModel.getTitle()));
 //            contentTv.setText(Html.fromHtml(postModel.getContent()));
         }

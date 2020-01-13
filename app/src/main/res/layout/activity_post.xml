@@ -110,18 +110,39 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layoutDirection="rtl"
-                android:background="@color/white"
+                android:background="@color/g800"
                 android:layout_below="@+id/split2_line"
                 android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_event_black_24dp"
+                    android:padding="5dp"
+                    android:layout_height="wrap_content"/>
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
                     android:padding="5dp"
                     android:textDirection="rtl"
                     android:textSize="16dp"
                     android:id="@+id/date_post_card"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="15dp"
-                    android:textColor="@color/blue800"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_create_black_24dp"
+                    android:padding="5dp"
                     android:layout_height="wrap_content"/>
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
@@ -131,8 +152,9 @@
                     android:id="@+id/auther_post_card"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:textColor="@color/blue800"
+                    android:textColor="@color/white"
                     android:layout_height="wrap_content"/>
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
             <RelativeLayout

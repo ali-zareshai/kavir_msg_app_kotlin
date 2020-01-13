@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:padding="10dp"
             android:visibility="visible"
+            android:background="@color/g300"
             android:id="@+id/search_result_rc"
             android:clipToPadding="false"
             android:layout_below="@+id/frame_et"
