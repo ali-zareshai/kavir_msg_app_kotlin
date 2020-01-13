@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.CommentModel;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> 
             holder.titleTv.setText(Html.fromHtml(commentModel.getName()));
             holder.contentTv.setText(Html.fromHtml(commentModel.getContent()));
         }
-        holder.dateTv.setText(commentModel.getDate());
+        holder.dateTv.setText(FormatHelper.toPersianNumber(commentModel.getDate()));
     }
 
 

@@ -14,6 +14,7 @@ import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.models.SubCategoryModel;
 import com.shafa.ali.kavir_msg.utility.CircleTransform;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.Setting;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         holder.id.setText(String.valueOf(subCategoryModel.getId()));
         holder.title.setText(subCategoryModel.getTitle());
         holder.description.setText(subCategoryModel.getDescription());
-        holder.postCount.setText(String.valueOf(subCategoryModel.getPost_count()));
+        holder.postCount.setText(FormatHelper.toPersianNumber(String.valueOf(subCategoryModel.getPost_count())));
         Glide.with(context)
                 .load(Setting.CATEGORY_IMAGES_URL+subCategoryModel.getSlug()+".png")
                 .override(90, 90)

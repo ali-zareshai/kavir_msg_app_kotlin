@@ -20,8 +20,10 @@ import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,6 +91,10 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
             public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
                 if (response.isSuccessful()){
                     tiltlePostsModel = response.body();
+                    if (tiltlePostsModel.getPostsModels() == null || tiltlePostsModel.getPostsModels().size()==0){
+                        fininshActivity();
+                        return;
+                    }
                     TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
                     recyclerView.setAdapter(titleAdapter);
                     setPage();
@@ -99,14 +105,19 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
-                Log.e("onFailure:",t.getMessage());
+                fininshActivity();
             }
         });
     }
 
+    private void fininshActivity() {
+        MDToast.makeText(this,getString(R.string.no_exit_post),2500,MDToast.TYPE_INFO).show();
+        finish();
+    }
+
     private void setPage() {
-        pageNumberTv.setText(String.valueOf(pageNumber));
-        totalPageTv.setText(tiltlePostsModel.getPages());
+        pageNumberTv.setText(FormatHelper.toPersianNumber(String.valueOf(pageNumber)));
+        totalPageTv.setText(FormatHelper.toPersianNumber(tiltlePostsModel.getPages()));
         if (tiltlePostsModel.getPages().equals(String.valueOf(pageNumber))){
             nextPageBtn.setVisibility(View.GONE);
         }else {

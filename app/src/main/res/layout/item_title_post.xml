@@ -49,19 +49,18 @@
                 android:layout_below="@+id/split_line"
                 android:id="@+id/content_card"
                 android:layout_height="wrap_content"/>
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:background="@color/pink500"
-                android:orientation="horizontal"
-                android:gravity="right"
                 android:layoutDirection="rtl"
                 android:layout_below="@+id/content_card"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp">
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
                     android:padding="5dp"
                     android:textDirection="rtl"
                     android:textSize="16dp"
+                    android:layout_centerVertical="true"
                     android:id="@+id/auther_card"
                     android:layout_marginRight="15dp"
                     android:textColor="@color/white"
@@ -70,6 +69,7 @@
                     android:layout_width="wrap_content"
                     android:padding="5dp"
                     android:textDirection="rtl"
+                    android:layout_centerInParent="true"
                     android:textSize="16dp"
                     android:id="@+id/date_card"
                     android:layout_marginRight="25dp"
@@ -77,11 +77,13 @@
                     android:layout_height="match_parent"/>
             <LinearLayout
                 android:layout_width="80dp"
+                android:layout_alignParentLeft="true"
                 android:background="@color/pink500"
                 android:orientation="horizontal"
                 android:gravity="center"
+                android:layout_centerVertical="true"
                 android:id="@+id/comment_count_liner"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="15dp"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -98,7 +100,7 @@
                     android:textColor="@color/white"
                     android:layout_height="match_parent"/>
             </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

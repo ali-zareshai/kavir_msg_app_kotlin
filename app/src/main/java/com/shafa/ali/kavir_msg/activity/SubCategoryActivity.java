@@ -121,6 +121,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
         intent.putExtra("slug",slug);
         startActivity(intent);
+        finish();
     }
 
     private void generateDataList(List<SubCategoryModel> subCategoryModelList) {

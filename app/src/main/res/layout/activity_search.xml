@@ -29,7 +29,7 @@
                 android:layout_alignParentLeft="true"
                 android:id="@+id/back_search_btn"
                 android:src="@drawable/ic_arrow_back_black_24dp"
-                android:background="@color/toolbar_color"
+                android:background="@color/tranport"
                 android:layout_height="50dp" />
         </FrameLayout>
         <android.support.v7.widget.RecyclerView

@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.utility.CircleTransform;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.Setting;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
 
         holder.id.setText(String.valueOf(categoryModel.getId()));
         holder.title.setText(categoryModel.getTitle());
-        holder.description.setText(categoryModel.getDescription());
+        holder.description.setText(FormatHelper.toPersianNumber(categoryModel.getDescription()));
         holder.postCount.setText(String.valueOf(categoryModel.getPost_count()));
         Glide.with(context)
                 .load(Setting.CATEGORY_IMAGES_URL+categoryModel.getSlug()+".png")

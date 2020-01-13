@@ -110,6 +110,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layoutDirection="rtl"
+                android:background="@color/white"
                 android:layout_below="@+id/split2_line"
                 android:layout_height="wrap_content">
                 <customviews.CustomTextView3

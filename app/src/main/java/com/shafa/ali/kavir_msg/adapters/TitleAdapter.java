@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 
 import java.util.List;
 
@@ -42,8 +43,8 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
             holder.contentTv.setText(Html.fromHtml(postsModel.getContent()));
         }
         holder.autherTv.setText(postsModel.getAuthor());
-        holder.dateTv.setText(postsModel.getDate());
-        holder.commentCountTv.setText(postsModel.getCommentCount());
+        holder.dateTv.setText(FormatHelper.toPersianNumber(postsModel.getDate()));
+        holder.commentCountTv.setText(FormatHelper.toPersianNumber(postsModel.getCommentCount()));
         if (postsModel.getCommentCount().equalsIgnoreCase("0")){
             holder.commentLinear.setVisibility(View.GONE);
         }

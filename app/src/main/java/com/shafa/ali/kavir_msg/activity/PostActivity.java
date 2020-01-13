@@ -32,6 +32,7 @@ import com.shafa.ali.kavir_msg.models.CommentModel;
 import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -144,9 +145,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setViews() {
-        dateTv.setText(postModel.getDate());
+        dateTv.setText(FormatHelper.toPersianNumber(postModel.getDate()));
         autherTv.setText(postModel.getAuthor());
-        commentTv.setText(getString(R.string.comments)+"("+postModel.getCommentModelList().size()+")");
+        commentTv.setText(getString(R.string.comments)+"("+ FormatHelper.toPersianNumber(String.valueOf(postModel.getCommentModelList().size()))+")");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData("<html dir=\"rtl\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"/>"+postModel.getContent()+"</html>","text/html","UTF-8");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

@@ -1,6 +1,7 @@
 package com.shafa.ali.kavir_msg.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
 import com.shafa.ali.kavir_msg.R;
@@ -32,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
     private SearchView searchView;
     private ImageButton backBtn;
     private List<TiltlePostsModel.PostsModel> postsModelList;
+    private FrameLayout searchFram;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +42,26 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView =(RecyclerView)findViewById(R.id.search_result_rc);
         searchView = (SearchView)findViewById(R.id.search_dt);
         backBtn = (ImageButton)findViewById(R.id.back_search_btn);
+        searchFram=(FrameLayout)findViewById(R.id.frame_et);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchFram.setBackgroundColor(Color.WHITE);
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchFram.setBackgroundColor(Color.parseColor("#d32f2f"));
+                return false;
             }
         });
 
@@ -59,7 +78,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        searchEditText.setTextColor(getResources().getColor(R.color.white));
+//        searchEditText.setTextColor(getResources().getColor(R.color.white));
         searchEditText.setTextSize(24);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
