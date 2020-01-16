@@ -2,6 +2,7 @@ package com.shafa.ali.kavir_msg.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.utility.CircleTransform;
 import com.shafa.ali.kavir_msg.utility.FormatHelper;
+import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Setting;
 
 import java.util.List;
+
+import io.realm.Realm;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder> {
     private Context context;
@@ -40,7 +44,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         holder.id.setText(String.valueOf(categoryModel.getId()));
         holder.title.setText(categoryModel.getTitle());
         holder.description.setText(FormatHelper.toPersianNumber(categoryModel.getDescription()));
-        holder.postCount.setText(String.valueOf(categoryModel.getPost_count()));
+        holder.postCount.setText(FormatHelper.toPersianNumber(String.valueOf(categoryModel.getPost_count())));
+        String newPosts = getNewPosts(String.valueOf(categoryModel.getId()),categoryModel.getPost_count());
+        if (newPosts.equals("0")){
+            holder.newPost.setVisibility(View.GONE);
+        }else {
+            holder.newPost.setText(FormatHelper.toPersianNumber(newPosts));
+        }
         Glide.with(context)
                 .load(Setting.CATEGORY_IMAGES_URL+categoryModel.getSlug()+".png")
                 .override(90, 90)
@@ -60,7 +70,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-         TextView id,title,description,postCount;
+         TextView id,title,description,postCount,newPost;
          ImageView imageCategory;
 
         public Holder(View itemView) {
@@ -69,10 +79,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
             id = (TextView)itemView.findViewById(R.id.id_category);
             title=(TextView)itemView.findViewById(R.id.name_category);
             description=(TextView)itemView.findViewById(R.id.desp_category);
-            postCount=(TextView)itemView.findViewById(R.id.count_category);
+            postCount=(TextView)itemView.findViewById(R.id.count_post_category);
             imageCategory=(ImageView)itemView.findViewById(R.id.image_category);
-
+            newPost = (TextView)itemView.findViewById(R.id.new_post_category);
         }
 
+    }
+
+    private String getNewPosts(String postId,int totalPost){
+        String oldPostCount = SaveItem.getItem(context,"post:"+postId,"0");
+        return String.valueOf(totalPost-Integer.parseInt(SaveItem.getItem(context,"post:"+postId,"0")));
     }
 }

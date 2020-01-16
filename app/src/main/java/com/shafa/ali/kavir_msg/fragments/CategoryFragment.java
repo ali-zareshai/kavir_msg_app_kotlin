@@ -20,6 +20,7 @@ import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.activity.CategoryActivity;
 import com.shafa.ali.kavir_msg.activity.SubCategoryActivity;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
+import com.shafa.ali.kavir_msg.db.models.Post;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
@@ -29,6 +30,7 @@ import com.shafa.ali.kavir_msg.utility.SaveItem;
 
 import java.util.List;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +43,7 @@ public class CategoryFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private SpinKitView loading;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private List<CategoryModel> categoryModelList;
 
 
     public CategoryFragment() {
@@ -95,7 +98,8 @@ public class CategoryFragment extends Fragment {
             public void onResponse(Call<List<CategoryModel>> call, Response<List<CategoryModel>> response) {
 //                Log.e("msg",response.body().toString());
                 if (response.isSuccessful()){
-                    generateDataList(response.body());
+                    categoryModelList = response.body();
+                    generateDataList(categoryModelList);
                     loading.setVisibility(View.GONE);
                     hideSwipRefresh();
                 }
@@ -113,14 +117,14 @@ public class CategoryFragment extends Fragment {
         categoryRecycler.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(),
                 categoryRecycler, new ClickListener() {    @Override
         public void onClick(View view, final int position) {
-            TextView idTv =(TextView)view.findViewById(R.id.id_category);
             TextView nameTv   = (TextView)view.findViewById(R.id.name_category);
-            String id =idTv.getText().toString().trim();
+            String id = String.valueOf(categoryModelList.get(position).getId());
             Intent intent =new Intent(getActivity().getApplicationContext(), SubCategoryActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("parentId",id);
             bundle.putString("parentName",nameTv.getText().toString());
             intent.putExtras(bundle);
+            setCountPostCount(id,categoryModelList.get(position).getPost_count());
             startActivity(intent);
         }
 
@@ -135,6 +139,11 @@ public class CategoryFragment extends Fragment {
         Log.e("category list",categoryModelList.toString());
         categoryAdapter =new CategoryAdapter(getActivity().getApplicationContext(),categoryModelList);
         categoryRecycler.setAdapter(categoryAdapter);
+
+    }
+
+    private void setCountPostCount(String postId,int newCountPost){
+        SaveItem.setItem(getActivity().getApplicationContext(),"post:"+postId,String.valueOf(newCountPost));
 
     }
 

@@ -9,7 +9,8 @@ public class Application extends android.app.Application {
         super.onCreate();
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
-                .name("kavir.realm")
+                .name("kavirDb.realm")
+                .schemaVersion(1)
                 .build();
         Realm.setDefaultConfiguration(config);
     }

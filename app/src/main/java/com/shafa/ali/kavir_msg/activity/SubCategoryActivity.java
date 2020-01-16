@@ -17,12 +17,9 @@ import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
-import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
 import com.shafa.ali.kavir_msg.adapters.SubCategoryAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
-import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.models.SubCategoryModel;
-import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.server.GetDataSubCategory;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
@@ -30,6 +27,7 @@ import com.shafa.ali.kavir_msg.utility.SaveItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,6 +78,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
             //Values are passing to activity & to fragment as well
             currentSlug = subCategoryModels.get(position).getSlug();
             getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
+            setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
 //            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
 //            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
         }
@@ -199,5 +198,10 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
+    }
+
+    private void setCountPostCount(String postId,int newCountPost){
+        SaveItem.setItem(getApplicationContext(),"post:"+postId,String.valueOf(newCountPost));
+
     }
 }
