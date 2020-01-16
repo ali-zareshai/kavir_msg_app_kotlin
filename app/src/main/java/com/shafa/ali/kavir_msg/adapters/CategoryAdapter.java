@@ -87,7 +87,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     }
 
     private String getNewPosts(String postId,int totalPost){
-        String oldPostCount = SaveItem.getItem(context,"post:"+postId,"0");
         return String.valueOf(totalPost-Integer.parseInt(SaveItem.getItem(context,"post:"+postId,"0")));
     }
 }

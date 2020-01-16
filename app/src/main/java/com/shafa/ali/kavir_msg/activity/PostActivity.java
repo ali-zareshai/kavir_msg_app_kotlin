@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -56,7 +57,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private CommentAdapter commentAdapter;
     private ScrollView scrollviewPost;
     private SpinKitView loading;
-    private ImageButton backBtn,sendComment,showComments,saveBtn,deleteBtn,homeBtn;
+    private ImageButton backBtn,saveBtn,deleteBtn,homeBtn;
+    private LinearLayout sendComment,showComments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,9 +213,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         scrollviewPost =(ScrollView)findViewById(R.id.scrollview_post);
         loading =(SpinKitView)findViewById(R.id.spin_post);
         backBtn = (ImageButton)findViewById(R.id.back_post_btn);
-        sendComment =(ImageButton) findViewById(R.id.add_new_comment);
-        showComments=(ImageButton) findViewById(R.id.show_comment);
-        commentTv = (TextView)findViewById(R.id.count_comment);
+        sendComment =(LinearLayout) findViewById(R.id.add_new_comment);
+        showComments=(LinearLayout) findViewById(R.id.show_comment);
+        commentTv = (TextView) findViewById(R.id.count_comment);
         saveBtn =(ImageButton)findViewById(R.id.save_post_btn);
         deleteBtn=(ImageButton)findViewById(R.id.delete_post_btn);
         homeBtn =(ImageButton)findViewById(R.id.home_post_btn);

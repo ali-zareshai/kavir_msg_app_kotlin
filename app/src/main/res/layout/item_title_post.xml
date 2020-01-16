@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:padding="5dp"
                     android:textDirection="rtl"
-                    android:textSize="16dp"
+                    android:textSize="10dp"
                     android:id="@+id/date_card"
                     android:textColor="@color/white"
                     android:layout_height="match_parent"/>
@@ -101,6 +101,7 @@
                 android:layout_alignParentLeft="true"
                 android:background="@color/pink500"
                 android:orientation="horizontal"
+                android:layoutDirection="ltr"
                 android:layout_centerVertical="true"
                 android:id="@+id/comment_count_liner"
                 android:layout_marginRight="15dp"
