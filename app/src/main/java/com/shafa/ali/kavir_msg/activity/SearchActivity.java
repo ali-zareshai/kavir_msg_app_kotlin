@@ -2,6 +2,7 @@ package com.shafa.ali.kavir_msg.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -80,6 +81,9 @@ public class SearchActivity extends AppCompatActivity {
         EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 //        searchEditText.setTextColor(getResources().getColor(R.color.white));
         searchEditText.setTextSize(24);
+//        searchEditText.setActivated(true);
+        Typeface type2 = Typeface.createFromAsset(getAssets(),"fonts/sans.ttf");
+        searchEditText.setTypeface(type2,Typeface.NORMAL);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -118,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<TiltlePostsModel.PostsModel>> call, Throwable t) {
-                Log.e("onFailure:",t.getMessage());
+//                Log.e("onFailure:",t.getMessage());
             }
         });
     }

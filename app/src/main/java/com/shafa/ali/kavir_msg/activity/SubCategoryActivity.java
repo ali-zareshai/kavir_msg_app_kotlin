@@ -42,7 +42,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private Toolbar mTopToolbar;
     private Bundle bundle;
     private String parentId;
-    private ImageButton backBtn;
+    private ImageButton backBtn,homeBtn;
     private List<SubCategoryModel> subCategoryModels;
     private SpinKitView loading;
     private String currentSlug =null;
@@ -54,6 +54,8 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         subCategoryRecycler =(RecyclerView)findViewById(R.id.sub_category_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         loading =(SpinKitView)findViewById(R.id.spin_sub_cat);
+        homeBtn =(ImageButton)findViewById(R.id.home_sub_btn);
+        homeBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         /////////
         bundle = getIntent().getExtras();
@@ -87,6 +89,11 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 //                Toast.makeText(SubCategoryActivity.this, "Long press on position :"+position,Toast.LENGTH_LONG).show();
             }}));
 
+    }
+
+    private void startHomePage(){
+        startActivity(new Intent(SubCategoryActivity.this,CategoryActivity.class));
+        finish();
     }
 
     private  void getSubCategoryFromServer(String parentIdf){
@@ -143,6 +150,9 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
             case R.id.back_btn:
                 onBackPressed();
                 finish();
+                break;
+            case R.id.home_sub_btn:
+                startHomePage();
                 break;
         }
     }

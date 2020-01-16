@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.shafa.ali.kavir_msg.R;
-import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.models.SubCategoryModel;
 import com.shafa.ali.kavir_msg.utility.CircleTransform;
 import com.shafa.ali.kavir_msg.utility.FormatHelper;
@@ -30,7 +29,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category,parent,false);
         return new Holder(view);
     }
 

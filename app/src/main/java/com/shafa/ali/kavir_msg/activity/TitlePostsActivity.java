@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,12 +33,13 @@ import retrofit2.Retrofit;
 
 public class TitlePostsActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
-    private ImageButton backBtn,nextPageBtn,prePageBtn;
+    private ImageButton backBtn,nextPageBtn,prePageBtn,homeBtn;
     private TextView pageNumberTv,totalPageTv;
     private String slugName;
     private int pageNumber = 1;
     private TiltlePostsModel tiltlePostsModel;
     private SpinKitView loading;
+    private CardView notExistPostcardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,13 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         pageNumberTv = (TextView)findViewById(R.id.page_number);
         totalPageTv =(TextView)findViewById(R.id.total_page_number);
         loading =(SpinKitView)findViewById(R.id.spin_title_post);
+        homeBtn =(ImageButton)findViewById(R.id.home_title_post_btn);
+        notExistPostcardView =(CardView)findViewById(R.id.not_exist_post_card);
 
         backBtn.setOnClickListener(this);
         prePageBtn.setOnClickListener(this);
         nextPageBtn.setOnClickListener(this);
+        homeBtn.setOnClickListener(this);
 
         slugName = getIntent().getExtras().getString("slug");
         slugTitle.setText(slugName);// set name slug in toolbar
@@ -112,6 +117,13 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
     private void fininshActivity() {
         MDToast.makeText(this,getString(R.string.no_exit_post),2500,MDToast.TYPE_INFO).show();
+        loading.setVisibility(View.GONE);
+        notExistPostcardView.setVisibility(View.VISIBLE);
+//        finish();
+    }
+
+    private void startHomePage(){
+        startActivity(new Intent(TitlePostsActivity.this,CategoryActivity.class));
         finish();
     }
 
@@ -150,6 +162,9 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
             case R.id.pre_page:
                 pageNumber--;
                 getDataFromServer();
+                break;
+            case R.id.home_title_post_btn:
+                startHomePage();
                 break;
         }
     }

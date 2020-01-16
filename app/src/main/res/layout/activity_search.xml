@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     tools:context=".activity.SearchActivity">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:id="@+id/frame_et"
-            android:background="@color/toolbar_color"
+            android:background="@color/tranport"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true">
             <android.support.v7.widget.SearchView
@@ -19,6 +20,7 @@
                 app:queryHint="@string/keyword"
                 android:id="@+id/search_dt"
                 android:layoutDirection="rtl"
+                app:iconifiedByDefault="false"
                 android:textDirection="rtl"
                 android:layout_height="match_parent"/>
 
@@ -29,8 +31,8 @@
                 android:layout_alignParentLeft="true"
                 android:id="@+id/back_search_btn"
                 android:src="@drawable/ic_arrow_back_black_24dp"
-                android:background="@color/tranport"
-                android:layout_height="50dp" />
+                android:background="@color/toolbar_color"
+                android:layout_height="match_parent" />
         </FrameLayout>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

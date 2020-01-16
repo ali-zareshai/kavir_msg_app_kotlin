@@ -56,7 +56,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private CommentAdapter commentAdapter;
     private ScrollView scrollviewPost;
     private SpinKitView loading;
-    private ImageButton backBtn,sendComment,showComments,saveBtn,deleteBtn;
+    private ImageButton backBtn,sendComment,showComments,saveBtn,deleteBtn,homeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         showComments.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
+        homeBtn.setOnClickListener(this);
 
         Toolbar mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
@@ -195,6 +196,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private void startHomePage(){
+        startActivity(new Intent(PostActivity.this,CategoryActivity.class));
+        finish();
+    }
+
     private void initViews() {
         titleTv = (TextView)findViewById(R.id.title_post_card);
 //        contentTv=(TextView)findViewById(R.id.content_post_card);
@@ -210,6 +216,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         commentTv = (TextView)findViewById(R.id.count_comment);
         saveBtn =(ImageButton)findViewById(R.id.save_post_btn);
         deleteBtn=(ImageButton)findViewById(R.id.delete_post_btn);
+        homeBtn =(ImageButton)findViewById(R.id.home_post_btn);
 
     }
 
@@ -241,6 +248,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.delete_post_btn:
                 deleteCurrentPost();
+                break;
+            case R.id.home_post_btn:
+                startHomePage();
                 break;
 
         }
