@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
+import com.shafa.ali.kavir_msg.fragments.AboutFragment;
 import com.shafa.ali.kavir_msg.fragments.CategoryFragment;
 import com.shafa.ali.kavir_msg.fragments.ReadyReadFragment;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
@@ -85,7 +86,11 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         displayNameTv =(TextView)headerView.findViewById(R.id.display_name_header);
-        displayNameTv.setText(FormatHelper.toPersianNumber(SaveItem.getItem(this,SaveItem.USER_NAME,"--")));
+        String displayName  =SaveItem.getItem(this,SaveItem.USER_NAME,"");
+        if (displayName.equals("")){
+            displayName = getString(R.string.guest);
+        }
+        displayNameTv.setText(FormatHelper.toPersianNumber(displayName));
         navigationView.setNavigationItemSelectedListener(this);
 
         toggle.setDrawerIndicatorEnabled(false);
@@ -166,6 +171,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         } else if (id == R.id.ready_read_page) {
             loadFragment(ReadyReadFragment.newInstance());
             toolbarTitle.setText(getString(R.string.redy_read));
+        }else if (id == R.id.about_we){
+            loadFragment(AboutFragment.newInstance());
+            toolbarTitle.setText(getString(R.string.about_we));
         }
 
         drawer.closeDrawer(Gravity.END);

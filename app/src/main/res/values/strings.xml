@@ -30,6 +30,8 @@
     <string name="keyword">متن مورد نظر جهت جستجو ...</string>
     <string name="search">جستجو</string>
     <string name="no_exit_post">پستی جهت نمایش وجود ندارد</string>
+    <string name="guest">مهمان</string>
+    <string name="about_we">درباره ما</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
