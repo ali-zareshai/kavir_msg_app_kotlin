@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface GetPostsServer {
     @GET("post-title.php")
-    Call<TiltlePostsModel> getTiltlePosts(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page);
+    Call<TiltlePostsModel> getTiltlePosts(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page,@Query("page-size")String pageSize);
 
     @GET("post.php")
     Call<PostModel> getPost(@Query ("cookie") String cookieValue,@Query("id") String postId);

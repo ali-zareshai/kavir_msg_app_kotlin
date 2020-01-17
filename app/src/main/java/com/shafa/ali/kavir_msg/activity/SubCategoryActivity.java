@@ -44,6 +44,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private List<SubCategoryModel> subCategoryModels;
     private SpinKitView loading;
     private String currentSlug =null;
+    private int currentPageSize =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         public void onClick(View view, final int position) {
             //Values are passing to activity & to fragment as well
             currentSlug = subCategoryModels.get(position).getSlug();
+            currentPageSize =subCategoryModels.get(position).getPost_count();
             getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
             setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
 //            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
@@ -106,7 +108,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                     subCategoryModels = new ArrayList<>();
                     subCategoryModels = response.body();
                     if (subCategoryModels.get(0).getId()==0){
-                        startTitlePostCategory(currentSlug);
+                        startTitlePostCategory(currentSlug,currentPageSize);
                     }else{
                         generateDataList(subCategoryModels);
                     }
@@ -123,9 +125,10 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    private void startTitlePostCategory(String slug){
+    private void startTitlePostCategory(String slug,int postSize){
         Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
         intent.putExtra("slug",slug);
+        intent.putExtra("post_size",postSize);
         startActivity(intent);
         finish();
     }

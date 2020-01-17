@@ -21,5 +21,6 @@
     <color name="blue200">#90A4AE</color>
     <color name="red800">#c62828</color>
     <color name="navi_header">#9E9E9E</color>
+    <color name="black">#000000</color>
 
 </resources>

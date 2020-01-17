@@ -26,6 +26,7 @@ import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
+import customview.PaginationView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,13 +34,12 @@ import retrofit2.Retrofit;
 
 public class TitlePostsActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
-    private ImageButton backBtn,nextPageBtn,prePageBtn,homeBtn;
-    private TextView pageNumberTv,totalPageTv;
+    private ImageButton backBtn,homeBtn;
     private String slugName;
-    private int pageNumber = 1;
     private TiltlePostsModel tiltlePostsModel;
     private SpinKitView loading;
     private CardView notExistPostcardView;
+    private PaginationView paginationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,17 +48,12 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         recyclerView =(RecyclerView)findViewById(R.id.posts_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         TextView slugTitle = (TextView)findViewById(R.id.slug_title);
-        nextPageBtn =(ImageButton)findViewById(R.id.next_page);
-        prePageBtn =(ImageButton)findViewById(R.id.pre_page);
-        pageNumberTv = (TextView)findViewById(R.id.page_number);
-        totalPageTv =(TextView)findViewById(R.id.total_page_number);
         loading =(SpinKitView)findViewById(R.id.spin_title_post);
         homeBtn =(ImageButton)findViewById(R.id.home_title_post_btn);
         notExistPostcardView =(CardView)findViewById(R.id.not_exist_post_card);
+        paginationView =(PaginationView) findViewById(R.id.pager_size_spinner);
 
         backBtn.setOnClickListener(this);
-        prePageBtn.setOnClickListener(this);
-        nextPageBtn.setOnClickListener(this);
         homeBtn.setOnClickListener(this);
 
         slugName = getIntent().getExtras().getString("slug");
@@ -66,7 +61,16 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        getDataFromServer();
+
+        getDataFromServer(1,10);
+
+        paginationView.setPager(getIntent().getExtras().getInt("post_size"));
+        paginationView.setOnPagerUpdate(new PaginationView.OnPagerUpdate() {
+            @Override
+            public void onUpdate(int pageNumber, int pageSize) {
+                getDataFromServer(pageNumber,pageSize);
+            }
+        });
 
         recyclerView.addOnItemTouchListener(new TitlePostsActivity.RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
@@ -86,12 +90,13 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void getDataFromServer() {
+    private void getDataFromServer(int pageNumber ,int pageSize) {
+        Log.e("pageSize:",String.valueOf(pageSize));
         loading.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
-        getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber)).enqueue(new Callback<TiltlePostsModel>() {
+        getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber),String.valueOf(pageSize)).enqueue(new Callback<TiltlePostsModel>() {
             @Override
             public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
                 if (response.isSuccessful()){
@@ -102,7 +107,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                     }
                     TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
                     recyclerView.setAdapter(titleAdapter);
-                    setPage();
                     loading.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 }
@@ -127,20 +131,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         finish();
     }
 
-    private void setPage() {
-        pageNumberTv.setText(FormatHelper.toPersianNumber(String.valueOf(pageNumber)));
-        totalPageTv.setText(FormatHelper.toPersianNumber(tiltlePostsModel.getPages()));
-        if (tiltlePostsModel.getPages().equals(String.valueOf(pageNumber))){
-            nextPageBtn.setVisibility(View.GONE);
-        }else {
-            nextPageBtn.setVisibility(View.VISIBLE);
-        }
-        if (pageNumber == 1){
-            prePageBtn.setVisibility(View.GONE);
-        }else {
-            prePageBtn.setVisibility(View.VISIBLE);
-        }
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -154,14 +145,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
             case R.id.back_btn:
                 onBackPressed();
                 finish();
-                break;
-            case R.id.next_page:
-                pageNumber++;
-                getDataFromServer();
-                break;
-            case R.id.pre_page:
-                pageNumber--;
-                getDataFromServer();
                 break;
             case R.id.home_title_post_btn:
                 startHomePage();

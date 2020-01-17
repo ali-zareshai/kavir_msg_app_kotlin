@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@android:color/white"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/g800" />
+
+    <ImageButton
+        android:id="@+id/left_arrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_chevron_left_black_24dp" />
+
+
+
+    <customviews.CustomTextView
+        android:id="@+id/tv_current_page"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:autoSizeTextType="uniform"
+        android:gravity="bottom|center_horizontal" />
+
+    <TextView
+        android:id="@+id/tv_current_page_popup"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/popup_bg"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|bottom"
+        android:textColor="@android:color/white"
+        android:visibility="invisible" />
+
+
+    <ImageButton
+        android:id="@+id/right_arrow"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/total_pages"
+        android:layout_toLeftOf="@id/right_arrow"
+        android:layout_toRightOf="@id/left_arrow"
+        android:thumb="@drawable/ic_beenhere_black_24dp" />
+
+    <customviews.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:id="@+id/total_pages"
+        android:textSize="16dp"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
