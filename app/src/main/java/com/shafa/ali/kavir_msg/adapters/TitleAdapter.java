@@ -37,7 +37,7 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.titleTv.setText(Html.fromHtml(postsModel.getTitle(), Html.FROM_HTML_MODE_COMPACT));
-            holder.contentTv.setText(postsModel.getContent());
+            holder.contentTv.setText(Html.fromHtml(postsModel.getContent(), Html.FROM_HTML_MODE_COMPACT));
         } else {
             holder.titleTv.setText(Html.fromHtml(postsModel.getTitle()));
             holder.contentTv.setText(Html.fromHtml(postsModel.getContent()));
