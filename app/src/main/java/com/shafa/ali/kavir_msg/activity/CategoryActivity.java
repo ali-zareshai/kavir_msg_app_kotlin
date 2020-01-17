@@ -70,6 +70,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbarTitle =(TextView) findViewById(R.id.category_title);
         searchBtn =(FloatingActionButton)findViewById(R.id.search_btn);
+
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +93,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         }
         displayNameTv.setText(FormatHelper.toPersianNumber(displayName));
         navigationView.setNavigationItemSelectedListener(this);
-
+        setNameLoginItem();
         toggle.setDrawerIndicatorEnabled(false);
         drawer.addDrawerListener(toggle);
 
@@ -164,7 +165,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         int id = menuItem.getItemId();
 
         if (id == R.id.login) {
-            startActivity(new Intent(CategoryActivity.this,LoginActivity.class));
+            loginProcess();
         } else if (id == R.id.home_page) {
             loadFragment(CategoryFragment.newInstance());
             toolbarTitle.setText(getString(R.string.home));
@@ -178,6 +179,41 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
         drawer.closeDrawer(Gravity.END);
         return true;
+    }
+
+    private void loginProcess() {
+        Menu menu = navigationView.getMenu();
+        MenuItem loginItem = menu.findItem(R.id.login);
+        if (loginItem.getTitle().toString().equalsIgnoreCase(getString(R.string.login))){
+            startActivity(new Intent(CategoryActivity.this,LoginActivity.class));
+        }else{
+            logout();
+        }
+    }
+
+    private void logout() {
+        clearSeesion();
+        finish();
+    }
+
+    private void clearSeesion(){
+        SaveItem.setItem(this,SaveItem.USER_FIRST_NAME,"");
+        SaveItem.setItem(this,SaveItem.USER_LAST_NAME,"");
+        SaveItem.setItem(this,SaveItem.USER_EMAIL,"");
+        SaveItem.setItem(this,SaveItem.USER_NAME,"");
+        SaveItem.setItem(this,SaveItem.USER_MOBILE,"");
+        SaveItem.setItem(this,SaveItem.USER_ID,"");
+        SaveItem.setItem(this,SaveItem.USER_COOKIE,"");
+    }
+
+    private void setNameLoginItem(){
+        Menu menu = navigationView.getMenu();
+        MenuItem loginItem = menu.findItem(R.id.login);
+        if (SaveItem.getItem(this,SaveItem.USER_COOKIE,"").equals("")){
+            loginItem.setTitle(getString(R.string.login));
+        }else{
+            loginItem.setTitle(getString(R.string.logout));
+        }
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
