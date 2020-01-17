@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="@color/teal800"
-    android:gravity="bottom"
+    android:layoutDirection="ltr"
+    android:background="@color/navi_header"
     android:orientation="vertical"
     android:paddingBottom="5dp"
     android:paddingLeft="5dp"
@@ -11,13 +11,46 @@
     android:paddingTop="5dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image_header"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_person_black_24dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/white"/>
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:orientation="horizontal"
+        android:layoutDirection="ltr"
+        android:layout_below="@+id/profile_image_header"
+        android:layout_height="wrap_content">
+        <customviews.CustomTextView
+            android:layout_width="wrap_content"
+            android:textDirection="rtl"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="علی"
+            android:id="@+id/display_name_header"
+            android:textSize="21dp"
+            android:padding="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"/>
+        <customviews.CustomTextView
+            android:layout_width="wrap_content"
+            android:textDirection="rtl"
+            android:textStyle="bold"
+            android:textColor="@color/red800"
+            android:text="@string/welcome"
+            android:textSize="21dp"
+            android:padding="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 
 
-</LinearLayout>
+
+</RelativeLayout>

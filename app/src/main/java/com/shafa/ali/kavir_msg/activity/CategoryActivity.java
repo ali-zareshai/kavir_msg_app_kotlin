@@ -39,6 +39,7 @@ import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -54,7 +55,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private Toolbar mTopToolbar;
     private FragmentTransaction transaction;
     private DrawerLayout drawer;
-    private TextView toolbarTitle;
+    private TextView toolbarTitle,displayNameTv;
     private NavigationView navigationView;
     private FloatingActionButton searchBtn;
 
@@ -82,6 +83,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
                 this, drawer, mTopToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        displayNameTv =(TextView)headerView.findViewById(R.id.display_name_header);
+        displayNameTv.setText(FormatHelper.toPersianNumber(SaveItem.getItem(this,SaveItem.USER_NAME,"--")));
         navigationView.setNavigationItemSelectedListener(this);
 
         toggle.setDrawerIndicatorEnabled(false);

@@ -20,7 +20,7 @@
     <string name="user_or_pass_is_wrong">نام کاربری یا پسورد اشتباه است</string>
     <string name="password">رمز عبور</string>
     <string name="mobile">موبایل</string>
-    <string name="welcome">خوش آمدید</string>
+    <string name="welcome">خوش آمدید:</string>
     <string name="open_in_browser">مشاهده در مرورگر</string>
     <string name="no_post">نظری جهت نمایش وجو ندارد</string>
     <string name="add_to_list">به لیست اضافه شد</string>
