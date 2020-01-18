@@ -142,7 +142,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<PostModel> call, Throwable t) {
-                Log.e("onFailure:",t.getMessage());
+                Log.e("onFailure:",t.toString());
             }
         });
     }

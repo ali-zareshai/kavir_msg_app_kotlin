@@ -68,7 +68,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         paginationView.setOnPagerUpdate(new PaginationView.OnPagerUpdate() {
             @Override
             public void onUpdate(int pageNumber, int pageSize) {
-                getDataFromServer(pageNumber,pageSize);
+                getDataFromServer(pageNumber+1,pageSize);
             }
         });
 
@@ -91,7 +91,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void getDataFromServer(int pageNumber ,int pageSize) {
-        Log.e("pageSize:",String.valueOf(pageSize));
         loading.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
@@ -143,7 +142,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.back_btn:
-                onBackPressed();
+//                onBackPressed();
                 finish();
                 break;
             case R.id.home_title_post_btn:

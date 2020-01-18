@@ -90,7 +90,7 @@ public class CategoryFragment extends Fragment {
         }
     }
 
-    private void getDataFromServer() {
+    public void getDataFromServer() {
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         GetDataCategory getDataService=retrofit.create(GetDataCategory.class);
         getDataService.getAllCategorys(SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_COOKIE,"")).enqueue(new Callback<List<CategoryModel>>() {

@@ -116,6 +116,14 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+    @Override
+    protected void onResume() {
+        Log.e("onResume:","onResume fragment");
+        CategoryFragment fragment = (CategoryFragment) getFragmentManager().findFragmentById(R.id.fragment);
+        fragment.getDataFromServer();
+        super.onResume();
+    }
+
     private void setFontNavig() {
         Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {

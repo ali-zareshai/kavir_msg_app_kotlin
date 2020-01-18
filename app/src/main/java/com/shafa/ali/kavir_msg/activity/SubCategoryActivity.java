@@ -21,8 +21,10 @@ import com.shafa.ali.kavir_msg.adapters.SubCategoryAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.SubCategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataSubCategory;
+import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,16 +73,20 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
         getSubCategoryFromServer(parentId);
 
-
-        subCategoryRecycler.addOnItemTouchListener(new SubCategoryActivity.RecyclerTouchListener(this,
+        subCategoryRecycler.addOnItemTouchListener(new RecyclerTouchListener(this,
                 subCategoryRecycler, new ClickListener() {
         @Override
         public void onClick(View view, final int position) {
             //Values are passing to activity & to fragment as well
-            currentSlug = subCategoryModels.get(position).getSlug();
-            currentPageSize =subCategoryModels.get(position).getPost_count();
-            getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
-            setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
+            try{
+                currentSlug = subCategoryModels.get(position).getSlug();
+                currentPageSize =subCategoryModels.get(position).getPost_count();
+                getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
+                setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
+            }catch (Exception e){
+                Log.e("Exception:",e.getMessage());
+            }
+
 //            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
 //            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
         }
@@ -92,12 +98,20 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+
     private void startHomePage(){
         startActivity(new Intent(SubCategoryActivity.this,CategoryActivity.class));
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        startHomePage();
+        super.onBackPressed();
+    }
+
     private  void getSubCategoryFromServer(String parentIdf){
+        loading.setVisibility(View.VISIBLE);
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
         getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentIdf).enqueue(new Callback<List<SubCategoryModel>>() {
@@ -107,11 +121,15 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                 if (response.isSuccessful()){
                     subCategoryModels = new ArrayList<>();
                     subCategoryModels = response.body();
+
+
                     if (subCategoryModels.get(0).getId()==0){
-                        startTitlePostCategory(currentSlug,currentPageSize);
+                        startTitlePostActivity(currentSlug,currentPageSize);
                     }else{
                         generateDataList(subCategoryModels);
                     }
+
+                    loading.setVisibility(View.GONE);
 
                 }
 
@@ -125,83 +143,35 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         });
     }
 
-    private void startTitlePostCategory(String slug,int postSize){
-        Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
-        intent.putExtra("slug",slug);
-        intent.putExtra("post_size",postSize);
-        startActivity(intent);
-        finish();
+    private void startTitlePostActivity(String slug,int postSize){
+        if (slug!=null){
+            Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
+            intent.putExtra("slug",slug);
+            intent.putExtra("post_size",postSize);
+            startActivity(intent);
+        }else {
+            MDToast.makeText(this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
+            startHomePage();
+        }
     }
 
     private void generateDataList(List<SubCategoryModel> subCategoryModelList) {
         subCategoryAdapter = null;
         subCategoryAdapter =new SubCategoryAdapter(getApplicationContext(),subCategoryModelList);
         subCategoryRecycler.setAdapter(subCategoryAdapter);
-        loading.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.back_btn:
-                onBackPressed();
-                finish();
-                break;
             case R.id.home_sub_btn:
                 startHomePage();
                 break;
         }
     }
 
-    private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-        private ClickListener clicklistener;
-        private GestureDetector gestureDetector;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final ClickListener clicklistener){
-
-            this.clicklistener=clicklistener;
-            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                    if(child!=null && clicklistener!=null){
-                        clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child=rv.findChildViewUnder(e.getX(),e.getY());
-            if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
-                clicklistener.onClick(child,rv.getChildAdapterPosition(child));
-            }
-
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-    }
 
     private void setCountPostCount(String postId,int newCountPost){
         SaveItem.setItem(getApplicationContext(),"post:"+postId,String.valueOf(newCountPost));
