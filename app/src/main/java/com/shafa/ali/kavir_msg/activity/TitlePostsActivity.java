@@ -22,6 +22,7 @@ import com.shafa.ali.kavir_msg.models.PostModel;
 import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.FormatHelper;
+import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
@@ -72,7 +73,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        recyclerView.addOnItemTouchListener(new TitlePostsActivity.RecyclerTouchListener(this, recyclerView, new ClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 TiltlePostsModel.PostsModel postsModel = tiltlePostsModel.getPostsModels().get(position);
@@ -104,6 +105,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                         fininshActivity();
                         return;
                     }
+                    notExistPostcardView.setVisibility(View.GONE);
                     TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
                     recyclerView.setAdapter(titleAdapter);
                     loading.setVisibility(View.GONE);
@@ -151,47 +153,5 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-        private ClickListener clicklistener;
-        private GestureDetector gestureDetector;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recycleView, final ClickListener clicklistener){
-
-            this.clicklistener=clicklistener;
-            gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                    if(child!=null && clicklistener!=null){
-                        clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-            View child=rv.findChildViewUnder(e.getX(),e.getY());
-            if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
-                clicklistener.onClick(child,rv.getChildAdapterPosition(child));
-            }
-
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-    }
 }

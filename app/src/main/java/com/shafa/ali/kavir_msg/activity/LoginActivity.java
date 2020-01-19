@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register.setOnClickListener(this);
         loginBtn.setOnClickListener(this);
         qrcodeImg.setOnClickListener(this);
-        Toast.makeText(this, Utility.getUniqueIMEIId(this), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, Utility.getUniqueIMEIId(this), Toast.LENGTH_LONG).show();
         /////////////// set save user pass
         userNameEdit.setText(SaveItem.getItem(this,SaveItem.USERNAME_LOGIN,""));
         passwordEdit.setText(SaveItem.getItem(this,SaveItem.PASSWORD_LOGIN,""));

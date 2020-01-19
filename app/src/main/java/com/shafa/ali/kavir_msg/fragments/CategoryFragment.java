@@ -110,7 +110,7 @@ public class CategoryFragment extends Fragment {
             public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
 //                Log.e("msg1",t.getLocalizedMessage());
 //                Log.e("msg2",t.getMessage());
-                Toast.makeText(getActivity().getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity().getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -136,7 +136,6 @@ public class CategoryFragment extends Fragment {
     }
 
     private void generateDataList(List<CategoryModel> categoryModelList){
-        Log.e("category list",categoryModelList.toString());
         categoryAdapter =new CategoryAdapter(getActivity().getApplicationContext(),categoryModelList);
         categoryRecycler.setAdapter(categoryAdapter);
 

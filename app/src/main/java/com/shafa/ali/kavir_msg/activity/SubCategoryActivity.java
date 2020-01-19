@@ -85,6 +85,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                 setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
             }catch (Exception e){
                 Log.e("Exception:",e.getMessage());
+                getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
             }
 
 //            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
