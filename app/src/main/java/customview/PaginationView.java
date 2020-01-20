@@ -176,7 +176,7 @@ public class PaginationView extends RelativeLayout {
 
     public void updatePosition(int progress){
         mPagerTV.setText(FormatHelper.toPersianNumber(progress+1+""));
-        mPagerPopupTV.setText(FormatHelper.toPersianNumber(progress+1+""));
+        mPagerPopupTV.setText(mContext.getString(R.string.page)+" "+FormatHelper.toPersianNumber(progress+1+""));
         Rect bounds = mSeekBar.getThumb().getBounds();
         mPagerTV.setTranslationX(mSeekBar.getLeft() + bounds.left);
         mPagerTV.setTranslationY(bounds.height()*130/100);

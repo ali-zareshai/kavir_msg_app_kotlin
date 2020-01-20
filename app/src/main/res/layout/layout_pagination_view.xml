@@ -26,17 +26,20 @@
         android:id="@+id/tv_current_page"
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="32dp"
+        android:textSize="14dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:autoSizeTextType="uniform"
         android:gravity="bottom|center_horizontal" />
 
-    <TextView
+    <customviews.CustomTextView
         android:id="@+id/tv_current_page_popup"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/popup_bg"
-        android:elevation="4dp"
+        android:elevation="10dp"
+        android:textSize="26dp"
+        android:textStyle="bold"
         android:gravity="center_horizontal|bottom"
         android:textColor="@android:color/white"
         android:visibility="invisible" />

@@ -106,20 +106,25 @@
     </android.support.v7.widget.Toolbar>
 
 
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:id="@+id/posts_recyclerview"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"
-        android:layout_height="match_parent"/>
-        <customview.PaginationView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:clipChildren="false"
-            android:id="@+id/pager_size_spinner"
-            android:layout_height="?attr/actionBarSize"/>
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginBottom="?attr/actionBarSize"
+                android:id="@+id/posts_recyclerview"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                android:layout_height="match_parent"/>
+            <customview.PaginationView
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:clipChildren="false"
+                android:layout_gravity="bottom"
+                android:id="@+id/pager_size_spinner"
+                android:layout_height="?attr/actionBarSize"/>
+        </FrameLayout>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

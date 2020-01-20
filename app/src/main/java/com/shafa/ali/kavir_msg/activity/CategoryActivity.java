@@ -118,9 +118,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     protected void onResume() {
-        Log.e("onResume:","onResume fragment");
-        CategoryFragment fragment = (CategoryFragment) getFragmentManager().findFragmentById(R.id.fragment);
-        fragment.getDataFromServer();
+        try{
+            CategoryFragment fragment = (CategoryFragment) getFragmentManager().findFragmentById(R.id.fragment);
+            fragment.getDataFromServer();
+        }catch (Exception e){
+            Log.e("onResume:",e.getMessage());
+        }
+
         super.onResume();
     }
 

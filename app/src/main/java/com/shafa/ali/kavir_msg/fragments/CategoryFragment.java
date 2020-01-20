@@ -2,6 +2,7 @@ package com.shafa.ali.kavir_msg.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,12 +10,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.activity.CategoryActivity;
@@ -27,6 +30,7 @@ import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.shafa.ali.kavir_msg.utility.Utility;
 
 import java.util.List;
 
@@ -108,9 +112,18 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
-//                Log.e("msg1",t.getLocalizedMessage());
-//                Log.e("msg2",t.getMessage());
-//                Toast.makeText(getActivity().getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity())
+                        .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
+                        .setTextGravity(Gravity.RIGHT)
+                        .setTitle(getString(R.string.not_respone))
+                        .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                getDataFromServer();
+                                dialogInterface.dismiss();
+                            }
+                        });
+                builder.show();
             }
         });
 

@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.CommentAdapter;
@@ -36,6 +39,7 @@ import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
 import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
@@ -94,9 +98,20 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.open_in_browser:
                 openInWeb();
                 return true;
+            case R.id.share_link:
+                shareLink();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void shareLink() {
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,  Uri.parse(postModel.getUrl()));
+        startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)));
     }
 
     private void openInWeb() {
@@ -142,7 +157,18 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<PostModel> call, Throwable t) {
-                Log.e("onFailure:",t.toString());
+                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(PostActivity.this)
+                        .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
+                        .setTextGravity(Gravity.RIGHT)
+                        .setTitle(getString(R.string.not_respone))
+                        .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                fetchDataNet();
+                                dialogInterface.dismiss();
+                            }
+                        });
+                builder.show();
             }
         });
     }
@@ -190,12 +216,14 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void checkSaved() {
+    private boolean checkSaved() {
         Realm realm = Realm.getDefaultInstance();
         if (realm.where(Post.class).equalTo("id",postId).count()!=0){
-            saveBtn.setEnabled(false);
             saveBtn.setImageResource(R.drawable.ic_schedule_black);
+            return true;
         }
+        saveBtn.setImageResource(R.drawable.ic_schedule_white);
+        return false;
     }
 
     private void startHomePage(){
@@ -246,7 +274,11 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 new CustomCommentModal().showNewComment(this,postId);
                 break;
             case R.id.save_post_btn:
-                saveCurrentPost();
+                if (checkSaved()){
+                    deleteCurrentPost();
+                }else {
+                    saveCurrentPost();
+                }
                 break;
             case R.id.delete_post_btn:
                 deleteCurrentPost();
@@ -265,9 +297,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         realm.commitTransaction();
         if (res){
             MDToast.makeText(this,getString(R.string.delete_success),2500,MDToast.TYPE_SUCCESS).show();
-            ((CategoryActivity)CategoryActivity.context).finish();
-            startActivity(new Intent(PostActivity.this,CategoryActivity.class));
-            onBackPressed();
+//            ((CategoryActivity)CategoryActivity.context).finish();
+//            startActivity(new Intent(PostActivity.this,CategoryActivity.class));
+            checkSaved();
+//            onBackPressed();
         }
     }
 

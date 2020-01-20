@@ -34,7 +34,7 @@
         <activity
             android:name=".activity.PostActivity"
             android:configChanges="orientation|screenSize"
-            android:noHistory="true"
+            android:noHistory="false"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
         <activity

@@ -2,11 +2,17 @@ package com.shafa.ali.kavir_msg.utility;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.Gravity;
+
+import com.crowdfire.cfalertdialog.CFAlertDialog;
+import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.activity.CategoryActivity;
 
 public class Utility {
     public static String getUniqueIMEIId(Context context) {
@@ -39,4 +45,7 @@ public class Utility {
         }
         return "not_found";
     }
+
+
+
 }

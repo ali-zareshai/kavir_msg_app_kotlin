@@ -1,6 +1,7 @@
 package com.shafa.ali.kavir_msg.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +10,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.TitleAdapter;
@@ -25,6 +28,7 @@ import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import customview.PaginationView;
@@ -91,7 +95,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void getDataFromServer(int pageNumber ,int pageSize) {
+    private void getDataFromServer(final int pageNumber , final int pageSize) {
         loading.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
@@ -115,7 +119,18 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
             @Override
             public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
-                fininshActivity();
+                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(TitlePostsActivity.this)
+                        .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
+                        .setTextGravity(Gravity.RIGHT)
+                        .setTitle(getString(R.string.not_respone))
+                        .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                getDataFromServer(pageNumber+1,pageSize);
+                                dialogInterface.dismiss();
+                            }
+                        });
+                builder.show();
             }
         });
     }
