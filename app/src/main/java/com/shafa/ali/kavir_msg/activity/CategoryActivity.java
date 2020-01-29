@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
 import com.shafa.ali.kavir_msg.fragments.AboutFragment;
 import com.shafa.ali.kavir_msg.fragments.CategoryFragment;
 import com.shafa.ali.kavir_msg.fragments.ReadyReadFragment;
+import com.shafa.ali.kavir_msg.fragments.RegisterFragment;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.CategoryModel;
 import com.shafa.ali.kavir_msg.server.GetDataCategory;
@@ -43,6 +45,7 @@ import com.shafa.ali.kavir_msg.utility.CustomTypeFaceSpan;
 import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.List;
@@ -58,7 +61,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private DrawerLayout drawer;
     private TextView toolbarTitle,displayNameTv;
     private NavigationView navigationView;
-    private FloatingActionButton searchBtn;
+    private ImageButton searchBtn;
 
     public static Context context;
 
@@ -69,7 +72,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         context = this;
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbarTitle =(TextView) findViewById(R.id.category_title);
-        searchBtn =(FloatingActionButton)findViewById(R.id.search_btn);
+        searchBtn =(ImageButton) findViewById(R.id.search_btn);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +190,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         }else if (id == R.id.about_we){
             loadFragment(AboutFragment.newInstance());
             toolbarTitle.setText(getString(R.string.about_we));
+        }else if (id == R.id.register){
+            loadFragment(RegisterFragment.newInstance());
+            toolbarTitle.setText(getString(R.string.register));
         }
 
         drawer.closeDrawer(Gravity.END);

@@ -23,6 +23,14 @@
             android:icon="@drawable/ic_vpn_key_black_24dp"
             android:title="@string/login" />
         <item
+            android:id="@+id/register"
+            android:icon="@drawable/add_user"
+            android:title="@string/register" />
+        <item
+            android:id="@+id/active"
+            android:icon="@drawable/active_user"
+            android:title="@string/active" />
+        <item
             android:id="@+id/about_we"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="@string/about_we"/>

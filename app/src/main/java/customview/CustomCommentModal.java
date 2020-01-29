@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -64,6 +66,8 @@ public class CustomCommentModal {
         //////
 //        commentDialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
         commentDialog.show();
+        Window window = commentDialog.getWindow();
+        window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
 
     }
 

@@ -48,6 +48,16 @@
                     android:layout_marginRight="75dp"
                     android:shadowColor="@color/counterColor"
                     android:layout_height="wrap_content" />
+                <ImageButton
+                    android:layout_width="50dp"
+                    android:padding="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:id="@+id/search_btn"
+                    android:src="@drawable/ic_search_black_24dp"
+                    android:background="@color/toolbar_color"
+                    android:layout_height="50dp" />
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
@@ -60,17 +70,17 @@
             android:name="com.shafa.ali.kavir_msg.fragments.CategoryFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="60dp"
-            android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/toolbar_color"
-            android:id="@+id/search_btn"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginBottom="50dp"
-            android:src="@drawable/ic_search_black_24dp"
-            android:scaleType="fitCenter"
-            android:layout_height="60dp"/>
+<!--        <android.support.design.widget.FloatingActionButton-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:backgroundTint="@color/toolbar_color"-->
+<!--            android:id="@+id/search_btn"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_marginLeft="50dp"-->
+<!--            android:layout_marginBottom="50dp"-->
+<!--            android:src="@drawable/ic_search_black_24dp"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:layout_height="60dp"/>-->
 
 
     </RelativeLayout>

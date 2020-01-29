@@ -28,7 +28,7 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private TextView register,loginBtn;
+    private TextView loginBtn;
     private ImageView qrcodeImg;
     private EditText userNameEdit,passwordEdit;
     private CustomCheckBox saveLoginCk;
@@ -38,14 +38,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        register =(TextView)findViewById(R.id.registerText);
         loginBtn =(TextView)findViewById(R.id.loginBtn);
         qrcodeImg =(ImageView)findViewById(R.id.qrcode);
         userNameEdit =(EditText)findViewById(R.id.usernameEd);
         passwordEdit =(EditText)findViewById(R.id.passwordEd);
         saveLoginCk =(CustomCheckBox)findViewById(R.id.save_pass_ckb);
         progressBarLogin =(ProgressBar)findViewById(R.id.progress_login);
-        register.setOnClickListener(this);
         loginBtn.setOnClickListener(this);
         qrcodeImg.setOnClickListener(this);
 //        Toast.makeText(this, Utility.getUniqueIMEIId(this), Toast.LENGTH_LONG).show();
@@ -59,11 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.registerText:
-                Intent i2 = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(i2);
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
-                break;
             case R.id.qrcode:
                 Intent i = new Intent(LoginActivity.this,QrCodeScanerActivity.class);
                 startActivity(i);

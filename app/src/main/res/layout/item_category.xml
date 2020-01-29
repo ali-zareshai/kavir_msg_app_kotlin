@@ -54,7 +54,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="100dp"
                         android:textStyle="bold"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginLeft="70dp"
                         android:layout_alignParentTop="true"
                         android:layout_height="wrap_content" />
                     <customviews.CustomTextView
@@ -68,21 +68,48 @@
                         android:layout_marginRight="105dp"
                         android:padding="2dp"
                         android:textDirection="rtl"
-                        android:layout_marginLeft="50dp"
+                        android:layout_marginLeft="70dp"
                         android:layout_height="wrap_content" />
                     <LinearLayout
-                        android:layout_width="50dp"
+                        android:layout_width="70dp"
                         android:layout_alignParentLeft="true"
                         android:layout_height="match_parent"
                         android:gravity="center"
+                        android:background="@color/g200"
                         android:layout_centerVertical="true"
                         android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <customviews.CustomTextView
+                                android:layout_width="25dp"
+                                android:textSize="10dp"
+                                android:text="25"
+                                android:textColor="@color/g800"
+                                android:id="@+id/count_post_category"
+                                android:padding="2dp"
+                                android:gravity="center"
+                                android:textDirection="rtl"
+                                android:layout_height="25dp" />
+                            <customviews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="10dp"
+                                android:text="@string/totoal_post"
+                                android:textColor="@color/g800"
+                                android:padding="2dp"
+                                android:gravity="center"
+                                android:textDirection="rtl"
+                                android:layout_height="25dp" />
+                        </LinearLayout>
+
                         <customviews.CustomTextView
                             android:layout_width="25dp"
                             android:textSize="12dp"
                             android:text="1"
+                            android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
-                            android:gravity="center"
+                            android:gravity="center|bottom"
                             android:textColor="@color/white"
                             android:id="@+id/new_post_category"
                             android:padding="2dp"
@@ -90,17 +117,7 @@
                             android:background="@drawable/new_post"
                             android:textDirection="rtl"
                             android:layout_height="25dp" />
-                        <customviews.CustomTextView
-                            android:layout_width="25dp"
-                            android:textSize="12dp"
-                            android:text="25"
-                            android:textColor="@color/g800"
-                            android:id="@+id/count_post_category"
-                            android:padding="2dp"
-                            android:gravity="center"
-                            android:background="@drawable/total_post"
-                            android:textDirection="rtl"
-                            android:layout_height="25dp" />
+
                     </LinearLayout>
 
 
