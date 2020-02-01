@@ -14,6 +14,9 @@ public class SaveItem {
         public static final String USER_COOKIE="usercookie";
         public static final String USERNAME_LOGIN ="username_login";
         public static final String PASSWORD_LOGIN ="password_login";
+        public static final String S_CODE ="s_code";
+        public static final String MID_CODE ="mid";
+        public static final String REGISTER_PHONE ="register_phone";
 
 
         public static SharedPreferences getSP(Context context){

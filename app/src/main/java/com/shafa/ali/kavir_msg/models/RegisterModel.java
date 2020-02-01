@@ -3,14 +3,20 @@ package com.shafa.ali.kavir_msg.models;
 import com.google.gson.annotations.SerializedName;
 
 public class RegisterModel {
-    @SerializedName("status")
+    @SerializedName("result")
     private String status;
 
-    @SerializedName("active_code")
-    private String activeCode;
+    @SerializedName("user_id")
+    private String userId;
 
     @SerializedName("message")
     private String message;
+
+    @SerializedName("s")
+    private String scode;
+
+    @SerializedName("mid")
+    private String mid;
 
     public RegisterModel() {
     }
@@ -23,12 +29,12 @@ public class RegisterModel {
         this.status = status;
     }
 
-    public String getActiveCode() {
-        return activeCode;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setActiveCode(String activeCode) {
-        this.activeCode = activeCode;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -37,5 +43,21 @@ public class RegisterModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getScode() {
+        return scode;
+    }
+
+    public void setScode(String scode) {
+        this.scode = scode;
+    }
+
+    public String getMid() {
+        return mid;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
     }
 }

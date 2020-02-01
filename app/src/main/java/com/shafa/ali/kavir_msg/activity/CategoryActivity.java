@@ -70,6 +70,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         context = this;
+        Log.e("mac    ",Utility.getMacAddr());
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         toolbarTitle =(TextView) findViewById(R.id.category_title);
         searchBtn =(ImageButton) findViewById(R.id.search_btn);

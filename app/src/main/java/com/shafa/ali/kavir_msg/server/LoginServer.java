@@ -15,9 +15,10 @@ public interface LoginServer {
 
     @POST("register.php")
     @FormUrlEncoded
-    Call<RegisterModel> registerUser(@Field("name")String name,
+    Call<RegisterModel> registerUser(@Field("first_name")String name,
                                      @Field("mobile")String mobile,
-                                     @Field("email")String email,
-                                     @Field("pass")String passord,
-                                     @Field("id")String imei);
+                                     @Field("user_email")String email,
+                                     @Field("user_pass")String password,
+                                     @Field("mid")String mid,
+                                     @Field("s")String sCode);
 }

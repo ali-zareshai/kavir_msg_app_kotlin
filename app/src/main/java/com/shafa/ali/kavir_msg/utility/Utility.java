@@ -71,11 +71,27 @@ public class Utility {
                 if (res1.length() > 0) {
                     res1.deleteCharAt(res1.length() - 1);
                 }
-                return res1.toString().trim();
+                return res1.toString().trim().replace(":","");
             }
         } catch (Exception ex) {
         }
         return "02:00:00:00:00:00";
+    }
+
+
+    public static String calSCode(Context context,String[] numberPhone){
+        try {
+            int n10 = Integer.parseInt(numberPhone[10]);
+            int n9  = Integer.parseInt(numberPhone[9]);
+            String sCode = SaveItem.getItem(context,SaveItem.S_CODE,"");
+            if (sCode.length()>0){
+                int index = n9+n10;
+                return sCode.substring(index,index+10);
+            }
+            return "";
+        }catch (Exception e){
+            return "";
+        }
     }
 
 
