@@ -51,7 +51,12 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".activity.QrCodeScanerActivity" />
+        <activity
+            android:name=".activity.QrCodeScanerActivity"
+            android:configChanges="orientation|screenSize"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme"/>
         <activity
             android:name=".activity.CategoryActivity"
             android:configChanges="orientation|screenSize"

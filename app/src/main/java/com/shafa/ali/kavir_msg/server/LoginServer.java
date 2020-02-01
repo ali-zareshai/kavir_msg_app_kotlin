@@ -21,4 +21,9 @@ public interface LoginServer {
                                      @Field("user_pass")String password,
                                      @Field("mid")String mid,
                                      @Field("s")String sCode);
+
+    @POST("active.php")
+    @FormUrlEncoded
+    Call<Void> activeUser(@Field("active_code")String activeCode,
+                          @Field("s")String sCode);
 }

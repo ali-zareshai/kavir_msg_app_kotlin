@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/g200"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ActiveFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/active_code_l"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:padding="5dp"
+            android:layoutDirection="rtl"
+            android:background="@color/g300"
+            android:orientation="horizontal">
+            <customviews.CustomTextView3
+                android:layout_width="wrap_content"
+                android:text="@string/active_code"
+                android:textSize="21dp"
+                android:layout_height="wrap_content"/>
+            <customviews.CustomTextView3
+                android:layout_width="wrap_content"
+                android:id="@+id/active_code_tv"
+                android:textSize="21dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <customview.CustomButtonRectangle
+            android:layout_width="wrap_content"
+            android:text="@string/scan_code"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            android:id="@+id/scan_code_btn"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+</FrameLayout>
