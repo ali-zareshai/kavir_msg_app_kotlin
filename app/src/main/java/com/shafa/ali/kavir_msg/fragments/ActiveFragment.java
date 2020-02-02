@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.shafa.ali.kavir_msg.R;
@@ -21,6 +22,7 @@ public class ActiveFragment extends Fragment {
     private static Fragment fragment = null;
     private TextView activeCode;
     private Button scanCodeBtn;
+    private ImageButton saveClipBoradBtn;
     public ActiveFragment() {
         // Required empty public constructor
     }
@@ -44,7 +46,14 @@ public class ActiveFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_active, container, false);
         scanCodeBtn=(Button)view.findViewById(R.id.scan_code_btn);
         activeCode=(TextView)view.findViewById(R.id.active_code_tv);
-        activeCode.setText(calActiveCode());
+        saveClipBoradBtn=(ImageButton)view.findViewById(R.id.save_clipbord);
+        activeCode.setText(FormatHelper.toPersianNumber(calActiveCode()));
+        saveClipBoradBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setClipboard(getActivity().getApplicationContext(),calActiveCode());
+            }
+        });
         scanCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +64,17 @@ public class ActiveFragment extends Fragment {
     }
 
     private String calActiveCode(){
-        String code = SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.MID_CODE,"")+SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_ID,"");
-        return FormatHelper.toPersianNumber(code);
+        return SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.MID_CODE,"")+SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_ID,"");
+    }
+
+    private void setClipboard(Context context, String text) {
+        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setText(text);
+        } else {
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+            clipboard.setPrimaryClip(clip);
+        }
     }
 }

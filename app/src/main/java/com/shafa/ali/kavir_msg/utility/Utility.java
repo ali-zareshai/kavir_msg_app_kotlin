@@ -13,10 +13,18 @@ import android.view.Gravity;
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.activity.CategoryActivity;
+import com.shafa.ali.kavir_msg.models.SecretCodeModel;
+import com.shafa.ali.kavir_msg.server.LoginServer;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class Utility {
     public static String getUniqueIMEIId(Context context) {
@@ -92,6 +100,29 @@ public class Utility {
         }catch (Exception e){
             return "";
         }
+    }
+
+    public static void getSecretCode(final Context context){
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+        LoginServer loginServer = retrofit.create(LoginServer.class);
+        loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
+            @Override
+            public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
+                if (response.body().getResult().equalsIgnoreCase("success")){
+                    String s_raw = response.body().getSecretCode();
+
+                    SaveItem.setItem(context,SaveItem.S_CODE,s_raw.substring(15,29)+s_raw.substring(0,14));
+                    Log.e("s_code res:",response.body().getSecretCode());
+                }else {
+                    MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SecretCodeModel> call, Throwable t) {
+                Log.e("onFailure:",t.toString());
+            }
+        });
     }
 
 

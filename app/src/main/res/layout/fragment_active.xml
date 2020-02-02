@@ -30,6 +30,12 @@
                 android:id="@+id/active_code_tv"
                 android:textSize="21dp"
                 android:layout_height="wrap_content"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_save_black_24dp"
+                android:padding="15dp"
+                android:id="@+id/save_clipbord"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
         <customview.CustomButtonRectangle
             android:layout_width="wrap_content"

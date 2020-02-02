@@ -7,10 +7,12 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.models.ActiveRespone;
 import com.shafa.ali.kavir_msg.server.LoginServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Utility;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import retrofit2.Call;
@@ -25,6 +27,7 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_qr_code_scaner);
+        Utility.getSecretCode(getApplicationContext());
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);
     }
@@ -52,17 +55,21 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
         mScannerView.stopCameraPreview();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.activeUser(qCode, Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""))).enqueue(new Callback<Void>() {
+        loginServer.activeUser(qCode, Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""))).enqueue(new Callback<ActiveRespone>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.e("onResponse",response.toString());
-                finish();
+            public void onResponse(Call<ActiveRespone> call, Response<ActiveRespone> response) {
+                if (response.body().getMessage().equalsIgnoreCase("success")){
+                    MDToast.makeText(getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
+                }else {
+                    Log.e("onResponse:",response.body().getMessage());
+                }
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("onFailure",t.toString());
+            public void onFailure(Call<ActiveRespone> call, Throwable t) {
+                Log.e("onFailure:",t.getMessage());
             }
         });
+
     }
 }

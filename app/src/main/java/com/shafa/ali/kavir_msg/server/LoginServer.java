@@ -1,11 +1,14 @@
 package com.shafa.ali.kavir_msg.server;
 
+import com.shafa.ali.kavir_msg.models.ActiveRespone;
 import com.shafa.ali.kavir_msg.models.LoginModel;
 import com.shafa.ali.kavir_msg.models.RegisterModel;
+import com.shafa.ali.kavir_msg.models.SecretCodeModel;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface LoginServer {
@@ -24,6 +27,9 @@ public interface LoginServer {
 
     @POST("active.php")
     @FormUrlEncoded
-    Call<Void> activeUser(@Field("active_code")String activeCode,
-                          @Field("s")String sCode);
+    Call<ActiveRespone> activeUser(@Field("active_code")String activeCode,
+                                   @Field("s")String sCode);
+
+    @GET("get_secret_code/?action=kavir")
+    Call<SecretCodeModel> getSecretCode();
 }

@@ -50,6 +50,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Utility.getSecretCode(getActivity().getApplicationContext());
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         nameEd  = (EditText)view.findViewById(R.id.nameuser);
         emailEd = (EditText)view.findViewById(R.id.emailuser);
