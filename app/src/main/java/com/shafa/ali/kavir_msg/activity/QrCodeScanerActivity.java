@@ -47,7 +47,7 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
 
     @Override
     public void handleResult(Result result) {
-        Toast.makeText(this, result.getText(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, result.getText(), Toast.LENGTH_LONG).show();
         sendQrCode(result.getText());
     }
 

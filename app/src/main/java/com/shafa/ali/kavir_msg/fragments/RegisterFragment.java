@@ -18,6 +18,9 @@ import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -75,7 +78,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendRegisterDate() {
         if (checkData()){
-            MDToast.makeText(getActivity().getApplicationContext(),getActivity().getString(R.string.full_all_fields),2500,MDToast.TYPE_WARNING).show();
             return;
         }
 
@@ -119,11 +121,38 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean checkData() {
-        if (nameEd.getText().toString().isEmpty() || emailEd.getText().toString().isEmpty() || phoneEd.getText().toString().isEmpty()|| passEd.getText().toString().isEmpty()){
+        if (nameEd.getText().toString().isEmpty() || emailEd.getText().toString().isEmpty() || phoneEd.getText().toString().isEmpty()|| passEd.getText().toString().isEmpty() || phoneEd.getText().toString().length()<10){
+            MDToast.makeText(getActivity().getApplicationContext(),getActivity().getString(R.string.full_all_fields),2500,MDToast.TYPE_WARNING).show();
+            return true;
+        }
+
+        if (isEmailValid(emailEd.getText().toString())){
+            MDToast.makeText(getActivity().getApplicationContext(),getActivity().getString(R.string.email_not_valid),2500,MDToast.TYPE_WARNING).show();
             return true;
         }
 
         return false;
+    }
+
+    public boolean isEmailValid(String email)
+    {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if(matcher.matches())
+            return true;
+        else
+            return false;
     }
 
     private String calMID(String[] numberPhone){

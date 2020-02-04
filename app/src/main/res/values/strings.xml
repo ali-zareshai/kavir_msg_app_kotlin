@@ -44,7 +44,9 @@
     <string name="register_success">ثبت نام با موفقیت انجام شد</string>
     <string name="register_fail">اشکال در ثبت نام</string>
     <string name="active_code">کد فعال سازی:</string>
-    <string name="scan_code">اسکن کد</string>
+    <string name="scan_code">اسکن بارکد</string>
+    <string name="copied"> کد کپی شد </string>
+    <string name="email_not_valid">ایمیل معتبر نیست</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="pagger_array">

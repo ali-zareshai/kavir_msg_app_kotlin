@@ -16,6 +16,7 @@ import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.activity.QrCodeScanerActivity;
 import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 
 public class ActiveFragment extends Fragment {
@@ -52,6 +53,7 @@ public class ActiveFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 setClipboard(getActivity().getApplicationContext(),calActiveCode());
+                MDToast.makeText(getActivity(),getActivity().getString(R.string.copied),2500,MDToast.TYPE_INFO).show();
             }
         });
         scanCodeBtn.setOnClickListener(new View.OnClickListener() {

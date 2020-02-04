@@ -25,11 +25,13 @@
                 android:layout_width="wrap_content"
                 android:text="@string/active_code"
                 android:textSize="21dp"
+                android:textColor="@color/g500"
                 android:layout_height="wrap_content"/>
             <customviews.CustomTextView3
                 android:layout_width="wrap_content"
                 android:id="@+id/active_code_tv"
-                android:textSize="21dp"
+                android:textSize="24dp"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content"/>
             <ImageButton
                 android:layout_width="wrap_content"
