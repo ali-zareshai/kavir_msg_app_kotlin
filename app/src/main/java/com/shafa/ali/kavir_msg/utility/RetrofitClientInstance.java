@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
 
-    private static Retrofit retrofit;
-    private static OkHttpClient okHttpClient;
+    private static Retrofit retrofit,retrofit2;
+    private static OkHttpClient okHttpClient,okHttpClient2;
 
     public static Retrofit getRetrofitInstance() {
 
@@ -28,5 +28,22 @@ public class RetrofitClientInstance {
                     .build();
         }
         return retrofit;
+    }
+
+    public static Retrofit getRetrofitInstanceNew() {
+
+        if (retrofit2 == null) {
+            okHttpClient2 = new OkHttpClient.Builder()
+                    .connectTimeout(5, TimeUnit.SECONDS)
+                    .writeTimeout(5, TimeUnit.SECONDS)
+                    .readTimeout(5, TimeUnit.SECONDS)
+                    .build();
+            retrofit2 = new retrofit2.Retrofit.Builder()
+                    .baseUrl(Setting.API_WORDPRESS_NEW)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okHttpClient)
+                    .build();
+        }
+        return retrofit2;
     }
 }

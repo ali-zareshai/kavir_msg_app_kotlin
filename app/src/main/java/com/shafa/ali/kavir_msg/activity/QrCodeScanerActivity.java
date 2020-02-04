@@ -53,7 +53,7 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
 
     private void sendQrCode(String qCode){
         mScannerView.stopCameraPreview();
-        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstanceNew();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.activeUser(qCode, Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""))).enqueue(new Callback<ActiveRespone>() {
             @Override

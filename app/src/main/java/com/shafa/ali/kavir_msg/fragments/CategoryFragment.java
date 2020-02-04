@@ -132,7 +132,7 @@ public class CategoryFragment extends Fragment {
         public void onClick(View view, final int position) {
             TextView nameTv   = (TextView)view.findViewById(R.id.name_category);
             String id = String.valueOf(categoryModelList.get(position).getId());
-            Intent intent =new Intent(getActivity().getApplicationContext(), SubCategoryActivity.class);
+            Intent intent =new Intent(getActivity(), SubCategoryActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("parentId",id);
             bundle.putString("parentName",nameTv.getText().toString());

@@ -89,8 +89,8 @@ public class Utility {
 
     public static String calSCode(Context context,String[] numberPhone){
         try {
-            int n10 = Integer.parseInt(numberPhone[10]);
-            int n9  = Integer.parseInt(numberPhone[9]);
+            int n10 = Integer.parseInt(numberPhone[(numberPhone.length)-1]);
+            int n9  = Integer.parseInt(numberPhone[(numberPhone.length)-2]);
             String sCode = SaveItem.getItem(context,SaveItem.S_CODE,"");
             if (sCode.length()>0){
                 int index = n9+n10;
@@ -103,16 +103,14 @@ public class Utility {
     }
 
     public static void getSecretCode(final Context context){
-        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstanceNew();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
             @Override
             public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
                 if (response.body().getResult().equalsIgnoreCase("success")){
-                    String s_raw = response.body().getSecretCode();
-
-                    SaveItem.setItem(context,SaveItem.S_CODE,s_raw.substring(15,29)+s_raw.substring(0,14));
-                    Log.e("s_code res:",response.body().getSecretCode());
+                    String s_raw = response.body().getSecretCode().trim();
+                    SaveItem.setItem(context,SaveItem.S_CODE,s_raw.substring(15,30)+s_raw.substring(0,15));
                 }else {
                     MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
                 }

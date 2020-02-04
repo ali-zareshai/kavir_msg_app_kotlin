@@ -16,7 +16,7 @@ public interface LoginServer {
     @FormUrlEncoded
     Call<LoginModel> loginUser(@Field("username")String userName,@Field("password")String password);
 
-    @POST("register.php")
+    @POST("register_wp")
     @FormUrlEncoded
     Call<RegisterModel> registerUser(@Field("first_name")String name,
                                      @Field("mobile")String mobile,
@@ -25,7 +25,7 @@ public interface LoginServer {
                                      @Field("mid")String mid,
                                      @Field("s")String sCode);
 
-    @POST("active.php")
+    @POST("active")
     @FormUrlEncoded
     Call<ActiveRespone> activeUser(@Field("active_code")String activeCode,
                                    @Field("s")String sCode);

@@ -75,7 +75,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendRegisterDate() {
         if (checkData()){
-            MDToast.makeText(getActivity().getApplicationContext(),getActivity().getString(R.string.full_all_fields),2500,MDToast.TYPE_SUCCESS).show();
+            MDToast.makeText(getActivity().getApplicationContext(),getActivity().getString(R.string.full_all_fields),2500,MDToast.TYPE_WARNING).show();
+            return;
         }
 
         sendData(nameEd.getText().toString(),emailEd.getText().toString(),phoneEd.getText().toString(),passEd.getText().toString());
@@ -83,7 +84,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendData(String name, String email, final String phone, String password) {
         loadingProgressBar.setVisibility(View.VISIBLE);
-        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstanceNew();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.registerUser(name,phone,email,password, calMID(phone.split("")),Utility.calSCode(getActivity().getApplicationContext(),phone.split(""))).enqueue(new Callback<RegisterModel>() {
             @Override
@@ -94,8 +95,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     SaveItem.setItem(getActivity().getApplicationContext(),SaveItem.USER_ID,response.body().getUserId());
                     SaveItem.setItem(getActivity().getApplicationContext(),SaveItem.REGISTER_PHONE,phone);
                     MDToast.makeText(getActivity().getApplicationContext(),getActivity().getApplicationContext().getString(R.string.register_success),2500,MDToast.TYPE_SUCCESS).show();
+                    emptyInputs();
                 }else {
-                    MDToast.makeText(getActivity().getApplicationContext(),getActivity().getApplicationContext().getString(R.string.register_fail),2500,MDToast.TYPE_ERROR).show();
+                    MDToast.makeText(getActivity().getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_ERROR).show();
                 }
                 loadingProgressBar.setVisibility(View.INVISIBLE);
             }
@@ -109,22 +111,27 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void emptyInputs() {
+        nameEd.setText("");
+        emailEd.setText("");
+        phoneEd.setText("");
+        passEd.setText("");
+    }
+
     private boolean checkData() {
         if (nameEd.getText().toString().isEmpty() || emailEd.getText().toString().isEmpty() || phoneEd.getText().toString().isEmpty()|| passEd.getText().toString().isEmpty()){
             return true;
         }
-        if (phoneEd.getText().toString().length()!=11){
-            return true;
-        }
+
         return false;
     }
 
     private String calMID(String[] numberPhone){
         try{
-            int n10 = Integer.parseInt(numberPhone[10]);
-            int n9  = Integer.parseInt(numberPhone[9]);
+            int n10 = Integer.parseInt(numberPhone[(numberPhone.length)-1]);
+            int n9  = Integer.parseInt(numberPhone[(numberPhone.length)-2]);
             String[] mac = Utility.getMacAddr().split("");
-            return n9+mac[n9]+n10+mac[n10]+"";
+            return n9+mac[n9+1]+n10+mac[n10+1]+"";
 
 
         }catch (Exception e){
