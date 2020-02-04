@@ -126,7 +126,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             return true;
         }
 
-        if (isEmailValid(emailEd.getText().toString())){
+        if (!isEmailValid(emailEd.getText().toString())){
             MDToast.makeText(getActivity().getApplicationContext(),getActivity().getString(R.string.email_not_valid),2500,MDToast.TYPE_WARNING).show();
             return true;
         }
