@@ -28,7 +28,7 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
-    private TextView loginBtn;
+    private TextView loginBtn,exitBtn;
     private ImageView qrcodeImg;
     private EditText userNameEdit,passwordEdit;
     private CustomCheckBox saveLoginCk;
@@ -44,8 +44,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         passwordEdit =(EditText)findViewById(R.id.passwordEd);
         saveLoginCk =(CustomCheckBox)findViewById(R.id.save_pass_ckb);
         progressBarLogin =(ProgressBar)findViewById(R.id.progress_login);
+        exitBtn =(TextView)findViewById(R.id.exist_login);
         loginBtn.setOnClickListener(this);
         qrcodeImg.setOnClickListener(this);
+        exitBtn.setOnClickListener(this);
 //        Toast.makeText(this, Utility.getUniqueIMEIId(this), Toast.LENGTH_LONG).show();
         /////////////// set save user pass
         userNameEdit.setText(SaveItem.getItem(this,SaveItem.USERNAME_LOGIN,""));
@@ -63,6 +65,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.loginBtn:
                 loginProcess();
+                break;
+            case R.id.exist_login:
+                finish();
                 break;
         }
     }
