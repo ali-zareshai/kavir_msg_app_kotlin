@@ -121,8 +121,9 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
             public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
                 CFAlertDialog.Builder builder = new CFAlertDialog.Builder(TitlePostsActivity.this)
                         .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                        .setTextGravity(Gravity.RIGHT)
                         .setTitle(getString(R.string.not_respone))
+                        .setIcon(R.drawable.access_server)
+                        .setTextGravity(Gravity.CENTER)
                         .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

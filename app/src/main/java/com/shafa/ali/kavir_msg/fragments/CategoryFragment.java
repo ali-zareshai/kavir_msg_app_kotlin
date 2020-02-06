@@ -114,8 +114,9 @@ public class CategoryFragment extends Fragment {
             public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
                 CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity())
                         .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                        .setTextGravity(Gravity.RIGHT)
                         .setTitle(getString(R.string.not_respone))
+                        .setIcon(R.drawable.access_server)
+                        .setTextGravity(Gravity.CENTER)
                         .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -149,7 +150,7 @@ public class CategoryFragment extends Fragment {
     }
 
     private void generateDataList(List<CategoryModel> categoryModelList){
-        categoryAdapter =new CategoryAdapter(getActivity().getApplicationContext(),categoryModelList);
+        categoryAdapter =new CategoryAdapter(getActivity(),categoryModelList);
         categoryRecycler.setAdapter(categoryAdapter);
 
     }

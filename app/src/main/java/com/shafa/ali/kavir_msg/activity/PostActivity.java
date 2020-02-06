@@ -159,8 +159,9 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             public void onFailure(Call<PostModel> call, Throwable t) {
                 CFAlertDialog.Builder builder = new CFAlertDialog.Builder(PostActivity.this)
                         .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                        .setTextGravity(Gravity.RIGHT)
                         .setTitle(getString(R.string.not_respone))
+                        .setIcon(R.drawable.access_server)
+                        .setTextGravity(Gravity.CENTER)
                         .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

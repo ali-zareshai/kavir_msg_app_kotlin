@@ -144,8 +144,9 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
             public void onFailure(Call<List<SubCategoryModel>> call, Throwable t) {
                 CFAlertDialog.Builder builder = new CFAlertDialog.Builder(SubCategoryActivity.this)
                         .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                        .setTextGravity(Gravity.RIGHT)
                         .setTitle(getString(R.string.not_respone))
+                        .setIcon(R.drawable.access_server)
+                        .setTextGravity(Gravity.CENTER)
                         .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
