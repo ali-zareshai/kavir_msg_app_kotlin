@@ -94,6 +94,7 @@ public class Utility {
             String sCode = SaveItem.getItem(context,SaveItem.S_CODE,"");
             if (sCode.length()>0){
                 int index = n9+n10;
+                Log.e("sCode:",sCode.substring(index,index+10));
                 return sCode.substring(index,index+10);
             }
             return "";
@@ -110,6 +111,7 @@ public class Utility {
             public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
                 if (response.body().getResult().equalsIgnoreCase("success")){
                     String s_raw = response.body().getSecretCode().trim();
+                    Log.e("s_raw",s_raw);
                     SaveItem.setItem(context,SaveItem.S_CODE,s_raw.substring(15,30)+s_raw.substring(0,15));
                 }else {
                     MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
@@ -121,6 +123,19 @@ public class Utility {
                 Log.e("onFailure:",t.toString());
             }
         });
+    }
+
+    public static String calMID(String[] numberPhone){
+        try{
+            int n10 = Integer.parseInt(numberPhone[(numberPhone.length)-1]);
+            int n9  = Integer.parseInt(numberPhone[(numberPhone.length)-2]);
+            String[] mac = Utility.getMacAddr().split("");
+            return n9+mac[n9+1]+n10+mac[n10+1]+"";
+
+
+        }catch (Exception e){
+            return "";
+        }
     }
 
 

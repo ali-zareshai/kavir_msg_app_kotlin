@@ -66,7 +66,15 @@ public class ActiveFragment extends Fragment {
     }
 
     private String calActiveCode(){
-        return SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.MID_CODE,"")+SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_ID,"");
+        String mid =SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.MID_CODE,"");
+        String userid = SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_ID,"");
+        if (!mid.equalsIgnoreCase("") && !userid.equalsIgnoreCase(""))
+            return mid+userid;
+        else {
+            MDToast.makeText(getActivity(),getActivity().getString(R.string.login_please),2500,MDToast.TYPE_INFO).show();
+            return "";
+        }
+
     }
 
     private void setClipboard(Context context, String text) {

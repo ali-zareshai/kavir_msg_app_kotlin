@@ -36,7 +36,6 @@
                     android:layout_marginLeft="15dp"
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
-                    android:textDirection="rtl"
                     android:inputType="text"
                     android:textColor="#fff"
                     />
@@ -62,7 +61,6 @@
                     android:layout_marginLeft="15dp"
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
-                    android:textDirection="rtl"
                     android:inputType="textEmailAddress"
                     android:textColor="#fff"
                     />
@@ -89,7 +87,6 @@
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
                     android:maxLength="11"
-                    android:textDirection="rtl"
                     android:inputType="number"
                     android:textColor="#fff"
                     />
@@ -117,7 +114,6 @@
                     android:gravity="center"
                     android:hint="********"
                     android:maxLength="12"
-                    android:textDirection="rtl"
                     android:inputType="text"
                     android:textColor="#fff"
                     />

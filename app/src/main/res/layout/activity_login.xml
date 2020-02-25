@@ -47,7 +47,6 @@
                         android:layout_marginLeft="15dp"
                         android:letterSpacing="0.1"
                         android:textSize="20dp"
-                        android:textDirection="rtl"
                         android:inputType="text"
                         android:textColor="#fff" />
                 </customview.CustomTextInputLayout>
@@ -82,7 +81,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/password"
-                        android:textDirection="rtl"
                         android:inputType="textPassword"
                         android:background="#00c7c7c7"
                         android:padding="10dp"
@@ -188,7 +186,7 @@
             android:layout_width="150dp"
             android:id="@+id/qrcode"
             android:layout_height="150dp"
-            android:src="@drawable/ibytes"
+            android:src="@drawable/kavir_logo_splash"
             />
     </LinearLayout>
 </RelativeLayout>

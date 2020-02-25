@@ -88,7 +88,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         loadingProgressBar.setVisibility(View.VISIBLE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstanceNew();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.registerUser(name,phone,email,password, calMID(phone.split("")),Utility.calSCode(getActivity().getApplicationContext(),phone.split(""))).enqueue(new Callback<RegisterModel>() {
+        loginServer.registerUser(name,phone,email,password, Utility.calMID(phone.split("")),Utility.calSCode(getActivity().getApplicationContext(),phone.split(""))).enqueue(new Callback<RegisterModel>() {
             @Override
             public void onResponse(Call<RegisterModel> call, Response<RegisterModel> response) {
                 if (response.body().getStatus().equalsIgnoreCase("success")){
@@ -155,18 +155,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             return false;
     }
 
-    private String calMID(String[] numberPhone){
-        try{
-            int n10 = Integer.parseInt(numberPhone[(numberPhone.length)-1]);
-            int n9  = Integer.parseInt(numberPhone[(numberPhone.length)-2]);
-            String[] mac = Utility.getMacAddr().split("");
-            return n9+mac[n9+1]+n10+mac[n10+1]+"";
 
-
-        }catch (Exception e){
-            return "";
-        }
-    }
 
 
 }

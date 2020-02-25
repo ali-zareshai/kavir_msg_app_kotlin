@@ -10,7 +10,7 @@
     android:paddingRight="5dp"
     android:paddingTop="5dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    
+
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image_header"

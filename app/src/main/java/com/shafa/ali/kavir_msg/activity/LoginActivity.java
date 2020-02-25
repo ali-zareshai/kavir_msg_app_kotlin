@@ -141,5 +141,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SaveItem.setItem(this,SaveItem.USER_MOBILE,body.getMobile());
         SaveItem.setItem(this,SaveItem.USER_ID,body.getUserId());
         SaveItem.setItem(this,SaveItem.USER_COOKIE,body.getCookie());
+        SaveItem.setItem(this,SaveItem.MID_CODE,Utility.calMID(body.getMobile().split("")));
     }
 }
