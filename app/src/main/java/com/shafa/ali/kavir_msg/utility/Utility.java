@@ -111,7 +111,6 @@ public class Utility {
             public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
                 if (response.body().getResult().equalsIgnoreCase("success")){
                     String s_raw = response.body().getSecretCode().trim();
-                    Log.e("s_raw",s_raw);
                     SaveItem.setItem(context,SaveItem.S_CODE,s_raw.substring(15,30)+s_raw.substring(0,15));
                 }else {
                     MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();

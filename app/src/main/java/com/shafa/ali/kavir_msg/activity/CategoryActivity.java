@@ -232,10 +232,16 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
     private void setNameLoginItem(){
         Menu menu = navigationView.getMenu();
         MenuItem loginItem = menu.findItem(R.id.login);
+        MenuItem activeItem= menu.findItem(R.id.active);
+        MenuItem registerItem = menu.findItem(R.id.register);
         if (SaveItem.getItem(this,SaveItem.USER_COOKIE,"").equals("")){
             loginItem.setTitle(getString(R.string.login));
+            activeItem.setVisible(false);
+            registerItem.setVisible(true);
         }else{
             loginItem.setTitle(getString(R.string.logout));
+            activeItem.setVisible(true);
+            registerItem.setVisible(false);
         }
     }
 
