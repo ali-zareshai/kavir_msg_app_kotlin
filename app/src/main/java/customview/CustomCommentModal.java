@@ -45,6 +45,16 @@ public class CustomCommentModal {
         final EditText commentEdit= (EditText)commentDialog.findViewById(R.id.comment_comment_dialog);
         ImageButton closeBtn =(ImageButton)commentDialog.findViewById(R.id.close_toolbar_btn);
 
+        if (!SaveItem.getItem(context,SaveItem.USER_NAME,"").equalsIgnoreCase("")){
+            nameEdit.setText(SaveItem.getItem(context,SaveItem.USER_NAME,""));
+            nameEdit.setEnabled(false);
+        }
+
+        if (!SaveItem.getItem(context,SaveItem.USER_EMAIL,"").equalsIgnoreCase("")){
+            emailEdit.setText(SaveItem.getItem(context,SaveItem.USER_EMAIL,""));
+            emailEdit.setEnabled(false);
+        }
+
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
