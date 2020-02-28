@@ -52,7 +52,7 @@ public class CustomCommentModal {
 
         if (!SaveItem.getItem(context,SaveItem.USER_EMAIL,"").equalsIgnoreCase("")){
             emailEdit.setText(SaveItem.getItem(context,SaveItem.USER_EMAIL,""));
-            emailEdit.setEnabled(false);
+            nameEdit.setEnabled(false);
         }
 
         closeBtn.setOnClickListener(new View.OnClickListener() {
