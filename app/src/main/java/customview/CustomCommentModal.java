@@ -18,6 +18,7 @@ import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.server.Comments;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
+import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.json.JSONException;
@@ -79,14 +80,17 @@ public class CustomCommentModal {
 
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         Comments comments = retrofit.create(Comments.class);
+        Log.e("postId:",postId);
         comments.postNewComment(postId,name,email,comment).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Log.e("onResponse",response.message());
+                Log.e("onResponse",response.toString());
+
                 if (response.isSuccessful()){
                     try {
                         JSONObject jsonObject = new JSONObject(response.body());
                         if (jsonObject.getString("status").equals("error")){
+                            commentDialog.dismiss();
                             MDToast.makeText(context,jsonObject.getString("error"),2500,MDToast.TYPE_ERROR).show();
                         }
                         else{

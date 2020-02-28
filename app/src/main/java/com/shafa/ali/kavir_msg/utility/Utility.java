@@ -104,7 +104,7 @@ public class Utility {
     }
 
     public static void getSecretCode(final Context context){
-        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstanceNew();
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
             @Override

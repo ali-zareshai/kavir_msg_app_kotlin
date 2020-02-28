@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBarLogin.setVisibility(View.VISIBLE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.loginUser(username,password).enqueue(new Callback<LoginModel>() {
+        loginServer.loginUser(username,password,SaveItem.getItem(this,SaveItem.S_CODE,"")).enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                 if (response.isSuccessful()){
@@ -142,5 +142,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SaveItem.setItem(this,SaveItem.USER_ID,body.getUserId());
         SaveItem.setItem(this,SaveItem.USER_COOKIE,body.getCookie());
         SaveItem.setItem(this,SaveItem.MID_CODE,Utility.calMID(body.getMobile().split("")));
+        SaveItem.setItem(this,SaveItem.S_CODE,Utility.calSCode(this,body.getMobile().split("")));
     }
 }

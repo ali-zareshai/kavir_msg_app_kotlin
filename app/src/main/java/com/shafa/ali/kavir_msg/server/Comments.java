@@ -4,9 +4,10 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface Comments {
-    @POST("comment.php")
+    @POST("submit_comment_apk?dev=1")
     @FormUrlEncoded
-    Call<String> postNewComment(@Field("id") String postId, @Field("name")String name, @Field("email") String email, @Field("content")String content);
+    Call<String> postNewComment(@Field("post_id") String postId, @Field("name")String name, @Field("email") String email, @Field("content")String content);
 }

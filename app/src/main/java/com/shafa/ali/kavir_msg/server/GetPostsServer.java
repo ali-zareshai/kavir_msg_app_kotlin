@@ -11,13 +11,13 @@ import retrofit2.http.Header;
 import retrofit2.http.Query;
 
 public interface GetPostsServer {
-    @GET("post-title.php")
-    Call<TiltlePostsModel> getTiltlePosts(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page,@Query("page-size")String pageSize);
+    @GET("get_post_title?dev=0")
+    Call<TiltlePostsModel> getTiltlePosts(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page,@Query("count")String pageSize);
 
-    @GET("post.php")
+    @GET("get_post_apk?dev=0")
     Call<PostModel> getPost(@Query ("cookie") String cookieValue,@Query("id") String postId);
 
-    @GET("search.php")
+    @GET("get_search_results_apk?dev=0")
     Call<List<TiltlePostsModel.PostsModel>> getSearch(@Query ("cookie") String cookieValue, @Query("q")String query);
 
 }

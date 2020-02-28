@@ -12,9 +12,9 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface LoginServer {
-    @POST("login.php")
+    @POST("login_apk")
     @FormUrlEncoded
-    Call<LoginModel> loginUser(@Field("username")String userName,@Field("password")String password);
+    Call<LoginModel> loginUser(@Field("user_login")String userName,@Field("user_password")String password,@Field("s")String sCode);
 
     @POST("register_wp")
     @FormUrlEncoded

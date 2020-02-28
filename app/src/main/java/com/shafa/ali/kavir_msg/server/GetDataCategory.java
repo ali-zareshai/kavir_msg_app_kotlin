@@ -9,6 +9,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface GetDataCategory {
-    @GET("test.php?type=cat")
+    @GET("get_cat_and_sub_apk/?type=cat&dev=0")
     Call<List<CategoryModel>> getAllCategorys(@Query("cookie") String cookieValue);
 }
