@@ -6,7 +6,7 @@ public class LoginModel {
     @SerializedName("status")
     private String status;
 
-    @SerializedName("user_result")
+    @SerializedName("result")
     private String result;
 
     @SerializedName("message")

@@ -48,11 +48,11 @@ public class ActiveFragment extends Fragment {
         scanCodeBtn=(Button)view.findViewById(R.id.scan_code_btn);
         activeCode=(TextView)view.findViewById(R.id.active_code_tv);
         saveClipBoradBtn=(ImageButton)view.findViewById(R.id.save_clipbord);
-        activeCode.setText(FormatHelper.toPersianNumber(calActiveCode()));
+        activeCode.setText(FormatHelper.toPersianNumber(SaveItem.getItem(getActivity(),SaveItem.APK_ID,"")));
         saveClipBoradBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setClipboard(getActivity().getApplicationContext(),calActiveCode());
+                setClipboard(getActivity().getApplicationContext(),SaveItem.getItem(getActivity(),SaveItem.APK_ID,""));
                 MDToast.makeText(getActivity(),getActivity().getString(R.string.copied),2500,MDToast.TYPE_INFO).show();
             }
         });
@@ -65,17 +65,17 @@ public class ActiveFragment extends Fragment {
         return view;
     }
 
-    private String calActiveCode(){
-        String mid =SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.MID_CODE,"");
-        String userid = SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_ID,"");
-        if (!mid.equalsIgnoreCase("") && !userid.equalsIgnoreCase(""))
-            return mid+userid;
-        else {
-            MDToast.makeText(getActivity(),getActivity().getString(R.string.login_please),2500,MDToast.TYPE_INFO).show();
-            return "";
-        }
-
-    }
+//    private String calActiveCode(){
+//        String mid =SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.MID_CODE,"");
+//        String userid = SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_ID,"");
+//        if (!mid.equalsIgnoreCase("") && !userid.equalsIgnoreCase(""))
+//            return mid+userid;
+//        else {
+//            MDToast.makeText(getActivity(),getActivity().getString(R.string.login_please),2500,MDToast.TYPE_INFO).show();
+//            return "";
+//        }
+//
+//    }
 
     private void setClipboard(Context context, String text) {
         if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {

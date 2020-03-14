@@ -25,7 +25,7 @@ public interface LoginServer {
                                      @Field("mid")String mid,
                                      @Field("s")String sCode);
 
-    @POST("active")
+    @POST("active_apk")
     @FormUrlEncoded
     Call<ActiveRespone> activeUser(@Field("active_code")String activeCode,
                                    @Field("s")String sCode);

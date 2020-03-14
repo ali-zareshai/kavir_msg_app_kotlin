@@ -49,6 +49,7 @@
     <string name="email_not_valid">ایمیل معتبر نیست</string>
     <string name="exit_login">برگشت</string>
     <string name="login_please">لطفا وارد شوید</string>
+    <string name="qr_is_wrong">اشکال در کد QR</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="pagger_array">

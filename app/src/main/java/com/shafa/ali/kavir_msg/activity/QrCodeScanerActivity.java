@@ -56,22 +56,50 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
 
     @Override
     public void handleResult(Result result) {
-//        Toast.makeText(this, result.getText(), Toast.LENGTH_LONG).show();
-        sendQrCode(result.getText());
+        Log.e("qr code:",result.getText());
+        if (checkQr(result.getText())){
+            sendQrCode(result.getText());
+        }else {
+            MDToast.makeText(this,getString(R.string.qr_is_wrong),2500,MDToast.TYPE_ERROR).show();
+        }
+
+    }
+
+    private boolean checkQr(String qr){
+        if (SaveItem.getItem(this,SaveItem.APK_ID,"").equalsIgnoreCase(calApkCodeFromQr(qr.trim().split("")))){
+            return true;
+        }
+        return false;
+    }
+
+    private String calApkCodeFromQr(String[] qr){
+        try {
+            String mid = qr[1]+qr[2]+qr[3]+qr[4]+"";
+            int q5 = Integer.parseInt(qr[5]);
+            String uid = "";
+            for (int i=0;i<q5;i++){
+                uid = uid + qr[i+6];
+            }
+            uid = qr[5]+uid;
+            return mid+uid;
+        }catch (Exception e){
+            Log.e("calApkCodeFromQr:",e.getMessage());
+            return "";
+        }
+
     }
 
     private void sendQrCode(String qCode){
         mScannerView.stopCameraPreview();
+        Log.e("secrt code:",SaveItem.getItem(this,SaveItem.S_CODE,""));
+        Log.e("scode:",Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split("")));
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.activeUser(qCode, Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""))).enqueue(new Callback<ActiveRespone>() {
             @Override
             public void onResponse(Call<ActiveRespone> call, Response<ActiveRespone> response) {
-                if (response.body().getMessage().equalsIgnoreCase("success")){
-                    MDToast.makeText(getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
-                }else {
-                    Log.e("onResponse:",response.body().getMessage());
-                }
+                MDToast.makeText(getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
+                finish();
             }
 
             @Override

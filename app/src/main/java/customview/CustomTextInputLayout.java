@@ -13,7 +13,7 @@ public class CustomTextInputLayout extends TextInputLayout {
     }
 
     private void init(Context context) {
-        Typeface type2 = Typeface.createFromAsset(context.getAssets(),"fonts/sans.ttf");
+        Typeface type2 = Typeface.createFromAsset(context.getAssets(),"fonts/Vazir.ttf");
         this.setTypeface(type2);
     }
 

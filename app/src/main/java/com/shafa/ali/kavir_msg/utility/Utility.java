@@ -94,7 +94,6 @@ public class Utility {
             String sCode = SaveItem.getItem(context,SaveItem.S_CODE,"");
             if (sCode.length()>0){
                 int index = n9+n10;
-                Log.e("sCode:",sCode.substring(index,index+10));
                 return sCode.substring(index,index+10);
             }
             return "";
@@ -132,6 +131,18 @@ public class Utility {
             return n9+mac[n9+1]+n10+mac[n10+1]+"";
 
 
+        }catch (Exception e){
+            return "";
+        }
+    }
+
+    public static String calApkId(Context context,String[] numberPhone){
+        try {
+            String mid = calMID(numberPhone);
+            String uid = SaveItem.getItem(context,SaveItem.USER_ID,"");
+            int len = uid.length();
+            SaveItem.setItem(context,SaveItem.APK_ID,mid+len+uid);
+            return mid+len+uid;
         }catch (Exception e){
             return "";
         }

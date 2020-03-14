@@ -14,12 +14,15 @@ import android.widget.Toast;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.models.LoginModel;
 import com.shafa.ali.kavir_msg.server.LoginServer;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import net.igenius.customcheckbox.CustomCheckBox;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +41,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Utility.getSecretCode(getApplicationContext());
+
+
         loginBtn =(TextView)findViewById(R.id.loginBtn);
         qrcodeImg =(ImageView)findViewById(R.id.qrcode);
         userNameEdit =(EditText)findViewById(R.id.usernameEd);
@@ -84,8 +90,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             MDToast.makeText(this,getString(R.string.full_all_fields),2500,MDToast.TYPE_ERROR).show();
             return;
         }
-        String userName = userNameEdit.getText().toString().trim();
-        String password = passwordEdit.getText().toString().trim();
+        String userName = FormatHelper.toEngNumber(userNameEdit.getText().toString().trim());
+        String password = FormatHelper.toEngNumber(passwordEdit.getText().toString().trim());
         loginUser(userName,password);
     }
 
@@ -98,9 +104,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void loginUser(final String username, final String password){
         progressBarLogin.setVisibility(View.VISIBLE);
+        String scode = Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""));
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.loginUser(username,password,SaveItem.getItem(this,SaveItem.S_CODE,"")).enqueue(new Callback<LoginModel>() {
+        loginServer.loginUser(username,password,scode).enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(Call<LoginModel> call, Response<LoginModel> response) {
                 if (response.isSuccessful()){
@@ -113,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         MDToast.makeText(getApplicationContext(),getString(R.string.welcome),2500,MDToast.TYPE_SUCCESS).show();
                         finish();
                     }else {
-                        MDToast.makeText(getApplicationContext(),getString(R.string.user_or_pass_is_wrong),2500,MDToast.TYPE_WARNING).show();
+                        MDToast.makeText(getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_WARNING).show();
                     }
                 }else {
                     MDToast.makeText(getApplicationContext(),getString(R.string.error_in_connection),2500,MDToast.TYPE_WARNING).show();
@@ -143,5 +150,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         SaveItem.setItem(this,SaveItem.USER_COOKIE,body.getCookie());
         SaveItem.setItem(this,SaveItem.MID_CODE,Utility.calMID(body.getMobile().split("")));
         SaveItem.setItem(this,SaveItem.S_CODE,Utility.calSCode(this,body.getMobile().split("")));
+        Utility.calApkId(this,body.getMobile().split(""));
     }
 }
