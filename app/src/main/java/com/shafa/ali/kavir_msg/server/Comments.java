@@ -9,5 +9,5 @@ import retrofit2.http.Query;
 public interface Comments {
     @POST("submit_comment_apk")
     @FormUrlEncoded
-    Call<String> postNewComment(@Field("post_id") String postId, @Field("name")String name, @Field("email") String email, @Field("content")String content);
+    Call<String> postNewComment(@Field("apk_id")String apkId, @Field("post_id") String postId, @Field("name")String name, @Field("email") String email, @Field("content")String content);
 }

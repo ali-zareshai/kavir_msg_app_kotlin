@@ -93,7 +93,7 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
         mScannerView.stopCameraPreview();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.activeUser(qCode, Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""))).enqueue(new Callback<ActiveRespone>() {
+        loginServer.activeUser(qCode, SaveItem.getItem(this,SaveItem.S_CODE,"")).enqueue(new Callback<ActiveRespone>() {
             @Override
             public void onResponse(Call<ActiveRespone> call, Response<ActiveRespone> response) {
                 MDToast.makeText(getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_INFO).show();

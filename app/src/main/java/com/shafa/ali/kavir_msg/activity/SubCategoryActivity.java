@@ -38,6 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SubCategoryActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView subCategoryRecycler;
@@ -158,6 +159,12 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 
     private void startTitlePostActivity(String slug,int postSize){
         if (slug!=null){

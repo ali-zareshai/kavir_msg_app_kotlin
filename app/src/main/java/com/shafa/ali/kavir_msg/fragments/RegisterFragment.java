@@ -86,6 +86,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private void sendData(String name, String email, final String phone, String password) {
         loadingProgressBar.setVisibility(View.VISIBLE);
+        Log.e("s:",Utility.calSCode(getActivity().getApplicationContext(),phone.split("")));
+        Log.e("phone:",phone);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.registerUser(name,phone,email,password, Utility.calMID(phone.split("")),Utility.calSCode(getActivity().getApplicationContext(),phone.split(""))).enqueue(new Callback<RegisterModel>() {

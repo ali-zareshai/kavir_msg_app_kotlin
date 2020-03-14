@@ -91,7 +91,8 @@ public class Utility {
         try {
             int n10 = Integer.parseInt(numberPhone[(numberPhone.length)-1]);
             int n9  = Integer.parseInt(numberPhone[(numberPhone.length)-2]);
-            String sCode = SaveItem.getItem(context,SaveItem.S_CODE,"");
+            String sCode = SaveItem.getItem(context,SaveItem.raw_Scode,"");
+            Log.e("sCode:",sCode);
             if (sCode.length()>0){
                 int index = n9+n10;
                 return sCode.substring(index,index+10);
@@ -110,7 +111,7 @@ public class Utility {
             public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
                 if (response.body().getResult().equalsIgnoreCase("success")){
                     String s_raw = response.body().getSecretCode().trim();
-                    SaveItem.setItem(context,SaveItem.S_CODE,s_raw.substring(15,30)+s_raw.substring(0,15));
+                    SaveItem.setItem(context,SaveItem.raw_Scode,s_raw.substring(0,30));
                 }else {
                     MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
                 }

@@ -104,7 +104,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void loginUser(final String username, final String password){
         progressBarLogin.setVisibility(View.VISIBLE);
-        String scode = Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""));
+        String scode = "";
+        if (username.equalsIgnoreCase(SaveItem.getItem(this,SaveItem.REGISTER_PHONE,""))){
+            scode = Utility.calSCode(this, SaveItem.getItem(this,SaveItem.REGISTER_PHONE,"").split(""));
+        }else {
+            scode = Utility.calSCode(this, username.split(""));
+            Log.e("phone:",username);
+        }
+        Log.e("scode:",scode);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.loginUser(username,password,scode).enqueue(new Callback<LoginModel>() {

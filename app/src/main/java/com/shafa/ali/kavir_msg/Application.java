@@ -2,6 +2,7 @@ package com.shafa.ali.kavir_msg;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class Application extends android.app.Application {
     @Override
@@ -13,5 +14,11 @@ public class Application extends android.app.Application {
                 .schemaVersion(1)
                 .build();
         Realm.setDefaultConfiguration(config);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/sans.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+
     }
 }

@@ -75,7 +75,7 @@ public class AccessFragment extends Fragment {
         loading.setVisibility(View.VISIBLE);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         final LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.getAccessList(SaveItem.getItem(getActivity(),SaveItem.APK_ID,""), Utility.calSCode(getActivity(), SaveItem.getItem(getActivity(),SaveItem.REGISTER_PHONE,"").split("")))
+        loginServer.getAccessList(SaveItem.getItem(getActivity(),SaveItem.APK_ID,""), SaveItem.getItem(getActivity(),SaveItem.S_CODE,""))
                 .enqueue(new Callback<List<AccessModel>>() {
                     @Override
                     public void onResponse(Call<List<AccessModel>> call, Response<List<AccessModel>> response) {

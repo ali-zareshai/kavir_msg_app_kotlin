@@ -56,6 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CategoryActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar mTopToolbar;
@@ -232,6 +233,12 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         SaveItem.setItem(this,SaveItem.USER_ID,"");
         SaveItem.setItem(this,SaveItem.USER_COOKIE,"");
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
 
     private void setNameLoginItem(){
         Menu menu = navigationView.getMenu();

@@ -31,7 +31,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:textDirection="rtl"
                     android:background="#00c7c7c7"
                     android:textColorHint="#d9e5f3"
                     app:passwordToggleEnabled="true">
@@ -68,7 +67,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textDirection="rtl"
                     android:background="#00c7c7c7"
                     android:textColorHint="#d9e5f3"
                     app:passwordToggleEnabled="true">

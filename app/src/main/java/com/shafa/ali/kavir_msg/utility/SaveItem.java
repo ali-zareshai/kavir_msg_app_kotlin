@@ -18,6 +18,7 @@ public class SaveItem {
         public static final String MID_CODE ="mid";
         public static final String REGISTER_PHONE ="register_phone";
         public static final String APK_ID ="apk_id";
+        public static final String raw_Scode="raw_s";
 
 
         public static SharedPreferences getSP(Context context){

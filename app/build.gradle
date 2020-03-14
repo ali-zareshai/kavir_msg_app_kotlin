@@ -45,4 +45,7 @@ dependencies {
     implementation 'io.realm:android-adapters:2.0.0'
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
+    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+
 }

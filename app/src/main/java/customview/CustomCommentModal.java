@@ -91,7 +91,7 @@ public class CustomCommentModal {
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         Comments comments = retrofit.create(Comments.class);
         Log.e("postId:",postId);
-        comments.postNewComment(postId,name,email,comment).enqueue(new Callback<String>() {
+        comments.postNewComment(SaveItem.getItem(context,SaveItem.APK_ID,""),postId,name,email,comment).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.e("onResponse",response.toString());
