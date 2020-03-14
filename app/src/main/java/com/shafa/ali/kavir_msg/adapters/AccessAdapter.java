@@ -31,7 +31,7 @@ public class AccessAdapter extends RecyclerView.Adapter<AccessAdapter.Holder> {
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_access,parent,false);
         return new Holder(view);
     }
 
@@ -44,7 +44,7 @@ public class AccessAdapter extends RecyclerView.Adapter<AccessAdapter.Holder> {
         holder.productIdTv.setText(FormatHelper.toPersianNumber(accessModel.getProductId()));
 
         Glide.with(context)
-                .load(Setting.CATEGORY_IMAGES_URL+"p/"+accessModel.getProductId()+".png")
+                .load(Setting.CATEGORY_IMAGES_URL+"p/p"+accessModel.getProductId()+".png")
                 .override(90, 90)
                 .centerCrop()
                 .crossFade()

@@ -31,6 +31,10 @@
             android:icon="@drawable/active_user"
             android:title="@string/active" />
         <item
+            android:id="@+id/access"
+            android:icon="@drawable/ic_traffic_black_24dp"
+            android:title="@string/access_list" />
+        <item
             android:id="@+id/about_we"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="@string/about_we"/>
