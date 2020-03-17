@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.activity.LoginActivity;
 import com.shafa.ali.kavir_msg.models.RegisterModel;
 import com.shafa.ali.kavir_msg.server.LoginServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
@@ -100,6 +102,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     SaveItem.setItem(getActivity().getApplicationContext(),SaveItem.REGISTER_PHONE,phone);
                     MDToast.makeText(getActivity().getApplicationContext(),getActivity().getApplicationContext().getString(R.string.register_success),2500,MDToast.TYPE_SUCCESS).show();
                     emptyInputs();
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 }else {
                     MDToast.makeText(getActivity().getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_ERROR).show();
                 }
