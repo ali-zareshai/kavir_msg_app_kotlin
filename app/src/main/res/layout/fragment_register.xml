@@ -118,58 +118,42 @@
                     android:textColor="#fff"
                     />
             </LinearLayout>
-
-
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp"
-        android:textDirection="rtl">
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
-            android:gravity="center"
-
-            android:layout_height="wrap_content">
-
-            <customviews.CustomTextView
-                android:id="@+id/registerBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#009a9a"
-                android:letterSpacing="0.2"
-                android:padding="16dp"
-                android:gravity="center"
-                android:text="@string/register"
-                android:textColor="#d9e5f3"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/progress_register"
-                style="?android:attr/progressBarStyleLarge"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/registerBtn"
-                android:layout_alignTop="@+id/registerBtn"
-                android:indeterminate="true"
-                android:elevation="2dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="50dp"
-                android:indeterminateTint="@android:color/holo_blue_dark"
-                android:visibility="gone" />
+                android:layout_gravity="center"
+                android:layout_marginBottom="50dp"
+                android:gravity="center"
+                android:layout_height="wrap_content">
 
-        </RelativeLayout>
+                <customviews.CustomTextView
+                    android:id="@+id/registerBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#009a9a"
+                    android:letterSpacing="0.2"
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:text="@string/register"
+                    android:textColor="#d9e5f3"
+                    android:textStyle="bold" />
 
+                <ProgressBar
+                    android:id="@+id/progress_register"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@+id/registerBtn"
+                    android:layout_alignTop="@+id/registerBtn"
+                    android:indeterminate="true"
+                    android:elevation="2dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"
+                    android:indeterminateTint="@android:color/holo_blue_dark"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
