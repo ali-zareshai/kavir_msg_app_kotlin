@@ -87,6 +87,9 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                if (dialog.isShowing()){
+                    return;
+                }
                 dialog.show();
                 TiltlePostsModel.PostsModel postsModel = tiltlePostsModel.getPostsModels().get(position);
                 Intent intent = new Intent(TitlePostsActivity.this,PostActivity.class);
