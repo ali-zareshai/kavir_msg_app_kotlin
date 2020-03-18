@@ -54,12 +54,13 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private String parentId;
     private ImageButton backBtn,homeBtn;
     private List<SubCategoryModel> subCategoryModels;
-    private SpinKitView loading;
     private String currentSlug =null;
     private String parentName;
     private int currentPageSize =0;
     private TextView notExist;
     private AlertDialog dialog;
+    private boolean isSending =false;
+    private String lastList =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,6 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_sub_category);
         subCategoryRecycler =(RecyclerView)findViewById(R.id.sub_category_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
-        loading =(SpinKitView)findViewById(R.id.spin_sub_cat);
         homeBtn =(ImageButton)findViewById(R.id.home_sub_btn);
         notExist=(TextView)findViewById(R.id.not_exsit);
         homeBtn.setOnClickListener(this);
@@ -96,6 +96,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                 subCategoryRecycler, new ClickListener() {
         @Override
         public void onClick(View view, final int position) {
+            dialog.show();
             //Values are passing to activity & to fragment as well
             try{
                 currentSlug = subCategoryModels.get(position).getSlug();
@@ -104,8 +105,11 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                 setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
             }catch (Exception e){
                 Log.e("Exception:",e.getMessage());
-                getSubCategoryFromServer(String.valueOf(subCategoryModels.get(position).getId()));
+//                getSubCategoryFromServer(subCategoryModels.get(position).getSlug());
+
+
             }
+            dialog.dismiss();
 
 //            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
 //            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
@@ -118,8 +122,17 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
     }
 
+    @Override
+    protected void onResume() {
+        if (lastList!=null){
+            Log.e("slug:",lastList);
+            getSubCategoryFromServer(lastList);
+        }
 
-    private void hasPost(final String slug,final String postSize){
+        super.onResume();
+    }
+
+    private void hasPost(final String slug, final int postSize){
         dialog.show();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
@@ -152,7 +165,6 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
     private void startHomePage(){
         startActivity(new Intent(SubCategoryActivity.this,CategoryActivity.class));
-        dialog.dismiss();
         finish();
     }
 
@@ -162,9 +174,12 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         super.onBackPressed();
     }
 
-    private  void getSubCategoryFromServer(String parentIdf){
+    private  void getSubCategoryFromServer(final String parentIdf){
+        if (isSending){
+            return;
+        }
+        isSending=true;
         dialog.show();
-        loading.setVisibility(View.VISIBLE);
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
         getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentIdf).enqueue(new Callback<List<SubCategoryModel>>() {
@@ -175,15 +190,16 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                     subCategoryModels = new ArrayList<>();
                     subCategoryModels = response.body();
 
-
                     if (subCategoryModels.get(0).getId()==0){
                         startTitlePostActivity(currentSlug,currentPageSize);
                     }else{
+                        Log.e("cat parentIdf:",parentIdf);
+                        lastList = parentIdf;
                         generateDataList(subCategoryModels);
                     }
 
-                    loading.setVisibility(View.GONE);
                     dialog.dismiss();
+                    isSending=false;
 
                 }
 
@@ -205,6 +221,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                         });
                 builder.show();
                 dialog.dismiss();
+                isSending=false;
             }
         });
     }
@@ -225,7 +242,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 //            MDToast.makeText(this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
 ////            startHomePage();
             notExist.setVisibility(View.VISIBLE);
-            hasPost(parentName,postSize+"");
+            hasPost(parentName,postSize);
         }
     }
 

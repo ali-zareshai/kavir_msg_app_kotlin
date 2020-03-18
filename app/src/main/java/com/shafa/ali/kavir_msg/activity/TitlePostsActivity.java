@@ -45,7 +45,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     private ImageButton backBtn,homeBtn;
     private String slugName;
     private TiltlePostsModel tiltlePostsModel;
-    private SpinKitView loading;
     private CardView notExistPostcardView;
     private PaginationView paginationView;
     private AlertDialog dialog;
@@ -57,7 +56,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         recyclerView =(RecyclerView)findViewById(R.id.posts_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         TextView slugTitle = (TextView)findViewById(R.id.slug_title);
-        loading =(SpinKitView)findViewById(R.id.spin_title_post);
         homeBtn =(ImageButton)findViewById(R.id.home_title_post_btn);
         notExistPostcardView =(CardView)findViewById(R.id.not_exist_post_card);
         paginationView =(PaginationView) findViewById(R.id.pager_size_spinner);
@@ -89,11 +87,13 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                dialog.show();
                 TiltlePostsModel.PostsModel postsModel = tiltlePostsModel.getPostsModels().get(position);
                 Intent intent = new Intent(TitlePostsActivity.this,PostActivity.class);
                 intent.putExtra("postId",postsModel.getId());
                 intent.putExtra("source","net");
                 startActivity(intent);
+                dialog.dismiss();
             }
 
             @Override
@@ -105,7 +105,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void getDataFromServer(final int pageNumber , final int pageSize) {
-        loading.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         dialog.show();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
@@ -122,7 +121,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                     notExistPostcardView.setVisibility(View.GONE);
                     TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
                     recyclerView.setAdapter(titleAdapter);
-                    loading.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     dialog.dismiss();
                 }
@@ -150,7 +148,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
     private void fininshActivity() {
         MDToast.makeText(this,getString(R.string.no_exit_post),2500,MDToast.TYPE_INFO).show();
-        loading.setVisibility(View.GONE);
         dialog.dismiss();
         notExistPostcardView.setVisibility(View.VISIBLE);
 //        finish();

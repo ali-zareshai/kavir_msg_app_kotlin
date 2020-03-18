@@ -144,6 +144,7 @@ public class CategoryFragment extends Fragment {
         categoryRecycler.addOnItemTouchListener(new RecyclerTouchListener(getActivity().getApplicationContext(),
                 categoryRecycler, new ClickListener() {    @Override
         public void onClick(View view, final int position) {
+            dialog.show();
             TextView nameTv   = (TextView)view.findViewById(R.id.name_category);
             String id = String.valueOf(categoryModelList.get(position).getId());
             Intent intent =new Intent(getActivity(), SubCategoryActivity.class);
@@ -153,6 +154,7 @@ public class CategoryFragment extends Fragment {
             intent.putExtras(bundle);
             setCountPostCount(id,categoryModelList.get(position).getPost_count());
             startActivity(intent);
+            dialog.dismiss();
         }
 
             @Override
