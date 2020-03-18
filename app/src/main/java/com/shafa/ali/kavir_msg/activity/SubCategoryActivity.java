@@ -21,9 +21,12 @@ import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.SubCategoryAdapter;
+import com.shafa.ali.kavir_msg.adapters.TitleAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.SubCategoryModel;
+import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
 import com.shafa.ali.kavir_msg.server.GetDataSubCategory;
+import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
@@ -51,7 +54,9 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private List<SubCategoryModel> subCategoryModels;
     private SpinKitView loading;
     private String currentSlug =null;
+    private String parentName;
     private int currentPageSize =0;
+    private TextView notExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +66,14 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         loading =(SpinKitView)findViewById(R.id.spin_sub_cat);
         homeBtn =(ImageButton)findViewById(R.id.home_sub_btn);
+        notExist=(TextView)findViewById(R.id.not_exsit);
         homeBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         /////////
         bundle = getIntent().getExtras();
         if (bundle!=null){
             parentId = bundle.getString("parentId");
-            String parentName = bundle.getString("parentName");
+            parentName = bundle.getString("parentName");
             ((TextView)findViewById(R.id.parent_cat_tv)).setText(parentName);
         }
         mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -102,6 +108,35 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 //                Toast.makeText(SubCategoryActivity.this, "Long press on position :"+position,Toast.LENGTH_LONG).show();
             }}));
 
+    }
+
+
+    private void hasPost(final String slug,final String postSize){
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+        GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
+        getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slug,"0","10").enqueue(new Callback<TiltlePostsModel>() {
+            @Override
+            public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
+                if (response.isSuccessful()){
+                    if (response.body().getPostsModels()!= null && response.body().getPostsModels().size()>0){
+                        Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
+                        intent.putExtra("slug",slug);
+                        intent.putExtra("post_size",postSize);
+                        startActivity(intent);
+                        return;
+                    }
+                }
+                MDToast.makeText(SubCategoryActivity.this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
+                startHomePage();
+
+            }
+
+            @Override
+            public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
+                MDToast.makeText(SubCategoryActivity.this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
+                startHomePage();
+            }
+        });
     }
 
 
@@ -173,8 +208,10 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
             intent.putExtra("post_size",postSize);
             startActivity(intent);
         }else {
-            MDToast.makeText(this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
-            startHomePage();
+//            MDToast.makeText(this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
+////            startHomePage();
+            notExist.setVisibility(View.VISIBLE);
+            hasPost(parentName,postSize+"");
         }
     }
 

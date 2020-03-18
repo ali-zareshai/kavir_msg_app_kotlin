@@ -19,6 +19,17 @@
             android:layout_gravity="center"
             android:layout_centerInParent="true"
             app:SpinKit_Color="@color/colorAccent" />
+        <customviews.CustomTextView
+            android:layout_width="match_parent"
+            android:textSize="28dp"
+            android:id="@+id/not_exsit"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:text="@string/not_exist_sub"
+            android:textColor="@color/red800"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_height="wrap_content"/>
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
