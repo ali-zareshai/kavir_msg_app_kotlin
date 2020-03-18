@@ -52,6 +52,7 @@
     <string name="qr_is_wrong">اشکال در کد QR</string>
     <string name="access_list">دسترسی ها</string>
     <string name="please_wait">لطفا انتظار ...</string>
+    <string name="not_access_active">دسترسی فعالی برای شما وجود ندارد</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="pagger_array">

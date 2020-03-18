@@ -188,26 +188,37 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
         } else if (id == R.id.home_page) {
             loadFragment(CategoryFragment.newInstance());
             toolbarTitle.setText(getString(R.string.home));
+            statusSearchBtn(View.VISIBLE);
         } else if (id == R.id.ready_read_page) {
             loadFragment(ReadyReadFragment.newInstance());
             toolbarTitle.setText(getString(R.string.redy_read));
+            statusSearchBtn(View.VISIBLE);
         }else if (id == R.id.about_we){
             loadFragment(AboutFragment.newInstance());
             toolbarTitle.setText(getString(R.string.about_we));
+            statusSearchBtn(View.VISIBLE);
         }else if (id == R.id.register){
             loadFragment(RegisterFragment.newInstance());
             toolbarTitle.setText(getString(R.string.register));
+            statusSearchBtn(View.VISIBLE);
         }else if (id==R.id.active){
             loadFragment(ActiveFragment.newInstance());
             toolbarTitle.setText(getString(R.string.active));
+            statusSearchBtn(View.VISIBLE);
         }else if (id==R.id.access){
             loadFragment(AccessFragment.newInstance());
             toolbarTitle.setText(getString(R.string.access_list));
+            statusSearchBtn(View.GONE);
         }
 
         drawer.closeDrawer(Gravity.END);
         return true;
     }
+
+    private void statusSearchBtn(int visible) {
+        searchBtn.setVisibility(visible);
+    }
+
 
     private void loginProcess() {
         Menu menu = navigationView.getMenu();

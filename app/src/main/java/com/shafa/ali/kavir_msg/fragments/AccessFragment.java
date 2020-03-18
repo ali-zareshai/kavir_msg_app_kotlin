@@ -23,6 +23,7 @@ import com.shafa.ali.kavir_msg.server.LoginServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Utility;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.List;
 
@@ -33,7 +34,6 @@ import retrofit2.Retrofit;
 
 public class AccessFragment extends Fragment {
     private RecyclerView recyclerView;
-    private SpinKitView loading;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView.LayoutManager layoutManager;
     private AccessAdapter accessAdapter;
@@ -57,7 +57,6 @@ public class AccessFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_access, container, false);
         recyclerView =(RecyclerView)view.findViewById(R.id.access_recyclerview);
-        loading = (SpinKitView)view.findViewById(R.id.spin_access);
         swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swip_refresh_access);
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -72,7 +71,7 @@ public class AccessFragment extends Fragment {
     }
 
     private void getDataFromServer() {
-        loading.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         final LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.getAccessList(SaveItem.getItem(getActivity(),SaveItem.APK_ID,""), SaveItem.getItem(getActivity(),SaveItem.S_CODE,""))
@@ -80,10 +79,19 @@ public class AccessFragment extends Fragment {
                     @Override
                     public void onResponse(Call<List<AccessModel>> call, Response<List<AccessModel>> response) {
                         if (response.isSuccessful()){
-                            accessAdapter = new AccessAdapter(getActivity(),response.body());
-                            recyclerView.setAdapter(accessAdapter);
+                            try{
+                                if (response.body().size()==0){
+                                    MDToast.makeText(getActivity(),getActivity().getString(R.string.not_access_active),3000,MDToast.TYPE_ERROR).show();
+                                }else {
+                                    accessAdapter = new AccessAdapter(getActivity(),response.body());
+                                    recyclerView.setAdapter(accessAdapter);
+                                }
+
+                            }catch (Exception e){
+                                Log.e("onResponse access:",e.getMessage());
+                            }
+
                         }
-                        loading.setVisibility(View.GONE);
                         if (swipeRefreshLayout.isRefreshing()){
                             swipeRefreshLayout.setRefreshing(false);
                         }
@@ -91,8 +99,6 @@ public class AccessFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<AccessModel>> call, Throwable t) {
-                        loading.setVisibility(View.GONE);
-                        Log.e("AccessModel:",t.getMessage());
                         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity())
                                 .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
                                 .setTitle(getString(R.string.not_respone))
