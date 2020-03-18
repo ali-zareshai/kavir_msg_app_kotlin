@@ -9,84 +9,78 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingLeft="60dp"
-        android:paddingRight="60dp">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:background="@drawable/border_register"
                 android:padding="16dp">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/usrusr"
+                    android:src="@drawable/ic_smartphone_black_24dp"
                     android:layout_gravity="center"/>
-                <customview.CustomTextInputLayout
-                    android:id="@+id/etusernameLayout"
+                <customviews.CustomEditText2
+                    android:id="@+id/usernameEd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:background="#00c7c7c7"
                     android:textColorHint="#d9e5f3"
-                    app:passwordToggleEnabled="true">
-
-                    <customview.CustomTextInputEditText
-                        android:id="@+id/usernameEd"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/username"
-                        android:background="#00c7c7c7"
-                        android:padding="10dp"
-                        android:textColorHint="#d9e5f3"
-                        android:layout_marginLeft="15dp"
-                        android:letterSpacing="0.1"
-                        android:textSize="20dp"
-                        android:inputType="text"
-                        android:textColor="#fff" />
-                </customview.CustomTextInputLayout>
-
+                    android:layout_marginLeft="15dp"
+                    android:background="#00c7c7c7"
+                    android:letterSpacing="0.1"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:hint="091XXXXXXXX"
+                    android:maxLength="11"
+                    android:textDirection="ltr"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_register"
                 android:padding="16dp">
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
                     android:src="@drawable/ic_vpn_key_black_24dp"
                     android:layout_gravity="center"/>
-                <customview.CustomTextInputLayout
-                    android:id="@+id/etPasswordLayout"
+                <customviews.CustomEditText2
+                    android:id="@+id/passwordEd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:background="#00c7c7c7"
                     android:textColorHint="#d9e5f3"
-                    app:passwordToggleEnabled="true">
+                    android:background="#00c7c7c7"
+                    android:textSize="16dp"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:hint="******"
+                    android:maxLength="15"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"/>
+                <ImageButton
+                    android:layout_width="24dp"
+                    android:id="@+id/toggle_pass"
+                    android:layout_alignParentLeft="true"
+                    android:padding="10dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/show_eye"/>
 
-                    <customview.CustomTextInputEditText
-                        android:id="@+id/passwordEd"
-                        android:textSize="20dp"
-                        android:textColor="#fff"
-                        android:textColorHint="#d9e5f3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/password"
-                        android:inputType="textPassword"
-                        android:background="#00c7c7c7"
-                        android:padding="10dp"
-                        android:layout_marginLeft="15dp"
-                        android:letterSpacing="0.1"/>
-                </customview.CustomTextInputLayout>
-
-            </LinearLayout>
+            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:id="@+id/save_line"
@@ -103,7 +97,7 @@
                 <customviews.CustomTextView3
                     android:layout_width="wrap_content"
                     android:text="@string/save"
-                    android:textColor="#ffff"
+                    android:textColor="@color/black"
                     android:textSize="16dp"
                     android:paddingRight="10dp"
                     android:layout_height="wrap_content" />
@@ -184,7 +178,7 @@
             android:layout_width="150dp"
             android:id="@+id/qrcode"
             android:layout_height="150dp"
-            android:src="@drawable/kavir_logo_splash"
+            android:src="@drawable/kavir_logo"
             />
     </LinearLayout>
 </RelativeLayout>

@@ -3,9 +3,11 @@ package com.shafa.ali.kavir_msg.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +38,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText userNameEdit,passwordEdit;
     private CustomCheckBox saveLoginCk;
     private ProgressBar progressBarLogin;
+    private ImageButton togglePassBtn;
+    private boolean isShowPass = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         saveLoginCk =(CustomCheckBox)findViewById(R.id.save_pass_ckb);
         progressBarLogin =(ProgressBar)findViewById(R.id.progress_login);
         exitBtn =(TextView)findViewById(R.id.exist_login);
+        togglePassBtn = (ImageButton)findViewById(R.id.toggle_pass);
         loginBtn.setOnClickListener(this);
         qrcodeImg.setOnClickListener(this);
         exitBtn.setOnClickListener(this);
+        togglePassBtn.setOnClickListener(this);
 //        Toast.makeText(this, Utility.getUniqueIMEIId(this), Toast.LENGTH_LONG).show();
         /////////////// set save user pass
         userNameEdit.setText(SaveItem.getItem(this,SaveItem.USERNAME_LOGIN,""));
@@ -75,6 +81,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.exist_login:
                 finish();
                 break;
+            case R.id.toggle_pass:
+                togglePass();
+                break;
+        }
+    }
+
+    private void togglePass() {
+        if (isShowPass){
+            passwordEdit.setTransformationMethod(new PasswordTransformationMethod());
+            isShowPass=false;
+            togglePassBtn.setBackgroundResource(R.drawable.show_eye);
+        }else {
+            passwordEdit.setTransformationMethod(null);
+            isShowPass=true;
+            togglePassBtn.setBackgroundResource(R.drawable.hide_eye);
         }
     }
 

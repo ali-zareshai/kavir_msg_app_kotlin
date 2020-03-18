@@ -38,7 +38,7 @@
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
                     android:inputType="text"
-                    android:textColor="#fff"
+                    android:textColor="@color/black"
                     />
             </LinearLayout>
             <LinearLayout
@@ -64,7 +64,7 @@
                     android:letterSpacing="0.1"
                     android:textSize="16dp"
                     android:inputType="textEmailAddress"
-                    android:textColor="#fff"
+                    android:textColor="@color/black"
                     />
             </LinearLayout>
             <LinearLayout
@@ -91,7 +91,7 @@
                     android:textSize="16dp"
                     android:maxLength="11"
                     android:inputType="number"
-                    android:textColor="#fff"
+                    android:textColor="@color/black"
                     />
             </LinearLayout>
 
@@ -119,7 +119,7 @@
                     android:hint="********"
                     android:maxLength="12"
                     android:inputType="text"
-                    android:textColor="#fff"
+                    android:textColor="@color/black"
                     />
             </LinearLayout>
             <RelativeLayout

@@ -8,11 +8,6 @@
 
             <corners android:radius="5dp" />
 
-            <padding
-                android:top="2dp"
-                android:bottom="2dp"
-                android:left="2dp"
-                android:right="2dp"/>
             <stroke
                 android:width="3dp"
                 android:color="#546E7A" />
@@ -22,15 +17,10 @@
     <item>
         <shape>
             <solid
-                android:color="#FFFFFF">
+                android:color="#D7FFFFFF">
             </solid>
 
             <corners android:radius="5dp" />
-            <padding
-                android:top="2dp"
-                android:bottom="2dp"
-                android:left="2dp"
-                android:right="2dp"/>
             <stroke
                 android:width="3dp"
                 android:color="@color/g300"/>
