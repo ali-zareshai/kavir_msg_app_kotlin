@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/g200"
+    android:background="@drawable/grdnt"
     android:clickable="true"
     android:layout_height="match_parent"
     tools:context=".fragments.ActiveFragment">
@@ -48,6 +48,20 @@
             android:layout_marginTop="20dp"
             android:padding="10dp"
             android:id="@+id/scan_code_btn"
+            android:layout_height="wrap_content"/>
+
+        <customviews.CustomTextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_below="@id/scan_code_btn"
+            android:layout_marginTop="20dp"
+            android:padding="5dp"
+            android:lines="5"
+            android:id="@+id/result_tv"
+            android:textDirection="rtl"
+            android:textColor="@color/red800"
+            android:textStyle="bold"
+            android:textSize="21dp"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 

@@ -1,6 +1,8 @@
 package com.shafa.ali.kavir_msg.activity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.fragments.ActiveFragment;
 import com.shafa.ali.kavir_msg.models.ActiveRespone;
 import com.shafa.ali.kavir_msg.server.LoginServer;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
@@ -18,19 +21,26 @@ import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
+import dmax.dialog.SpotsDialog;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_qr_code_scaner);
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage(R.string.please_wait)
+                .build();
         if( ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA},5);
@@ -56,11 +66,11 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
 
     @Override
     public void handleResult(Result result) {
-        Log.e("qr code:",result.getText());
+        dialog.show();
         if (checkQr(result.getText())){
             sendQrCode(result.getText());
         }else {
-            MDToast.makeText(this,getString(R.string.qr_is_wrong),2500,MDToast.TYPE_ERROR).show();
+            finishPage(getString(R.string.qr_is_wrong));
         }
 
     }
@@ -89,6 +99,17 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
 
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    private void finishPage(String msg){
+        ActiveFragment.result_tv.setText(msg);
+        dialog.dismiss();
+        finish();
+    }
+
     private void sendQrCode(String qCode){
         mScannerView.stopCameraPreview();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
@@ -96,13 +117,13 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
         loginServer.activeUser(qCode, SaveItem.getItem(this,SaveItem.S_CODE,"")).enqueue(new Callback<ActiveRespone>() {
             @Override
             public void onResponse(Call<ActiveRespone> call, Response<ActiveRespone> response) {
-                MDToast.makeText(getApplicationContext(),response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
-                finish();
+                finishPage(response.body().getMessage());
             }
 
             @Override
             public void onFailure(Call<ActiveRespone> call, Throwable t) {
                 Log.e("onFailure:",t.getMessage());
+                finishPage(t.getMessage());
             }
         });
 
