@@ -31,6 +31,7 @@ import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.shafa.ali.kavir_msg.utility.Setting;
 import com.shafa.ali.kavir_msg.utility.Utility;
 
 import java.util.List;
@@ -75,6 +76,7 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
+        Setting.isVistied = false;
         categoryRecycler =(RecyclerView)view.findViewById(R.id.category_recyclerview);
         loading = (SpinKitView)view.findViewById(R.id.spin_cat);
         swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swip_refresh_category);

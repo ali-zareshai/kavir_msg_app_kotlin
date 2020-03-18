@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.shafa.ali.kavir_msg.utility.Setting;
 import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
@@ -45,7 +47,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class SubCategoryActivity extends AppCompatActivity implements View.OnClickListener {
+public class SubCategoryActivity extends Activity implements View.OnClickListener {
     private RecyclerView subCategoryRecycler;
     private SubCategoryAdapter subCategoryAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -72,6 +74,8 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         notExist=(TextView)findViewById(R.id.not_exsit);
         homeBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+
+
 
         dialog = new SpotsDialog.Builder()
                 .setContext(this)
@@ -132,6 +136,8 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         super.onResume();
     }
 
+
+
     private void hasPost(final String slug, final int postSize){
         dialog.show();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
@@ -144,8 +150,17 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                         Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
                         intent.putExtra("slug",slug);
                         intent.putExtra("post_size",postSize);
-                        startActivity(intent);
-                        dialog.dismiss();
+                        lastList =null;
+                        if (!Setting.isVistied){
+                            Setting.isVistied  = true;
+                            Log.e("isVistied:","false");
+                            startActivity(intent);
+                        }
+
+
+
+//                        dialog.dismiss();
+                        finish();
                         return;
                     }
                 }

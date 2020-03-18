@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
         <customviews.CustomTextView
             android:layout_width="match_parent"
-            android:textSize="28dp"
+            android:textSize="21dp"
             android:id="@+id/not_exsit"
             android:textStyle="bold"
             android:visibility="gone"
