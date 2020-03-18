@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -37,6 +38,7 @@ public class AccessFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView.LayoutManager layoutManager;
     private AccessAdapter accessAdapter;
+    private TextView notAccessActiveTv;
 
 
     public AccessFragment() {
@@ -58,6 +60,7 @@ public class AccessFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_access, container, false);
         recyclerView =(RecyclerView)view.findViewById(R.id.access_recyclerview);
         swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swip_refresh_access);
+        notAccessActiveTv = (TextView)view.findViewById(R.id.no_access_active_tv);
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         getDataFromServer();
@@ -80,9 +83,13 @@ public class AccessFragment extends Fragment {
                     public void onResponse(Call<List<AccessModel>> call, Response<List<AccessModel>> response) {
                         if (response.isSuccessful()){
                             try{
-                                if (response.body().size()==0){
+                                if (response.body()==null || response.body().size()==0){
                                     MDToast.makeText(getActivity(),getActivity().getString(R.string.not_access_active),3000,MDToast.TYPE_ERROR).show();
+                                    recyclerView.setVisibility(View.GONE);
+                                    notAccessActiveTv.setVisibility(View.VISIBLE);
                                 }else {
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    notAccessActiveTv.setVisibility(View.GONE);
                                     accessAdapter = new AccessAdapter(getActivity(),response.body());
                                     recyclerView.setAdapter(accessAdapter);
                                 }

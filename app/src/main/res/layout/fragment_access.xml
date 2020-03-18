@@ -8,6 +8,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <customviews.CustomTextView
+            android:layout_width="match_parent"
+            android:text="@string/not_access_active"
+            android:textColor="@color/red800"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:visibility="gone"
+            android:background="@drawable/grdnt"
+            android:id="@+id/no_access_active_tv"
+            android:layout_height="match_parent"/>
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swip_refresh_access"
             android:layout_width="match_parent"
