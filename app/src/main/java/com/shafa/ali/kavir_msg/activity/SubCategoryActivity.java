@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +59,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     private String parentName;
     private int currentPageSize =0;
     private TextView notExist;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,11 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
         notExist=(TextView)findViewById(R.id.not_exsit);
         homeBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage(R.string.please_wait)
+                .build();
         /////////
         bundle = getIntent().getExtras();
         if (bundle!=null){
@@ -112,6 +120,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
 
     private void hasPost(final String slug,final String postSize){
+        dialog.show();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
         getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slug,"0","10").enqueue(new Callback<TiltlePostsModel>() {
@@ -123,6 +132,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                         intent.putExtra("slug",slug);
                         intent.putExtra("post_size",postSize);
                         startActivity(intent);
+                        dialog.dismiss();
                         return;
                     }
                 }
@@ -142,6 +152,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
 
     private void startHomePage(){
         startActivity(new Intent(SubCategoryActivity.this,CategoryActivity.class));
+        dialog.dismiss();
         finish();
     }
 
@@ -152,6 +163,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
     }
 
     private  void getSubCategoryFromServer(String parentIdf){
+        dialog.show();
         loading.setVisibility(View.VISIBLE);
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
@@ -171,6 +183,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                     }
 
                     loading.setVisibility(View.GONE);
+                    dialog.dismiss();
 
                 }
 
@@ -191,6 +204,7 @@ public class SubCategoryActivity extends AppCompatActivity implements View.OnCli
                             }
                         });
                 builder.show();
+                dialog.dismiss();
             }
         });
     }

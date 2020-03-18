@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,10 +33,12 @@ import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import customview.PaginationView;
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class TitlePostsActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
@@ -45,6 +48,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     private SpinKitView loading;
     private CardView notExistPostcardView;
     private PaginationView paginationView;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,11 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
         backBtn.setOnClickListener(this);
         homeBtn.setOnClickListener(this);
+
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage(R.string.please_wait)
+                .build();
 
         slugName = getIntent().getExtras().getString("slug");
         slugTitle.setText(slugName);// set name slug in toolbar
@@ -98,6 +107,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     private void getDataFromServer(final int pageNumber , final int pageSize) {
         loading.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        dialog.show();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
         getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber),String.valueOf(pageSize)).enqueue(new Callback<TiltlePostsModel>() {
@@ -114,6 +124,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                     recyclerView.setAdapter(titleAdapter);
                     loading.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
+                    dialog.dismiss();
                 }
             }
 
@@ -132,6 +143,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                             }
                         });
                 builder.show();
+                dialog.dismiss();
             }
         });
     }
@@ -139,8 +151,15 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     private void fininshActivity() {
         MDToast.makeText(this,getString(R.string.no_exit_post),2500,MDToast.TYPE_INFO).show();
         loading.setVisibility(View.GONE);
+        dialog.dismiss();
         notExistPostcardView.setVisibility(View.VISIBLE);
 //        finish();
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void startHomePage(){

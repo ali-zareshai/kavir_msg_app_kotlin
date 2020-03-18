@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import com.shafa.ali.kavir_msg.utility.Utility;
 
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +50,7 @@ public class CategoryFragment extends Fragment {
     private SpinKitView loading;
     private SwipeRefreshLayout swipeRefreshLayout;
     private List<CategoryModel> categoryModelList;
+    private AlertDialog dialog;
 
 
     public CategoryFragment() {
@@ -75,6 +78,10 @@ public class CategoryFragment extends Fragment {
         categoryRecycler =(RecyclerView)view.findViewById(R.id.category_recyclerview);
         loading = (SpinKitView)view.findViewById(R.id.spin_cat);
         swipeRefreshLayout =(SwipeRefreshLayout)view.findViewById(R.id.swip_refresh_category);
+        dialog = new SpotsDialog.Builder()
+                .setContext(getActivity())
+                .setMessage(R.string.please_wait)
+                .build();
         layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         categoryRecycler.setLayoutManager(layoutManager);
         getDataFromServer();
@@ -84,6 +91,8 @@ public class CategoryFragment extends Fragment {
                 getDataFromServer();
             }
         });
+
+
 
         return view;
     }
@@ -95,6 +104,7 @@ public class CategoryFragment extends Fragment {
     }
 
     public void getDataFromServer() {
+        dialog.show();
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
         GetDataCategory getDataService=retrofit.create(GetDataCategory.class);
         getDataService.getAllCategorys(SaveItem.getItem(getActivity().getApplicationContext(),SaveItem.USER_COOKIE,"")).enqueue(new Callback<List<CategoryModel>>() {
@@ -107,6 +117,8 @@ public class CategoryFragment extends Fragment {
                     loading.setVisibility(View.GONE);
                     hideSwipRefresh();
                 }
+
+                dialog.dismiss();
 
             }
 
@@ -125,6 +137,7 @@ public class CategoryFragment extends Fragment {
                             }
                         });
                 builder.show();
+                dialog.dismiss();
             }
         });
 
