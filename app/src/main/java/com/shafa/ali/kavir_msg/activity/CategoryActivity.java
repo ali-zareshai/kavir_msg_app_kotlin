@@ -232,6 +232,7 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     private void logout() {
         clearSeesion();
+        finishAffinity();
         finish();
     }
 

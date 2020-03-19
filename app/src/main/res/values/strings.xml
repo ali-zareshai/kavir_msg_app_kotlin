@@ -53,7 +53,8 @@
     <string name="access_list">دسترسی ها</string>
     <string name="please_wait">لطفا انتظار ...</string>
     <string name="not_access_active">دسترسی فعالی برای شما وجود ندارد</string>
-    <string name="not_exist_sub">زیرشاخه ای وجود ندارد (در حال انتقال)</string>
+    <string name="not_exist_sub">زیرشاخه ای وجود ندارد</string>
+    <string name="tranforing">در حال انتقال</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="pagger_array">

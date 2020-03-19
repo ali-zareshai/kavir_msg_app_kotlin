@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
     private String currentSlug =null;
     private String parentName;
     private int currentPageSize =0;
-    private TextView notExist;
+    private LinearLayout notExist;
     private AlertDialog dialog;
     private boolean isSending =false;
     private String lastList =null;
@@ -71,7 +72,7 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
         subCategoryRecycler =(RecyclerView)findViewById(R.id.sub_category_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         homeBtn =(ImageButton)findViewById(R.id.home_sub_btn);
-        notExist=(TextView)findViewById(R.id.not_exsit);
+        notExist=(LinearLayout) findViewById(R.id.not_exsit);
         homeBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
 

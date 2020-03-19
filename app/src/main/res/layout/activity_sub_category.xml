@@ -10,17 +10,45 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <customviews.CustomTextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:textSize="21dp"
-            android:id="@+id/not_exsit"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:text="@string/not_exist_sub"
-            android:textColor="@color/red800"
             android:layout_centerInParent="true"
-            android:gravity="center"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/not_exsit"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:text="@string/not_exist_sub"
+                android:textColor="@color/red800"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_height="wrap_content"/>
+            <com.github.ybq.android.spinkit.SpinKitView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/spin_kit"
+                android:layout_marginTop="20dp"
+                style="@style/SpinKitView.ThreeBounce"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@color/red800" />
+            <customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:textSize="17dp"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:text="@string/tranforing"
+                android:textColor="@color/red800"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
@@ -78,6 +106,7 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:id="@+id/sub_category_recyclerview"
             android:clipToPadding="false"
+            android:visibility="gone"
             android:scrollbars="vertical"
             android:layout_height="match_parent"/>
 
