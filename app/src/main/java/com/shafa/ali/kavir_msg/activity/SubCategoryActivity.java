@@ -201,7 +201,6 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
         getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentIdf).enqueue(new Callback<List<SubCategoryModel>>() {
             @Override
             public void onResponse(Call<List<SubCategoryModel>> call, Response<List<SubCategoryModel>> response) {
-//                Log.e("msg",response.body().toString());
                 if (response.isSuccessful()){
                     subCategoryModels = new ArrayList<>();
                     subCategoryModels = response.body();
