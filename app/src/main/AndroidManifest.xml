@@ -22,7 +22,6 @@
         <activity android:name=".activity.SplashActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
-            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,37 +32,31 @@
             android:name=".activity.SearchActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
-            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activity.PostActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
-            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activity.TitlePostsActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
-            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
-            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".activity.QrCodeScanerActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="true"
-            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme"/>
         <activity
             android:name=".activity.CategoryActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
-            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"/>
 
         <activity
@@ -71,7 +64,6 @@
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
             android:clearTaskOnLaunch="true"
-            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
     </application>
 

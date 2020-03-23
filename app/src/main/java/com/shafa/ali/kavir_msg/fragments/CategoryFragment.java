@@ -159,6 +159,7 @@ public class CategoryFragment extends Fragment {
                 bundle.putString("parentName",model.getTitle());
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }else if (model.getSubCount()==0 && model.getPost_count()>0){
                 Intent intent =new Intent(getActivity(), TitlePostsActivity.class);
@@ -167,6 +168,7 @@ public class CategoryFragment extends Fragment {
                 intent.putExtra("cat_name",model.getTitle());
                 intent.putExtra("post_size",model.getPost_count());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }else{
                 MDToast.makeText(getActivity(),getActivity().getString(R.string.empty_cat),2500,MDToast.TYPE_WARNING).show();

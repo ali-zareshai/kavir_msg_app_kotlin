@@ -54,7 +54,6 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_posts);
-        Log.e("title post activit:","onCreate");
         recyclerView =(RecyclerView)findViewById(R.id.posts_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         TextView slugTitle = (TextView)findViewById(R.id.slug_title);
@@ -103,6 +102,7 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(TitlePostsActivity.this,PostActivity.class);
                 intent.putExtra("postId",postsModel.getId());
                 intent.putExtra("source","net");
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -179,8 +179,9 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void startHomePage(){
-        startActivity(new Intent(TitlePostsActivity.this,CategoryActivity.class));
         finishAndRemoveTask();
+        startActivity(new Intent(TitlePostsActivity.this,CategoryActivity.class));
+
     }
 
 

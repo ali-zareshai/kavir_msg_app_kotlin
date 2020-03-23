@@ -192,6 +192,7 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
             intent.putExtra("slug",slug);
             intent.putExtra("post_size",postSize);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }else {
             notExist.setVisibility(View.VISIBLE);
