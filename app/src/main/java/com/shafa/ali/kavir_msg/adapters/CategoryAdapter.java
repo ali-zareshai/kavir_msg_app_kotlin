@@ -47,7 +47,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         holder.description.setText(FormatHelper.toPersianNumber(categoryModel.getDescription()));
         holder.postCount.setText(FormatHelper.toPersianNumber(String.valueOf(categoryModel.getPost_count())));
         holder.subCount.setText(FormatHelper.toPersianNumber(categoryModel.getSubCount()+""));
-        String newPosts = getNewPosts(String.valueOf(categoryModel.getId()),categoryModel.getPost_count());
+        String newPosts="";
+        try {
+            newPosts  = getNewPosts(String.valueOf(categoryModel.getId()),categoryModel.getPost_count());
+        }catch (Exception e){
+            Log.e("CategoryAdapter new:",e.getMessage());
+        }
+
         if (newPosts.equals("0")){
             holder.newPost.setVisibility(View.GONE);
         }else {

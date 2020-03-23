@@ -107,12 +107,12 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
 
     private void finishPage(String msg){
         ActiveFragment.message_tv.setText(msg);
-        if (msg.equalsIgnoreCase("already activated")){
-            ActiveFragment.result_tv.setText(getString(R.string.error));
-            ActiveFragment.result_tv.setTextColor(Color.RED);
-        }else if (msg.equalsIgnoreCase("user access set")){
+        if (msg.equalsIgnoreCase("user access set")){
             ActiveFragment.result_tv.setText(getString(R.string.success));
             ActiveFragment.result_tv.setTextColor(Color.GREEN);
+        }else {
+            ActiveFragment.result_tv.setText(getString(R.string.error));
+            ActiveFragment.result_tv.setTextColor(Color.RED);
         }
         dialog.dismiss();
         finish();
