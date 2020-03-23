@@ -128,6 +128,7 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<CategoryModel>> call, Throwable t) {
+                Log.e("onFailure:",t.getMessage());
                 CFAlertDialog.Builder builder = new CFAlertDialog.Builder(getActivity())
                         .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
                         .setTitle(getString(R.string.not_respone))

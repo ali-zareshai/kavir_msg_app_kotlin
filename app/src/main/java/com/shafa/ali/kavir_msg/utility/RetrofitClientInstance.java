@@ -10,16 +10,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
 
-    private static Retrofit retrofit,retrofit2;
-    private static OkHttpClient okHttpClient,okHttpClient2;
+    private static Retrofit retrofit;
+    private static OkHttpClient okHttpClient;
 
     public static Retrofit getRetrofitInstance() {
 
         if (retrofit == null) {
             okHttpClient = new OkHttpClient.Builder()
-                    .connectTimeout(5, TimeUnit.SECONDS)
-                    .writeTimeout(5, TimeUnit.SECONDS)
-                    .readTimeout(5, TimeUnit.SECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
                     .build();
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(Setting.API_WORDPRESS)
