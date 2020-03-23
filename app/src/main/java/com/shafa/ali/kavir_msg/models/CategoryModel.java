@@ -21,17 +21,29 @@ public class CategoryModel {
     @SerializedName("parent")
     private int parent;
 
-    public CategoryModel(int id, String slug, String title, String description, int post_count, int parent) {
+    @SerializedName("sub")
+    private int subCount;
+
+    public CategoryModel(int id, String slug, String title, String description, int post_count, int parent,int sub) {
         this.id = id;
         this.slug = slug;
         this.title = title;
         this.description = description;
         this.post_count = post_count;
         this.parent = parent;
+        this.subCount =sub;
     }
 
     public CategoryModel() {
 
+    }
+
+    public int getSubCount() {
+        return subCount;
+    }
+
+    public void setSubCount(int subCount) {
+        this.subCount = subCount;
     }
 
     public int getId() {

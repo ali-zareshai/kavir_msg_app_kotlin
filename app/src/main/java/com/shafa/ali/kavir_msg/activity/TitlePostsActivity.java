@@ -43,16 +43,18 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class TitlePostsActivity extends AppCompatActivity implements View.OnClickListener {
     private RecyclerView recyclerView;
     private ImageButton backBtn,homeBtn;
-    private String slugName;
+    private String slugName,catId;
     private TiltlePostsModel tiltlePostsModel;
     private CardView notExistPostcardView;
     private PaginationView paginationView;
     private AlertDialog dialog;
+    private boolean isPostOnly;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_posts);
+        Log.e("title post activit:","onCreate");
         recyclerView =(RecyclerView)findViewById(R.id.posts_recyclerview);
         backBtn =(ImageButton) findViewById(R.id.back_btn);
         TextView slugTitle = (TextView)findViewById(R.id.slug_title);
@@ -67,9 +69,15 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
                 .setContext(this)
                 .setMessage(R.string.please_wait)
                 .build();
+        isPostOnly = getIntent().getExtras().getBoolean("post_only");
+        if (isPostOnly){
+            catId = getIntent().getExtras().getString("cat_id");
+            slugTitle.setText(getIntent().getExtras().getString("cat_name"));
+        }else {
+            slugName = getIntent().getExtras().getString("slug");
+            slugTitle.setText(slugName);// set name slug in toolbar
+        }
 
-        slugName = getIntent().getExtras().getString("slug");
-        slugTitle.setText(slugName);// set name slug in toolbar
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -112,41 +120,49 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
         dialog.show();
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
-        getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber),String.valueOf(pageSize)).enqueue(new Callback<TiltlePostsModel>() {
-            @Override
-            public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
-                if (response.isSuccessful()){
-                    tiltlePostsModel = response.body();
-                    if (tiltlePostsModel.getPostsModels() == null || tiltlePostsModel.getPostsModels().size()==0){
-                        fininshActivity();
-                        return;
+        Call<TiltlePostsModel> tiltlePostsModelCall;
+        if (isPostOnly){
+            tiltlePostsModelCall = getPostsServer.getTitlePostByCatId(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),catId,String.valueOf(pageNumber),String.valueOf(pageSize));
+        }else {
+            tiltlePostsModelCall = getPostsServer.getTiltlePostsBySlug(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slugName,String.valueOf(pageNumber),String.valueOf(pageSize));
+        }
+        tiltlePostsModelCall.enqueue(new Callback<TiltlePostsModel>() {
+                @Override
+                public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
+                    if (response.isSuccessful()){
+                        tiltlePostsModel = response.body();
+                        if (tiltlePostsModel.getPostsModels() == null || tiltlePostsModel.getPostsModels().size()==0){
+                            fininshActivity();
+                            return;
+                        }
+                        notExistPostcardView.setVisibility(View.GONE);
+                        TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
+                        recyclerView.setAdapter(titleAdapter);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
                     }
-                    notExistPostcardView.setVisibility(View.GONE);
-                    TitleAdapter titleAdapter = new TitleAdapter(TitlePostsActivity.this,tiltlePostsModel.getPostsModels());
-                    recyclerView.setAdapter(titleAdapter);
-                    recyclerView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
+                    CFAlertDialog.Builder builder = new CFAlertDialog.Builder(TitlePostsActivity.this)
+                            .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
+                            .setTitle(getString(R.string.not_respone))
+                            .setIcon(R.drawable.access_server)
+                            .setTextGravity(Gravity.CENTER)
+                            .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    getDataFromServer(pageNumber+1,pageSize);
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                    builder.show();
                     dialog.dismiss();
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
-                CFAlertDialog.Builder builder = new CFAlertDialog.Builder(TitlePostsActivity.this)
-                        .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                        .setTitle(getString(R.string.not_respone))
-                        .setIcon(R.drawable.access_server)
-                        .setTextGravity(Gravity.CENTER)
-                        .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                getDataFromServer(pageNumber+1,pageSize);
-                                dialogInterface.dismiss();
-                            }
-                        });
-                builder.show();
-                dialog.dismiss();
-            }
-        });
+
     }
 
     private void fininshActivity() {
@@ -164,23 +180,18 @@ public class TitlePostsActivity extends AppCompatActivity implements View.OnClic
 
     private void startHomePage(){
         startActivity(new Intent(TitlePostsActivity.this,CategoryActivity.class));
-        finish();
+        finishAndRemoveTask();
     }
 
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.back_btn:
-//                onBackPressed();
-                finish();
+                finishAndRemoveTask();
+//                finishAffinity();
                 break;
             case R.id.home_title_post_btn:
                 startHomePage();

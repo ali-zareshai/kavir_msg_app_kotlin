@@ -85,7 +85,6 @@
                             <customviews.CustomTextView
                                 android:layout_width="25dp"
                                 android:textSize="10dp"
-                                android:text="25"
                                 android:textColor="@color/g800"
                                 android:id="@+id/count_post_category"
                                 android:padding="2dp"
@@ -94,8 +93,33 @@
                                 android:layout_height="25dp" />
                             <customviews.CustomTextView
                                 android:layout_width="wrap_content"
-                                android:textSize="10dp"
+                                android:textSize="6dp"
                                 android:text="@string/totoal_post"
+                                android:textColor="@color/g800"
+                                android:padding="2dp"
+                                android:gravity="center"
+                                android:textDirection="rtl"
+                                android:layout_height="25dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:id="@+id/sub_line"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <customviews.CustomTextView
+                                android:layout_width="25dp"
+                                android:textSize="10dp"
+                                android:textColor="@color/g800"
+                                android:id="@+id/count_sub_category"
+                                android:padding="2dp"
+                                android:gravity="center"
+                                android:textDirection="rtl"
+                                android:layout_height="25dp" />
+                            <customviews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:textSize="6dp"
+                                android:text="@string/sub_count"
                                 android:textColor="@color/g800"
                                 android:padding="2dp"
                                 android:gravity="center"

@@ -12,7 +12,10 @@ import retrofit2.http.Query;
 
 public interface GetPostsServer {
     @GET("get_post_title?dev=0")
-    Call<TiltlePostsModel> getTiltlePosts(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page,@Query("count")String pageSize);
+    Call<TiltlePostsModel> getTiltlePostsBySlug(@Query ("cookie") String cookieValue,@Query("slug") String slug, @Query("page") String page,@Query("count")String pageSize);
+
+    @GET("get_post_by_cat_id_apk?dev=0")
+    Call<TiltlePostsModel> getTitlePostByCatId(@Query ("cookie") String cookieValue,@Query("id") String catId, @Query("page") String page,@Query("count")String pageSize);
 
     @GET("get_post_apk?dev=0")
     Call<PostModel> getPost(@Query ("cookie") String cookieValue,@Query("id") String postId);

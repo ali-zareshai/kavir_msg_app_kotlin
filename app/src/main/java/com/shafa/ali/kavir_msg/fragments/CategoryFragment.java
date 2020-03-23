@@ -23,6 +23,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.activity.CategoryActivity;
 import com.shafa.ali.kavir_msg.activity.SubCategoryActivity;
+import com.shafa.ali.kavir_msg.activity.TitlePostsActivity;
 import com.shafa.ali.kavir_msg.adapters.CategoryAdapter;
 import com.shafa.ali.kavir_msg.db.models.Post;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
@@ -33,6 +34,7 @@ import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Setting;
 import com.shafa.ali.kavir_msg.utility.Utility;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.List;
 
@@ -147,15 +149,27 @@ public class CategoryFragment extends Fragment {
                 categoryRecycler, new ClickListener() {    @Override
         public void onClick(View view, final int position) {
             dialog.show();
-            TextView nameTv   = (TextView)view.findViewById(R.id.name_category);
-            String id = String.valueOf(categoryModelList.get(position).getId());
-            Intent intent =new Intent(getActivity(), SubCategoryActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString("parentId",id);
-            bundle.putString("parentName",nameTv.getText().toString());
-            intent.putExtras(bundle);
-            setCountPostCount(id,categoryModelList.get(position).getPost_count());
-            startActivity(intent);
+            CategoryModel model = categoryModelList.get(position);
+            setCountPostCount(model.getId()+"",categoryModelList.get(position).getPost_count());
+            if (model.getSubCount()>0){
+                Intent intent =new Intent(getActivity(), SubCategoryActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("parentId",model.getId()+"");
+                bundle.putString("parentName",model.getTitle());
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }else if (model.getSubCount()==0 && model.getPost_count()>0){
+                Intent intent =new Intent(getActivity(), TitlePostsActivity.class);
+                intent.putExtra("post_only",true);
+                intent.putExtra("cat_id",model.getId()+"");
+                intent.putExtra("cat_name",model.getTitle());
+                intent.putExtra("post_size",model.getPost_count());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }else{
+                MDToast.makeText(getActivity(),getActivity().getString(R.string.empty_cat),2500,MDToast.TYPE_WARNING).show();
+            }
             dialog.dismiss();
         }
 

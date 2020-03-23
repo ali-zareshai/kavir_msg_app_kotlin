@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,12 +46,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         holder.title.setText(categoryModel.getTitle());
         holder.description.setText(FormatHelper.toPersianNumber(categoryModel.getDescription()));
         holder.postCount.setText(FormatHelper.toPersianNumber(String.valueOf(categoryModel.getPost_count())));
+        holder.subCount.setText(FormatHelper.toPersianNumber(categoryModel.getSubCount()+""));
         String newPosts = getNewPosts(String.valueOf(categoryModel.getId()),categoryModel.getPost_count());
         if (newPosts.equals("0")){
             holder.newPost.setVisibility(View.GONE);
         }else {
             holder.newPost.setText(FormatHelper.toPersianNumber(newPosts));
         }
+
         Glide.with(context)
                 .load(Setting.CATEGORY_IMAGES_URL+categoryModel.getSlug()+".png")
                 .override(90, 90)
@@ -70,7 +73,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-         TextView id,title,description,postCount,newPost;
+         TextView id,title,description,postCount,newPost,subCount;
          ImageView imageCategory;
 
         public Holder(View itemView) {
@@ -82,6 +85,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
             postCount=(TextView)itemView.findViewById(R.id.count_post_category);
             imageCategory=(ImageView)itemView.findViewById(R.id.image_category);
             newPost = (TextView)itemView.findViewById(R.id.new_post_category);
+            subCount=(TextView)itemView.findViewById(R.id.count_sub_category);
         }
 
     }

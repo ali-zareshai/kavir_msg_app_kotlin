@@ -70,6 +70,7 @@
             android:name=".activity.SubCategoryActivity"
             android:configChanges="orientation|screenSize"
             android:noHistory="false"
+            android:clearTaskOnLaunch="true"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar" />
     </application>

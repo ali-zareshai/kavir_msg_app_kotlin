@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
         holder.title.setText(subCategoryModel.getTitle());
         holder.description.setText(subCategoryModel.getDescription());
         holder.postCount.setText(FormatHelper.toPersianNumber(String.valueOf(subCategoryModel.getPost_count())));
+        holder.subCatLine.setVisibility(View.GONE);
         String newPosts = getNewPosts(String.valueOf(subCategoryModel.getId()),subCategoryModel.getPost_count());
         if (newPosts.equals("0")){
             holder.newPost.setVisibility(View.GONE);
@@ -72,6 +74,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     public class Holder extends RecyclerView.ViewHolder{
          TextView id,title,description,postCount,newPost;
          ImageView imageCategory;
+         LinearLayout subCatLine;
 
         public Holder(View itemView) {
             super(itemView);
@@ -82,6 +85,8 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             postCount=(TextView)itemView.findViewById(R.id.count_post_category);
             imageCategory=(ImageView)itemView.findViewById(R.id.image_category);
             newPost = (TextView)itemView.findViewById(R.id.new_post_category);
+            subCatLine=(LinearLayout)itemView.findViewById(R.id.sub_line);
+
 
         }
 

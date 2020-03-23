@@ -5,43 +5,35 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.crowdfire.cfalertdialog.CFAlertDialog;
-import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.adapters.SubCategoryAdapter;
-import com.shafa.ali.kavir_msg.adapters.TitleAdapter;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
 import com.shafa.ali.kavir_msg.models.SubCategoryModel;
 import com.shafa.ali.kavir_msg.models.TiltlePostsModel;
-import com.shafa.ali.kavir_msg.server.GetDataSubCategory;
+import com.shafa.ali.kavir_msg.server.GetDataCategory;
 import com.shafa.ali.kavir_msg.server.GetPostsServer;
 import com.shafa.ali.kavir_msg.utility.RecyclerTouchListener;
 import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
 import com.shafa.ali.kavir_msg.utility.SaveItem;
 import com.shafa.ali.kavir_msg.utility.Setting;
-import com.shafa.ali.kavir_msg.utility.Utility;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
-import io.realm.Realm;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,14 +102,9 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
                 setCountPostCount(String.valueOf(subCategoryModels.get(position).getId()),subCategoryModels.get(position).getPost_count());
             }catch (Exception e){
                 Log.e("Exception:",e.getMessage());
-//                getSubCategoryFromServer(subCategoryModels.get(position).getSlug());
-
-
             }
             dialog.dismiss();
 
-//            startTitlePostCategory(String.valueOf(subCategoryModels.get(position).getId()));
-//            Toast.makeText(SubCategoryActivity.this, "Single Click on position        :"+position, Toast.LENGTH_SHORT).show();
         }
 
             @Override
@@ -139,56 +126,7 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
 
 
 
-    private void hasPost(final String slug, final int postSize){
-        dialog.show();
-        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
-        GetPostsServer getPostsServer = retrofit.create(GetPostsServer.class);
-        getPostsServer.getTiltlePosts(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),slug,"0","10").enqueue(new Callback<TiltlePostsModel>() {
-            @Override
-            public void onResponse(Call<TiltlePostsModel> call, Response<TiltlePostsModel> response) {
-                if (response.isSuccessful()){
-                    if (response.body().getPostsModels()!= null && response.body().getPostsModels().size()>0){
-                        Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
-                        intent.putExtra("slug",slug);
-                        intent.putExtra("post_size",postSize);
-                        lastList =null;
-                        if (!Setting.isVistied){
-                            Setting.isVistied  = true;
-                            Log.e("isVistied:","false");
-                            startActivity(intent);
-                        }
 
-
-
-//                        dialog.dismiss();
-                        finish();
-                        return;
-                    }
-                }
-                MDToast.makeText(SubCategoryActivity.this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
-                startHomePage();
-
-            }
-
-            @Override
-            public void onFailure(Call<TiltlePostsModel> call, Throwable t) {
-                MDToast.makeText(SubCategoryActivity.this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
-                startHomePage();
-            }
-        });
-    }
-
-
-    private void startHomePage(){
-        startActivity(new Intent(SubCategoryActivity.this,CategoryActivity.class));
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        startHomePage();
-        super.onBackPressed();
-    }
 
     private  void getSubCategoryFromServer(final String parentIdf){
         if (isSending){
@@ -197,24 +135,23 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
         isSending=true;
         dialog.show();
         Retrofit retrofit= RetrofitClientInstance.getRetrofitInstance();
-        GetDataSubCategory getDataService=retrofit.create(GetDataSubCategory.class);
+        GetDataCategory getDataService=retrofit.create(GetDataCategory.class);
         getDataService.getAllSubCategorys(SaveItem.getItem(this,SaveItem.USER_COOKIE,""),parentIdf).enqueue(new Callback<List<SubCategoryModel>>() {
             @Override
             public void onResponse(Call<List<SubCategoryModel>> call, Response<List<SubCategoryModel>> response) {
                 if (response.isSuccessful()){
                     subCategoryModels = new ArrayList<>();
                     subCategoryModels = response.body();
-
+                    isSending=false;
                     if (subCategoryModels.get(0).getId()==0){
                         startTitlePostActivity(currentSlug,currentPageSize);
                     }else{
-                        Log.e("cat parentIdf:",parentIdf);
                         lastList = parentIdf;
                         generateDataList(subCategoryModels);
                     }
 
                     dialog.dismiss();
-                    isSending=false;
+
 
                 }
 
@@ -248,16 +185,17 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
 
 
     private void startTitlePostActivity(String slug,int postSize){
+        Log.e("startTitlePostActivity:","l188");
         if (slug!=null){
             Intent intent =new Intent(SubCategoryActivity.this,TitlePostsActivity.class);
+            intent.putExtra("post_only",false);
             intent.putExtra("slug",slug);
             intent.putExtra("post_size",postSize);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }else {
-//            MDToast.makeText(this,getString(R.string.not_exit_subcat),3000,MDToast.TYPE_WARNING).show();
-////            startHomePage();
             notExist.setVisibility(View.VISIBLE);
-            hasPost(parentName,postSize);
+//            hasPost(parentName,postSize);
         }
     }
 
@@ -273,7 +211,7 @@ public class SubCategoryActivity extends Activity implements View.OnClickListene
         switch (view.getId()){
             case R.id.back_btn:
             case R.id.home_sub_btn:
-                startHomePage();
+                finishAndRemoveTask();
                 break;
         }
     }
