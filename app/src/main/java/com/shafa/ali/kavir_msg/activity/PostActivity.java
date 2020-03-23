@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -56,7 +57,7 @@ import retrofit2.Retrofit;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView titleTv,dateTv,autherTv,commentTv;
+    private TextView titleTv,dateTv,autherTv;
     private RecyclerView commentRv;
     private WebView webView;
     private String postId;
@@ -65,7 +66,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private ScrollView scrollviewPost;
     private SpinKitView loading;
     private ImageButton backBtn,saveBtn,deleteBtn,homeBtn;
-    private LinearLayout sendComment,showComments;
+    private Button sendComment,showComments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,7 +188,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private void setViews() {
         dateTv.setText(FormatHelper.toPersianNumber(postModel.getDate()));
         autherTv.setText(postModel.getAuthor());
-        commentTv.setText(getString(R.string.comments)+"("+ FormatHelper.toPersianNumber(String.valueOf(postModel.getCommentModelList().size()))+")");
+        showComments.setText(getString(R.string.comments)+"("+ FormatHelper.toPersianNumber(String.valueOf(postModel.getCommentModelList().size()))+")");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadData("<html dir=\"rtl\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"/>"+postModel.getContent()+"</html>","text/html","UTF-8");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -252,9 +253,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         scrollviewPost =(ScrollView)findViewById(R.id.scrollview_post);
         loading =(SpinKitView)findViewById(R.id.spin_post);
         backBtn = (ImageButton)findViewById(R.id.back_post_btn);
-        sendComment =(LinearLayout) findViewById(R.id.add_new_comment);
-        showComments=(LinearLayout) findViewById(R.id.show_comment);
-        commentTv = (TextView) findViewById(R.id.count_comment);
+        sendComment =(Button) findViewById(R.id.add_new_comment);
+        showComments=(Button) findViewById(R.id.show_comment);
         saveBtn =(ImageButton)findViewById(R.id.save_post_btn);
         deleteBtn=(ImageButton)findViewById(R.id.delete_post_btn);
         homeBtn =(ImageButton)findViewById(R.id.home_post_btn);
