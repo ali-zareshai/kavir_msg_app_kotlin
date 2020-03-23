@@ -24,7 +24,7 @@ public class ActiveFragment extends Fragment {
     private TextView activeCode;
     private Button scanCodeBtn;
     private ImageButton saveClipBoradBtn;
-    public static TextView result_tv;
+    public static TextView result_tv,message_tv;
     public ActiveFragment() {
         // Required empty public constructor
     }
@@ -50,6 +50,7 @@ public class ActiveFragment extends Fragment {
         activeCode=(TextView)view.findViewById(R.id.active_code_tv);
         saveClipBoradBtn=(ImageButton)view.findViewById(R.id.save_clipbord);
         result_tv = (TextView)view.findViewById(R.id.result_tv);
+        message_tv=(TextView)view.findViewById(R.id.message_tv);
         activeCode.setText(FormatHelper.toEngNumber(SaveItem.getItem(getActivity(),SaveItem.APK_ID,"")));
         saveClipBoradBtn.setOnClickListener(new View.OnClickListener() {
             @Override

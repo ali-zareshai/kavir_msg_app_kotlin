@@ -70,6 +70,7 @@
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 android:id="@+id/slug_title"
+                android:visibility="gone"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:shadowColor="@color/counterColor"

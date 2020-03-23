@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -105,7 +106,14 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
     }
 
     private void finishPage(String msg){
-        ActiveFragment.result_tv.setText(msg);
+        ActiveFragment.message_tv.setText(msg);
+        if (msg.equalsIgnoreCase("already activated")){
+            ActiveFragment.result_tv.setText(getString(R.string.error));
+            ActiveFragment.result_tv.setTextColor(Color.RED);
+        }else if (msg.equalsIgnoreCase("user access set")){
+            ActiveFragment.result_tv.setText(getString(R.string.success));
+            ActiveFragment.result_tv.setTextColor(Color.GREEN);
+        }
         dialog.dismiss();
         finish();
     }

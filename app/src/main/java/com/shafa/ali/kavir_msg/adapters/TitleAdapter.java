@@ -45,9 +45,9 @@ public class TitleAdapter extends RecyclerView.Adapter<TitleAdapter.Holder> {
         holder.autherTv.setText(postsModel.getAuthor());
         holder.dateTv.setText(FormatHelper.toPersianNumber(postsModel.getDate()));
         holder.commentCountTv.setText(FormatHelper.toPersianNumber(postsModel.getCommentCount()));
-        if (postsModel.getCommentCount().equalsIgnoreCase("0")){
-            holder.commentLinear.setVisibility(View.GONE);
-        }
+//        if (postsModel.getCommentCount().equalsIgnoreCase("0")){
+//            holder.commentLinear.setVisibility(View.GONE);
+//        }
 
     }
 

@@ -6,7 +6,9 @@
     android:clickable="true"
     android:layout_height="match_parent"
     tools:context=".fragments.ActiveFragment">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -50,19 +52,60 @@
             android:id="@+id/scan_code_btn"
             android:layout_height="wrap_content"/>
 
-        <customviews.CustomTextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:id="@+id/result_line"
             android:layout_below="@id/scan_code_btn"
-            android:layout_marginTop="20dp"
-            android:padding="5dp"
-            android:lines="5"
-            android:id="@+id/result_tv"
-            android:textDirection="rtl"
-            android:textColor="@color/red800"
-            android:textStyle="bold"
-            android:textSize="21dp"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
+            android:layout_height="wrap_content">
+            <customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/result"
+                android:layout_gravity="right"
+                android:padding="2dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"/>
+            <customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:background="@drawable/border_edit_text"
+                android:id="@+id/result_tv"
+                android:textDirection="rtl"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_below="@id/result_line"
+            android:layout_height="wrap_content">
+            <customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/message"
+                android:layout_gravity="right"
+                android:padding="2dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"/>
+            <customviews.CustomTextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:background="@drawable/border_edit_text"
+                android:id="@+id/message_tv"
+                android:textDirection="rtl"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+    </ScrollView>
 </FrameLayout>
