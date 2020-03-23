@@ -232,8 +232,9 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
 
     private void logout() {
         clearSeesion();
+        Intent intent = getIntent();
         finishAffinity();
-        finish();
+        startActivity(intent);
     }
 
     private void clearSeesion(){
