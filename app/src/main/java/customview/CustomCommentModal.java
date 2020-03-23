@@ -1,5 +1,6 @@
 package customview;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -24,6 +25,7 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -87,11 +89,16 @@ public class CustomCommentModal {
             MDToast.makeText(context,context.getString(R.string.full_all_fields),2500,MDToast.TYPE_WARNING).show();
             return;
         }
+        final AlertDialog dialog = new SpotsDialog.Builder()
+                .setContext(context)
+                .setMessage(R.string.please_wait)
+                .build();
+        dialog.show();
 
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         Comments comments = retrofit.create(Comments.class);
         Log.e("postId:",postId);
-        comments.postNewComment(SaveItem.getItem(context,SaveItem.APK_ID,""),postId,name,email,comment).enqueue(new Callback<String>() {
+        comments.postNewComment(SaveItem.getItem(context,SaveItem.S_CODE,""),SaveItem.getItem(context,SaveItem.APK_ID,""),postId,name,email,comment).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.e("onResponse",response.toString());
@@ -107,8 +114,10 @@ public class CustomCommentModal {
                             commentDialog.dismiss();
                             MDToast.makeText(context,context.getString(R.string.success_send_comment),2500,MDToast.TYPE_SUCCESS).show();
                         }
+                        dialog.dismiss();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        dialog.dismiss();
                     }
                 }
             }

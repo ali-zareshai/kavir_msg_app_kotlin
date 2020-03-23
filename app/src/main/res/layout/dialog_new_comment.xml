@@ -72,10 +72,11 @@
             android:textDirection="rtl"
             android:lines="5"
             android:minLines="5"
-            android:maxLines="5"
-            android:inputType="textEmailAddress"
+            android:maxLines="10"
+            android:scrollbars="vertical"
+            android:inputType="textMultiLine"
             android:id="@+id/comment_comment_dialog"
-            android:layout_height="wrap_content"/>
+            android:layout_height="120dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/submit_comment_dialog"

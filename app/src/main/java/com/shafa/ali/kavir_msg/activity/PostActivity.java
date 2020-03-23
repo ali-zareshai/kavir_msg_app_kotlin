@@ -1,5 +1,6 @@
 package com.shafa.ali.kavir_msg.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -45,12 +46,14 @@ import com.valdesekamdem.library.mdtoast.MDToast;
 import java.util.ArrayList;
 
 import customview.CustomCommentModal;
+import dmax.dialog.SpotsDialog;
 import io.realm.Realm;
 import io.realm.RealmList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView titleTv,dateTv,autherTv,commentTv;
@@ -79,6 +82,13 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar mTopToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(mTopToolbar);
+
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
