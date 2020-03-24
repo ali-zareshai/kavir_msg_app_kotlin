@@ -35,7 +35,7 @@ public interface LoginServer {
                                    @Field("s")String sCode);
 
     @GET("get_secret_code/?action=kavir")
-    Call<SecretCodeModel> getSecretCode();
+    Call<SecretCodeModel> getSecretCode(@Query("version_code")String versionCode);
 
     @GET("get_access_user")
     Call<List<AccessModel>> getAccessList(@Query("apk_id") String apkId, @Query("s")String sCode);

@@ -114,7 +114,7 @@ public class Utility {
     public static void getNewVersion(final Activity context){
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
+        loginServer.getSecretCode(String.valueOf(BuildConfig.VERSION_CODE)).enqueue(new Callback<SecretCodeModel>() {
             @Override
             public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
                 if (response.body().getResult().equalsIgnoreCase("success")){
@@ -134,7 +134,7 @@ public class Utility {
     public static void getSecretCode(final Activity context){
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
-        loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
+        loginServer.getSecretCode(String.valueOf(BuildConfig.VERSION_CODE)).enqueue(new Callback<SecretCodeModel>() {
             @Override
             public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
                 if (response.body().getResult().equalsIgnoreCase("success")){

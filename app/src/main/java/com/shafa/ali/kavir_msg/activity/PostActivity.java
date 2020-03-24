@@ -204,6 +204,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         if (postModel.getCommentStatus().equalsIgnoreCase("close")){
             ((RelativeLayout)findViewById(R.id.rel_comments)).setVisibility(View.GONE);
+        }else {
+            ((RelativeLayout)findViewById(R.id.rel_comments)).setVisibility(View.VISIBLE);
         }
 
     }
