@@ -1,20 +1,28 @@
 package com.shafa.ali.kavir_msg.utility;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 
 import com.crowdfire.cfalertdialog.CFAlertDialog;
+import com.shafa.ali.kavir_msg.BuildConfig;
 import com.shafa.ali.kavir_msg.R;
 import com.shafa.ali.kavir_msg.activity.CategoryActivity;
 import com.shafa.ali.kavir_msg.models.SecretCodeModel;
 import com.shafa.ali.kavir_msg.server.LoginServer;
+import com.tapadoo.alerter.Alerter;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.net.NetworkInterface;
@@ -103,7 +111,7 @@ public class Utility {
         }
     }
 
-    public static void getSecretCode(final Context context){
+    public static void getSecretCode(final Activity context){
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
         loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
@@ -112,6 +120,7 @@ public class Utility {
                 if (response.body().getResult().equalsIgnoreCase("success")){
                     String s_raw = response.body().getSecretCode().trim();
                     SaveItem.setItem(context,SaveItem.raw_Scode,s_raw.substring(0,30));
+                    checkNewVersion(context,response.body());
                 }else {
                     MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
                 }
@@ -122,6 +131,39 @@ public class Utility {
                 Log.e("onFailure:",t.toString());
             }
         });
+    }
+
+    private static void checkNewVersion(Activity context,SecretCodeModel body) {
+        if (Integer.parseInt(body.getVersionCode())> BuildConfig.VERSION_CODE){
+            showAlertNewVersion(context,body.getVersionName(),body.getUpdateUrl());
+        }
+    }
+
+    private static void showAlertNewVersion(final Activity context, String versionName, final String updateUrl) {
+        Alerter.create(context)
+                .setTitle(context.getString(R.string.new_version))
+                .setText(context.getString(R.string.version)+" "+versionName+" "+context.getString(R.string.available))
+                .setDuration(5000)
+                .setContentGravity(Gravity.CENTER)
+                .setTitleTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Vazir.ttf"))
+                .setTextTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/sans.ttf"))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Uri uri = Uri.parse(updateUrl);
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        try {
+                            context.startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            context.startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(updateUrl)));
+                        }
+                    }
+                })
+                .show();
     }
 
     public static String calMID(String[] numberPhone){

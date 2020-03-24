@@ -47,7 +47,7 @@ public class QrCodeScanerActivity extends AppCompatActivity implements ZXingScan
                 requestPermissions(new String[]{Manifest.permission.CAMERA},5);
             }
         }
-        Utility.getSecretCode(getApplicationContext());
+        Utility.getSecretCode(this);
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);
     }

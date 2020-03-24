@@ -15,7 +15,42 @@ public class SecretCodeModel {
     @SerializedName("s")
     private String secretCode;
 
+    @SerializedName("ver_code")
+    private String versionCode;
+
+    @SerializedName("ver_name")
+    private String versionName;
+
+    @SerializedName("url")
+    private String updateUrl;
+
+
+
     public SecretCodeModel() {
+    }
+
+    public String getVersionCode() {
+        return versionCode;
+    }
+
+    public void setVersionCode(String versionCode) {
+        this.versionCode = versionCode;
+    }
+
+    public String getVersionName() {
+        return versionName;
+    }
+
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
+    }
+
+    public String getUpdateUrl() {
+        return updateUrl;
+    }
+
+    public void setUpdateUrl(String updateUrl) {
+        this.updateUrl = updateUrl;
     }
 
     public String getStatus() {
