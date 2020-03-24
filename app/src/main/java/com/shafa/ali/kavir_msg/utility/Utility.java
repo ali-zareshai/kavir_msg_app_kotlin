@@ -111,6 +111,26 @@ public class Utility {
         }
     }
 
+    public static void getNewVersion(final Activity context){
+        Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
+        LoginServer loginServer = retrofit.create(LoginServer.class);
+        loginServer.getSecretCode().enqueue(new Callback<SecretCodeModel>() {
+            @Override
+            public void onResponse(Call<SecretCodeModel> call, Response<SecretCodeModel> response) {
+                if (response.body().getResult().equalsIgnoreCase("success")){
+                    checkNewVersion(context,response.body());
+                }else {
+                    MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SecretCodeModel> call, Throwable t) {
+                Log.e("onFailure:",t.toString());
+            }
+        });
+    }
+
     public static void getSecretCode(final Activity context){
         Retrofit retrofit = RetrofitClientInstance.getRetrofitInstance();
         LoginServer loginServer = retrofit.create(LoginServer.class);
@@ -120,7 +140,6 @@ public class Utility {
                 if (response.body().getResult().equalsIgnoreCase("success")){
                     String s_raw = response.body().getSecretCode().trim();
                     SaveItem.setItem(context,SaveItem.raw_Scode,s_raw.substring(0,30));
-                    checkNewVersion(context,response.body());
                 }else {
                     MDToast.makeText(context,response.body().getMessage(),2500,MDToast.TYPE_INFO).show();
                 }
@@ -147,6 +166,7 @@ public class Utility {
                 .setContentGravity(Gravity.CENTER)
                 .setTitleTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Vazir.ttf"))
                 .setTextTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/sans.ttf"))
+                .setIcon(R.drawable.ic_notifications_black_24dp)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

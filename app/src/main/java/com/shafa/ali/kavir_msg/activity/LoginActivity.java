@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         Utility.getSecretCode(this);
 
-
         loginBtn =(TextView)findViewById(R.id.loginBtn);
         qrcodeImg =(ImageView)findViewById(R.id.qrcode);
         userNameEdit =(EditText)findViewById(R.id.usernameEd);

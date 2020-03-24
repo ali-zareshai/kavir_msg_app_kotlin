@@ -7,15 +7,15 @@ import android.os.Bundle;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.utility.Utility;
 
 public class SplashActivity extends AppCompatActivity {
-    private SpinKitView loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        loader = findViewById(R.id.spin_kit);
+        Utility.getNewVersion(this);
 
         new Handler().postDelayed(new Runnable() {
             @Override

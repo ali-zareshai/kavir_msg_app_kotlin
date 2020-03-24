@@ -10,24 +10,15 @@
         android:background="@color/toolbar_color"
         android:layout_height="match_parent">
         <ImageView
-            android:layout_width="350dp"
-            android:layout_height="350dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:src="@drawable/kavir_logo_splash"
             android:background="@color/toolbar_color"
             android:padding="2dp"
             android:scaleType="fitCenter"
             android:layout_centerInParent="true"/>
-        <com.github.ybq.android.spinkit.SpinKitView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/spin_kit"
-            style="@style/SpinKitView.Large.Circle"
-            android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="80dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:SpinKit_Color="@color/white" />
+
 
     </RelativeLayout>
 
