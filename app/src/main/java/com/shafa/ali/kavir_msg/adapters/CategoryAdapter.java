@@ -61,7 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Holder
         }
 
         Glide.with(context)
-                .load(Setting.CATEGORY_IMAGES_URL+categoryModel.getSlug()+".png")
+                .load(Setting.CATEGORY_IMAGES_URL+categoryModel.getId()+".png")
                 .override(90, 90)
                 .centerCrop()
                 .crossFade()

@@ -44,7 +44,7 @@ public class AccessAdapter extends RecyclerView.Adapter<AccessAdapter.Holder> {
         holder.productIdTv.setText(FormatHelper.toPersianNumber(accessModel.getProductId()));
 
         Glide.with(context)
-                .load(Setting.CATEGORY_IMAGES_URL+"p/p"+accessModel.getProductId()+".png")
+                .load(Setting.CATEGORY_IMAGES_URL+"p/"+accessModel.getProductId()+".png")
                 .override(90, 90)
                 .centerCrop()
                 .crossFade()

@@ -54,7 +54,7 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             holder.newPost.setText(FormatHelper.toPersianNumber(newPosts));
         }
         Glide.with(context)
-                .load(Setting.CATEGORY_IMAGES_URL+subCategoryModel.getSlug()+".png")
+                .load(Setting.CATEGORY_IMAGES_URL+subCategoryModel.getId()+".png")
                 .override(90, 90)
                 .centerCrop()
                 .crossFade()
