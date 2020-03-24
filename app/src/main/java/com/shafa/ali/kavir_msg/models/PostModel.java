@@ -26,6 +26,17 @@ public class PostModel {
     @SerializedName("url")
     private String url;
 
+    @SerializedName("comment_status")
+    private String commentStatus;
+
+    public String getCommentStatus() {
+        return commentStatus;
+    }
+
+    public void setCommentStatus(String commentStatus) {
+        this.commentStatus = commentStatus;
+    }
+
     public String getUrl() {
         return url;
     }

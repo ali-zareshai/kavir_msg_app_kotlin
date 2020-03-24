@@ -202,6 +202,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         scrollviewPost.setVisibility(View.VISIBLE);
         loading.setVisibility(View.GONE);
 
+        if (postModel.getCommentStatus().equalsIgnoreCase("close")){
+            ((RelativeLayout)findViewById(R.id.rel_comments)).setVisibility(View.GONE);
+        }
+
     }
 
     private void setCommentRecycleView(){
