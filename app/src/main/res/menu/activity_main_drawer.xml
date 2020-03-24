@@ -35,6 +35,10 @@
             android:icon="@drawable/ic_traffic_black_24dp"
             android:title="@string/access_list" />
         <item
+            android:id="@+id/help"
+            android:icon="@drawable/ic_help_black_24dp"
+            android:title="@string/help" />
+        <item
             android:id="@+id/about_we"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="@string/about_we"/>

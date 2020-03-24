@@ -153,6 +153,9 @@ public class Utility {
     }
 
     private static void checkNewVersion(Activity context,SecretCodeModel body) {
+        if (body.getVersionCode()==null){
+            return;
+        }
         if (Integer.parseInt(body.getVersionCode())> BuildConfig.VERSION_CODE){
             showAlertNewVersion(context,body.getVersionName(),body.getUpdateUrl());
         }

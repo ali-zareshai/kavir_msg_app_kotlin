@@ -38,6 +38,7 @@ import com.shafa.ali.kavir_msg.fragments.AboutFragment;
 import com.shafa.ali.kavir_msg.fragments.AccessFragment;
 import com.shafa.ali.kavir_msg.fragments.ActiveFragment;
 import com.shafa.ali.kavir_msg.fragments.CategoryFragment;
+import com.shafa.ali.kavir_msg.fragments.HelpFragment;
 import com.shafa.ali.kavir_msg.fragments.ReadyReadFragment;
 import com.shafa.ali.kavir_msg.fragments.RegisterFragment;
 import com.shafa.ali.kavir_msg.interfaces.ClickListener;
@@ -209,6 +210,10 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             loadFragment(AccessFragment.newInstance());
             toolbarTitle.setText(getString(R.string.access_list));
             statusSearchBtn(View.GONE);
+        }else if (id==R.id.help){
+            loadFragment(HelpFragment.newInstance());
+            toolbarTitle.setText(getString(R.string.help));
+            statusSearchBtn(View.VISIBLE);
         }
 
         drawer.closeDrawer(Gravity.END);
