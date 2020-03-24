@@ -60,8 +60,8 @@
     <string name="message">پیام:</string>
     <string name="success">موفق</string>
     <string name="error">خطا</string>
-    <string name="new_version">ورژن جدید رسید</string>
-    <string name="version">ورژن</string>
+    <string name="new_version">نسخه جدید رسید</string>
+    <string name="version">نسخه</string>
     <string name="available">در دسترس است</string>
     <string name="help">راهنما</string>
     <!-- TODO: Remove or change this placeholder text -->

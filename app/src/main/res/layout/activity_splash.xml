@@ -13,11 +13,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:id="@+id/logo_kavir"
             android:src="@drawable/kavir_logo_splash"
             android:background="@color/toolbar_color"
             android:padding="2dp"
             android:scaleType="fitCenter"
             android:layout_centerInParent="true"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/logo_kavir"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layoutDirection="rtl"
+            android:layout_height="wrap_content">
+            <customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/version"
+                android:textStyle="normal"
+                android:textSize="21dp"
+                android:padding="3dp"
+                android:layout_height="wrap_content"/>
+            <customviews.CustomTextView
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="21dp"
+                android:id="@+id/version_name"
+                android:padding="3dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
     </RelativeLayout>

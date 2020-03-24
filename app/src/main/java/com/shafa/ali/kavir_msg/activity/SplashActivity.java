@@ -4,18 +4,23 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.github.ybq.android.spinkit.SpinKitView;
+import com.shafa.ali.kavir_msg.BuildConfig;
 import com.shafa.ali.kavir_msg.R;
+import com.shafa.ali.kavir_msg.utility.FormatHelper;
 import com.shafa.ali.kavir_msg.utility.Utility;
 
 public class SplashActivity extends AppCompatActivity {
-
+    private TextView versionNameTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         Utility.getNewVersion(this);
+        versionNameTv =(TextView)findViewById(R.id.version_name);
+        versionNameTv.setText(FormatHelper.toPersianNumber(BuildConfig.VERSION_NAME));
 
         new Handler().postDelayed(new Runnable() {
             @Override
