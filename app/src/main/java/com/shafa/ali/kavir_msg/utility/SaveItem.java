@@ -19,6 +19,9 @@ public class SaveItem {
         public static final String REGISTER_PHONE ="register_phone";
         public static final String APK_ID ="apk_id";
         public static final String raw_Scode="raw_s";
+        public static final String COME_NEW_VERSION ="new_version";
+        public static final String NEW_VERSION_NAME="version_name";
+        public static final String NEW_VERSION_URL ="version_url";
 
 
         public static SharedPreferences getSP(Context context){

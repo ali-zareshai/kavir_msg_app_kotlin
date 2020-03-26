@@ -157,15 +157,19 @@ public class Utility {
             return;
         }
         if (Integer.parseInt(body.getVersionCode())> BuildConfig.VERSION_CODE){
-            showAlertNewVersion(context,body.getVersionName(),body.getUpdateUrl());
+            SaveItem.setItem(context,SaveItem.COME_NEW_VERSION,"1");
+            SaveItem.setItem(context,SaveItem.NEW_VERSION_NAME,body.getVersionName());
+            SaveItem.setItem(context,SaveItem.NEW_VERSION_URL,body.getUpdateUrl());
+        }else{
+            SaveItem.setItem(context,SaveItem.COME_NEW_VERSION,"0");
         }
     }
 
-    private static void showAlertNewVersion(final Activity context, String versionName, final String updateUrl) {
+    public static void showAlertNewVersion(final Activity context, String versionName, final String updateUrl) {
         Alerter.create(context)
                 .setTitle(context.getString(R.string.new_version))
                 .setText(context.getString(R.string.version)+" "+versionName+" "+context.getString(R.string.available))
-                .setDuration(5000)
+                .setDuration(10000)
                 .setContentGravity(Gravity.CENTER)
                 .setTitleTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Vazir.ttf"))
                 .setTextTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/sans.ttf"))

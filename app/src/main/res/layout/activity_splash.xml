@@ -29,7 +29,7 @@
             android:layout_height="wrap_content">
             <customviews.CustomTextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="@string/version"
                 android:textStyle="normal"
                 android:textSize="21dp"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"/>
             <customviews.CustomTextView
                 android:layout_width="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="21dp"
                 android:id="@+id/version_name"

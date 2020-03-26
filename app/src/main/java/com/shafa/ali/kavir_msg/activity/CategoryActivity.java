@@ -86,6 +86,13 @@ public class CategoryActivity extends AppCompatActivity implements NavigationVie
             }
         });
         setSupportActionBar(mTopToolbar);
+        //// check new version
+        if (SaveItem.getItem(this,SaveItem.COME_NEW_VERSION,"").equalsIgnoreCase("1")){
+            Utility.showAlertNewVersion(this
+            ,SaveItem.getItem(this,SaveItem.NEW_VERSION_NAME,"")
+            ,SaveItem.getItem(this,SaveItem.NEW_VERSION_URL,""));
+            SaveItem.setItem(this,SaveItem.COME_NEW_VERSION,"0");
+        }
 
         //***************************
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
