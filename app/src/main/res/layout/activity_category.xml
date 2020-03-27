@@ -67,7 +67,7 @@
         <fragment
             android:id="@+id/fragment"
             android:layout_marginTop="?attr/actionBarSize"
-            android:name="com.kavir.ali.kavir_msg.fragments.CategoryFragment"
+            android:name="com.kavirelectronic.ali.kavir_info.fragments.CategoryFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 <!--        <android.support.design.widget.FloatingActionButton-->

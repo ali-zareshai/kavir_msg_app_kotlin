@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.kavir.ali.kavir_msg.R;
-import com.kavir.ali.kavir_msg.utility.FormatHelper;
+import com.kavirelectronic.ali.kavir_info.R;
+import com.kavirelectronic.ali.kavir_info.utility.FormatHelper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

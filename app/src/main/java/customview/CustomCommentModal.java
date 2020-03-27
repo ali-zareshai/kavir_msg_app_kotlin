@@ -13,10 +13,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import com.kavir.ali.kavir_msg.R;
-import com.kavir.ali.kavir_msg.server.Comments;
-import com.kavir.ali.kavir_msg.utility.RetrofitClientInstance;
-import com.kavir.ali.kavir_msg.utility.SaveItem;
+import com.kavirelectronic.ali.kavir_info.R;
+import com.kavirelectronic.ali.kavir_info.server.Comments;
+import com.kavirelectronic.ali.kavir_info.utility.RetrofitClientInstance;
+import com.kavirelectronic.ali.kavir_info.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.json.JSONException;
