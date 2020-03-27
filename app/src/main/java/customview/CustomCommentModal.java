@@ -9,17 +9,14 @@ import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import com.google.gson.JsonObject;
-import com.shafa.ali.kavir_msg.R;
-import com.shafa.ali.kavir_msg.server.Comments;
-import com.shafa.ali.kavir_msg.server.GetPostsServer;
-import com.shafa.ali.kavir_msg.utility.RetrofitClientInstance;
-import com.shafa.ali.kavir_msg.utility.SaveItem;
+import com.kavir.ali.kavir_msg.R;
+import com.kavir.ali.kavir_msg.server.Comments;
+import com.kavir.ali.kavir_msg.utility.RetrofitClientInstance;
+import com.kavir.ali.kavir_msg.utility.SaveItem;
 import com.valdesekamdem.library.mdtoast.MDToast;
 
 import org.json.JSONException;

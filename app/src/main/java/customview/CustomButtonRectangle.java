@@ -6,9 +6,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.shafa.ali.kavir_msg.R;
+import com.kavir.ali.kavir_msg.R;
 
 public class CustomButtonRectangle extends Button {
     public CustomButtonRectangle(Context context) {

@@ -2,24 +2,19 @@ package customview;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.IntDef;
-import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.shafa.ali.kavir_msg.R;
-import com.shafa.ali.kavir_msg.utility.FormatHelper;
+import com.kavir.ali.kavir_msg.R;
+import com.kavir.ali.kavir_msg.utility.FormatHelper;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
