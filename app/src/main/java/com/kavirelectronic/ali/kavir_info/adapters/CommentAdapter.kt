@@ -12,7 +12,7 @@ import com.kavirelectronic.ali.kavir_info.R
 import com.kavirelectronic.ali.kavir_info.models.CommentModel
 import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
 
-class CommentAdapter(private val commentModelList: List<CommentModel>, private val context: Context) : RecyclerView.Adapter<CommentAdapter.Holder>() {
+class CommentAdapter(private val commentModelList: List<CommentModel>?, private val context: Context) : RecyclerView.Adapter<CommentAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
         return Holder(view)

@@ -111,9 +111,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
         Log.e("scode:", scode)
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val loginServer = retrofit.create(LoginServer::class.java)
-        loginServer.loginUser(username, password, scode).enqueue(object : Callback<LoginModel> {
-            override fun onResponse(call: Call<LoginModel>, response: Response<LoginModel>) {
+        val loginServer = retrofit!!.create(LoginServer::class.java)
+        loginServer.loginUser(username, password, scode)?.enqueue(object : Callback<LoginModel?> {
+            override fun onFailure(call: Call<LoginModel?>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call<LoginModel?>, response: Response<LoginModel?>) {
                 if (response.isSuccessful) {
                     if (response.body()!!.result.equals("success", ignoreCase = true)) {
                         saveLoginData(response.body())
@@ -132,11 +136,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 progressBarLogin!!.visibility = View.GONE
             }
 
-            override fun onFailure(call: Call<LoginModel>, t: Throwable) {
-//                Log.e("onFailure:",t.getMessage());
-                progressBarLogin!!.visibility = View.GONE
-                MDToast.makeText(applicationContext, getString(R.string.error_in_connection), 2500, MDToast.TYPE_WARNING).show()
-            }
         })
     }
 
@@ -148,8 +147,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         SaveItem.setItem(this, SaveItem.USER_MOBILE, body.mobile)
         SaveItem.setItem(this, SaveItem.USER_ID, body.userId)
         SaveItem.setItem(this, SaveItem.USER_COOKIE, body.cookie)
-        SaveItem.setItem(this, SaveItem.MID_CODE, Utility.calMID(body.mobile.split("").toTypedArray()))
-        SaveItem.setItem(this, SaveItem.S_CODE, Utility.calSCode(this, body.mobile.split("").toTypedArray()))
-        Utility.calApkId(this, body.mobile.split("").toTypedArray())
+        SaveItem.setItem(this, SaveItem.MID_CODE, Utility.calMID(body.mobile!!.split("").toTypedArray()))
+        SaveItem.setItem(this, SaveItem.S_CODE, Utility.calSCode(this, body!!.mobile!!.split("").toTypedArray()))
+        Utility.calApkId(this, body!!.mobile!!.split("").toTypedArray())
     }
 }

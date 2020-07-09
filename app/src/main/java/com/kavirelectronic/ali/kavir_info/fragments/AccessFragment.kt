@@ -50,7 +50,7 @@ class AccessFragment : Fragment() {
         private get() {
             swipeRefreshLayout!!.isRefreshing = true
             val retrofit = RetrofitClientInstance.retrofitInstance
-            val loginServer = retrofit.create(LoginServer::class.java)
+            val loginServer = retrofit!!.create(LoginServer::class.java)
             loginServer.getAccessList(SaveItem.getItem(activity, SaveItem.APK_ID, ""), SaveItem.getItem(activity, SaveItem.S_CODE, ""))
                     .enqueue(object : Callback<List<AccessModel?>?> {
                         override fun onResponse(call: Call<List<AccessModel?>?>, response: Response<List<AccessModel?>?>) {

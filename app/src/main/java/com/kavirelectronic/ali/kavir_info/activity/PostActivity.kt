@@ -138,8 +138,8 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun fetchDataNet() {
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val getPostsServer = retrofit.create(GetPostsServer::class.java)
-        getPostsServer.getPost(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), postId).enqueue(object : Callback<PostModel?> {
+        val getPostsServer = retrofit!!.create(GetPostsServer::class.java)
+        getPostsServer.getPost(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), postId)!!.enqueue(object : Callback<PostModel?> {
             override fun onResponse(call: Call<PostModel?>, response: Response<PostModel?>) {
                 if (response.isSuccessful) {
                     postModel = response.body()
@@ -165,7 +165,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
     private fun setViews() {
         dateTv!!.text = FormatHelper.toPersianNumber(postModel!!.date)
         autherTv!!.text = postModel!!.author
-        showComments!!.text = getString(R.string.comments) + "(" + FormatHelper.toPersianNumber(postModel!!.commentModelList.size.toString()) + ")"
+        showComments!!.text = getString(R.string.comments) + "(" + FormatHelper.toPersianNumber(postModel!!.commentModelList!!.size.toString()) + ")"
         webView!!.settings.javaScriptEnabled = true
         webView!!.loadData("<html dir=\"rtl\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"/>" + postModel!!.content + "</html>", "text/html", "UTF-8")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -249,7 +249,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.back_post_btn -> finish()
-            R.id.show_comment -> if (postModel!!.commentModelList.size > 0) {
+            R.id.show_comment -> if (postModel!!.commentModelList!!.size > 0) {
                 setCommentRecycleView()
             } else {
                 MDToast.makeText(this, getString(R.string.no_post), 2500, MDToast.TYPE_INFO).show()

@@ -39,7 +39,7 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
     private var parentId: String? = null
     private var backBtn: ImageButton? = null
     private var homeBtn: ImageButton? = null
-    private var subCategoryModels: List<SubCategoryModel>? = null
+    private var subCategoryModels: List<SubCategoryModel?>? = null
     private var currentSlug: String? = null
     private var parentName: String? = null
     private var currentPageSize = 0
@@ -74,23 +74,23 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
         subCategoryRecycler!!.layoutManager = layoutManager
         getSubCategoryFromServer(parentId)
         subCategoryRecycler!!.addOnItemTouchListener(RecyclerTouchListener(this,
-                subCategoryRecycler, object : ClickListener {
-            override fun onClick(view: View, position: Int) {
+                subCategoryRecycler!!, object : ClickListener {
+            override fun onClick(view: View?, position: Int) {
                 dialog!!.show()
                 //Values are passing to activity & to fragment as well
                 try {
-                    currentSlug = subCategoryModels!![position].slug
-                    currentPageSize = subCategoryModels!![position].post_count
-                    getSubCategoryFromServer(subCategoryModels!![position].id.toString())
-                    setCountPostCount(subCategoryModels!![position].id.toString(), subCategoryModels!![position].post_count)
+                    currentSlug = subCategoryModels!![position]!!.slug
+                    currentPageSize = subCategoryModels!![position]!!.post_count
+                    getSubCategoryFromServer(subCategoryModels!![position]!!.id.toString())
+                    setCountPostCount(subCategoryModels!![position]!!.id.toString(), subCategoryModels!![position]!!.post_count)
                 } catch (e: Exception) {
                     Log.e("Exception:", e.message)
                 }
                 dialog!!.dismiss()
             }
 
-            override fun onLongClick(view: View, position: Int) {
-//                Toast.makeText(SubCategoryActivity.this, "Long press on position :"+position,Toast.LENGTH_LONG).show();
+            override fun onLongClick(view: View?, position: Int) {
+                TODO("Not yet implemented")
             }
         }))
     }
@@ -110,14 +110,15 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
         isSending = true
         dialog!!.show()
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val getDataService = retrofit.create(GetDataCategory::class.java)
-        getDataService.getAllSubCategorys(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), parentIdf).enqueue(object : Callback<List<SubCategoryModel>> {
-            override fun onResponse(call: Call<List<SubCategoryModel>>, response: Response<List<SubCategoryModel>>) {
+        val getDataService = retrofit!!.create(GetDataCategory::class.java)
+        getDataService.getAllSubCategorys(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), parentIdf)!!.enqueue(object : Callback<List<SubCategoryModel?>?> {
+
+            override fun onResponse(call: Call<List<SubCategoryModel?>?>, response: Response<List<SubCategoryModel?>?>) {
                 if (response.isSuccessful) {
                     subCategoryModels = ArrayList()
                     subCategoryModels = response.body()
                     isSending = false
-                    if (subCategoryModels!![0].id == 0) {
+                    if (subCategoryModels!![0]!!.id == 0) {
                         startTitlePostActivity(currentSlug, currentPageSize)
                     } else {
                         lastList = parentIdf
@@ -127,7 +128,7 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
                 }
             }
 
-            override fun onFailure(call: Call<List<SubCategoryModel>>, t: Throwable) {
+            override fun onFailure(call: Call<List<SubCategoryModel?>?>, t: Throwable) {
                 val builder = CFAlertDialog.Builder(this@SubCategoryActivity)
                         .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
                         .setTitle(getString(R.string.not_respone))
@@ -164,7 +165,7 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
         }
     }
 
-    private fun generateDataList(subCategoryModelList: List<SubCategoryModel>?) {
+    private fun generateDataList(subCategoryModelList: List<SubCategoryModel?>?) {
         subCategoryAdapter = null
         subCategoryAdapter = SubCategoryAdapter(applicationContext, subCategoryModelList)
         subCategoryRecycler!!.adapter = subCategoryAdapter

@@ -13,7 +13,7 @@ import com.kavirelectronic.ali.kavir_info.R
 import com.kavirelectronic.ali.kavir_info.models.TiltlePostsModel.PostsModel
 import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
 
-class TitleAdapter(private val context: Context, private val tiltlePostsModels: List<PostsModel>) : RecyclerView.Adapter<TitleAdapter.Holder>() {
+class TitleAdapter(private val context: Context, private val tiltlePostsModels: List<PostsModel?>?) : RecyclerView.Adapter<TitleAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_title_post, parent, false)
         return Holder(view)

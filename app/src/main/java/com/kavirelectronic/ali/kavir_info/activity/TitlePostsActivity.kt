@@ -75,7 +75,7 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
                     return
                 }
                 dialog!!.show()
-                val postsModel = tiltlePostsModel!!.postsModels[position]
+                val postsModel = tiltlePostsModel!!.postsModels[position?]
                 val intent = Intent(this@TitlePostsActivity, PostActivity::class.java)
                 intent.putExtra("postId", postsModel.id)
                 intent.putExtra("source", "net")
@@ -92,7 +92,7 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
         recyclerView!!.visibility = View.GONE
         dialog!!.show()
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val getPostsServer = retrofit.create(GetPostsServer::class.java)
+        val getPostsServer = retrofit!!.create(GetPostsServer::class.java)
         val tiltlePostsModelCall: Call<TiltlePostsModel>
         tiltlePostsModelCall = if (isPostOnly) {
             getPostsServer.getTitlePostByCatId(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), catId, pageNumber.toString(), pageSize.toString())
@@ -103,7 +103,7 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
             override fun onResponse(call: Call<TiltlePostsModel?>, response: Response<TiltlePostsModel?>) {
                 if (response.isSuccessful) {
                     tiltlePostsModel = response.body()
-                    if (tiltlePostsModel!!.postsModels == null || tiltlePostsModel!!.postsModels.size == 0) {
+                    if (tiltlePostsModel!!.postsModels == null || tiltlePostsModel!!.postsModels!!.size == 0) {
                         fininshActivity()
                         return
                     }

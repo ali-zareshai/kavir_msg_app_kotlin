@@ -92,13 +92,13 @@ class QrCodeScanerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler
     }
 
     private fun finishPage(msg: String?) {
-        ActiveFragment.message_tv.text = msg
+        ActiveFragment.message_tv!!.text = msg
         if (msg.equals("user access set", ignoreCase = true)) {
-            ActiveFragment.result_tv.text = getString(R.string.success)
-            ActiveFragment.result_tv.setTextColor(Color.GREEN)
+            ActiveFragment.result_tv!!.text = getString(R.string.success)
+            ActiveFragment!!.result_tv!!.setTextColor(Color.GREEN)
         } else {
-            ActiveFragment.result_tv.text = getString(R.string.error)
-            ActiveFragment.result_tv.setTextColor(Color.RED)
+            ActiveFragment.result_tv!!.text = getString(R.string.error)
+            ActiveFragment.result_tv!!.setTextColor(Color.RED)
         }
         dialog!!.dismiss()
         finish()
@@ -107,16 +107,16 @@ class QrCodeScanerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler
     private fun sendQrCode(qCode: String) {
         mScannerView!!.stopCameraPreview()
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val loginServer = retrofit.create(LoginServer::class.java)
-        loginServer.activeUser(qCode, SaveItem.getItem(this, SaveItem.S_CODE, "")).enqueue(object : Callback<ActiveRespone> {
-            override fun onResponse(call: Call<ActiveRespone>, response: Response<ActiveRespone>) {
+        val loginServer = retrofit!!.create(LoginServer::class.java)
+        loginServer.activeUser(qCode, SaveItem.getItem(this, SaveItem.S_CODE, ""))!!.enqueue(object : Callback<ActiveRespone?> {
+            override fun onFailure(call: Call<ActiveRespone?>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call<ActiveRespone?>, response: Response<ActiveRespone?>) {
                 finishPage(response.body()!!.message)
             }
 
-            override fun onFailure(call: Call<ActiveRespone>, t: Throwable) {
-                Log.e("onFailure:", t.message)
-                finishPage(t.message)
-            }
         })
     }
 }

@@ -28,7 +28,7 @@ class SearchActivity : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
     private var searchView: SearchView? = null
     private var backBtn: ImageButton? = null
-    private var postsModelList: List<PostsModel>? = null
+    private var postsModelList: List<PostsModel?>? = null
     private var searchFram: FrameLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,25 +61,31 @@ class SearchActivity : AppCompatActivity() {
         searchEditText.setTypeface(type2, Typeface.NORMAL)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerView!!.layoutManager = layoutManager
-        recyclerView!!.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView, object : ClickListener {
-            override fun onClick(view: View, position: Int) {
+        recyclerView!!.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView!!, object : ClickListener {
+            override fun onClick(view: View?, position: Int) {
                 val postsModel = postsModelList!![position]
                 val intent = Intent(this@SearchActivity, PostActivity::class.java)
-                intent.putExtra("postId", postsModel.id)
+                intent.putExtra("postId", postsModel!!.id)
                 intent.putExtra("source", "net")
                 startActivity(intent)
             }
 
-            override fun onLongClick(view: View, position: Int) {}
+            override fun onLongClick(view: View?, position: Int) {
+                TODO("Not yet implemented")
+            }
         }))
     }
 
     private fun getsearchResult(query: String) {
         recyclerView!!.visibility = View.GONE
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val getPostsServer = retrofit.create(GetPostsServer::class.java)
-        getPostsServer.getSearch(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), query).enqueue(object : Callback<List<PostsModel>?> {
-            override fun onResponse(call: Call<List<PostsModel>?>, response: Response<List<PostsModel>?>) {
+        val getPostsServer = retrofit!!.create(GetPostsServer::class.java)
+        getPostsServer.getSearch(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), query)!!.enqueue(object : Callback<List<PostsModel?>?> {
+            override fun onFailure(call: Call<List<PostsModel?>?>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onResponse(call: Call<List<PostsModel?>?>, response: Response<List<PostsModel?>?>) {
                 if (response.isSuccessful) {
                     val titleAdapter = TitleAdapter(this@SearchActivity, response.body())
                     postsModelList = response.body()
@@ -88,9 +94,6 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<List<PostsModel>?>, t: Throwable) {
-//                Log.e("onFailure:",t.getMessage());
-            }
         })
     }
 

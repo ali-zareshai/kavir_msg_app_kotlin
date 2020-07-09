@@ -109,11 +109,11 @@ class CategoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         }
     }
 
-    private fun loadFragment(fragmentNew: Fragment) {
-        transaction = fragmentManager.beginTransaction()
-        val fragment = fragmentManager.findFragmentById(R.id.fragment)
+    private fun loadFragment(fragmentNew: Fragment?) {
+        transaction = fragmentManager!!.beginTransaction()
+        val fragment = fragmentManager!!.findFragmentById(R.id.fragment)
         if (fragment != null) {
-            fragmentManager.beginTransaction().remove(fragment).commit()
+            fragmentManager!!.beginTransaction().remove(fragment).commit()
         }
         // load fragment
         transaction!!.replace(R.id.fragment, fragmentNew)

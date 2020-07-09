@@ -25,7 +25,7 @@ import retrofit2.Response
 
 class CustomCommentModal {
     private var commentDialog: Dialog? = null
-    fun showNewComment(context: Context, postId: String) {
+    fun showNewComment(context: Context, postId: String?) {
         commentDialog = Dialog(context)
         commentDialog!!.setContentView(R.layout.dialog_new_comment)
         commentDialog!!.setCancelable(true)
