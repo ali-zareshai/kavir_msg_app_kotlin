@@ -67,9 +67,9 @@ class RegisterFragment : Fragment(), View.OnClickListener {
         Log.e("s:", Utility.calSCode(activity.applicationContext, phone.split("").toTypedArray()))
         Log.e("phone:", phone)
         val retrofit = RetrofitClientInstance.retrofitInstance
-        val loginServer = retrofit.create(LoginServer::class.java)
-        loginServer.registerUser(name, phone, email, password, Utility.calMID(phone.split("").toTypedArray()), Utility.calSCode(activity.applicationContext, phone.split("").toTypedArray())).enqueue(object : Callback<RegisterModel> {
-            override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel>) {
+        val loginServer = retrofit!!.create(LoginServer::class.java)
+        loginServer!!.registerUser(name, phone, email, password, Utility.calMID(phone.split("").toTypedArray()), Utility.calSCode(activity.applicationContext, phone.split("").toTypedArray()))!!.enqueue(object : Callback<RegisterModel?> {
+            override fun onResponse(call: Call<RegisterModel>, response: Response<RegisterModel?>) {
                 if (response.body()!!.status.equals("success", ignoreCase = true)) {
                     SaveItem.setItem(activity.applicationContext, SaveItem.S_CODE, response.body()!!.scode)
                     SaveItem.setItem(activity.applicationContext, SaveItem.MID_CODE, response.body()!!.mid)
@@ -84,7 +84,7 @@ class RegisterFragment : Fragment(), View.OnClickListener {
                 loadingProgressBar!!.visibility = View.INVISIBLE
             }
 
-            override fun onFailure(call: Call<RegisterModel>, t: Throwable) {
+            override fun onFailure(call: Call<RegisterModel?>, t: Throwable) {
                 MDToast.makeText(activity.applicationContext, activity.applicationContext.getString(R.string.error_in_connection), 2500, MDToast.TYPE_ERROR).show()
                 loadingProgressBar!!.visibility = View.INVISIBLE
                 Log.e("onFailure:", t.toString())

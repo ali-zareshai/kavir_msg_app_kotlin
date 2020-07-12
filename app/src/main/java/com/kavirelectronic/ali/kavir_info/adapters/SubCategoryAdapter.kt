@@ -24,20 +24,20 @@ class SubCategoryAdapter(private val context: Context, private val subCategoryMo
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val subCategoryModel = subCategoryModelList[position]
-        holder.id.text = subCategoryModel.id.toString()
-        holder.title.text = subCategoryModel.title
-        holder.description.text = subCategoryModel.description
-        holder.postCount.text = FormatHelper.toPersianNumber(subCategoryModel.post_count.toString())
+        val subCategoryModel = subCategoryModelList!![position]
+        holder.id.text = subCategoryModel!!.id.toString()
+        holder.title.text = subCategoryModel!!.title
+        holder.description.text = subCategoryModel!!.description
+        holder.postCount.text = FormatHelper.toPersianNumber(subCategoryModel!!.post_count.toString())
         holder.subCatLine.visibility = View.GONE
-        val newPosts = getNewPosts(subCategoryModel.id.toString(), subCategoryModel.post_count)
+        val newPosts = getNewPosts(subCategoryModel!!.id.toString(), subCategoryModel!!.post_count)
         if (newPosts == "0") {
             holder.newPost.visibility = View.GONE
         } else {
             holder.newPost.text = FormatHelper.toPersianNumber(newPosts)
         }
         Glide.with(context)
-                .load(Setting.CATEGORY_IMAGES_URL + subCategoryModel.id + ".png")
+                .load(Setting.CATEGORY_IMAGES_URL + subCategoryModel!!.id + ".png")
                 .override(90, 90)
                 .centerCrop()
                 .crossFade()
@@ -48,7 +48,7 @@ class SubCategoryAdapter(private val context: Context, private val subCategoryMo
     }
 
     override fun getItemCount(): Int {
-        return subCategoryModelList.size
+        return subCategoryModelList!!.size
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {

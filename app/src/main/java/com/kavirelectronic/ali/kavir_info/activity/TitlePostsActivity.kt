@@ -14,7 +14,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.crowdfire.cfalertdialog.CFAlertDialog
 import com.kavirelectronic.ali.kavir_info.R
-import com.kavirelectronic.ali.kavir_info.activity.CategoryActivity
 import com.kavirelectronic.ali.kavir_info.adapters.TitleAdapter
 import com.kavirelectronic.ali.kavir_info.interfaces.ClickListener
 import com.kavirelectronic.ali.kavir_info.models.TiltlePostsModel
@@ -68,14 +67,14 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
         recyclerView!!.layoutManager = layoutManager
         getDataFromServer(1, 10)
         paginationView!!.setPager(intent.extras.getInt("post_size"))
-        paginationView!!.setOnPagerUpdate { pageNumber, pageSize -> getDataFromServer(pageNumber + 1, pageSize) }
-        recyclerView!!.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView, object : ClickListener {
-            override fun onClick(view: View, position: Int) {
+        paginationView!!.setOnPagerUpdate { pageNumber, pageSize -> getDataFromServer(pageNumber.toInt().plus(1), pageSize) }
+        recyclerView!!.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView!!, object : ClickListener {
+            override fun onClick(view: View?, position: Int) {
                 if (dialog!!.isShowing()) {
                     return
                 }
                 dialog!!.show()
-                val postsModel = tiltlePostsModel!!.postsModels[position?]
+                val postsModel = tiltlePostsModel!!.postsModels!![position]
                 val intent = Intent(this@TitlePostsActivity, PostActivity::class.java)
                 intent.putExtra("postId", postsModel.id)
                 intent.putExtra("source", "net")
@@ -84,7 +83,9 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
                 dialog!!.dismiss()
             }
 
-            override fun onLongClick(view: View, position: Int) {}
+            override fun onLongClick(view: View?, position: Int) {
+                TODO("Not yet implemented")
+            }
         }))
     }
 
@@ -93,13 +94,13 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
         dialog!!.show()
         val retrofit = RetrofitClientInstance.retrofitInstance
         val getPostsServer = retrofit!!.create(GetPostsServer::class.java)
-        val tiltlePostsModelCall: Call<TiltlePostsModel>
+        val tiltlePostsModelCall: Call<TiltlePostsModel?>?
         tiltlePostsModelCall = if (isPostOnly) {
             getPostsServer.getTitlePostByCatId(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), catId, pageNumber.toString(), pageSize.toString())
         } else {
             getPostsServer.getTiltlePostsBySlug(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), slugName, pageNumber.toString(), pageSize.toString())
         }
-        tiltlePostsModelCall.enqueue(object : Callback<TiltlePostsModel?> {
+        tiltlePostsModelCall!!.enqueue(object : Callback<TiltlePostsModel?> {
             override fun onResponse(call: Call<TiltlePostsModel?>, response: Response<TiltlePostsModel?>) {
                 if (response.isSuccessful) {
                     tiltlePostsModel = response.body()

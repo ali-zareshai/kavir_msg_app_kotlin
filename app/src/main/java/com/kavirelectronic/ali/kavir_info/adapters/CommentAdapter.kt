@@ -19,7 +19,7 @@ class CommentAdapter(private val commentModelList: List<CommentModel>?, private 
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val commentModel = commentModelList[position]
+        val commentModel = commentModelList!![position]
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.titleTv.text = Html.fromHtml(commentModel.name, Html.FROM_HTML_MODE_COMPACT)
             holder.contentTv.text = Html.fromHtml(commentModel.content, Html.FROM_HTML_MODE_COMPACT)
@@ -31,7 +31,7 @@ class CommentAdapter(private val commentModelList: List<CommentModel>?, private 
     }
 
     override fun getItemCount(): Int {
-        return commentModelList.size
+        return commentModelList!!.size
     }
 
      inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {

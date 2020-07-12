@@ -72,8 +72,8 @@ class CategoryFragment : Fragment() {
         get() {
             dialog!!.show()
             val retrofit = RetrofitClientInstance.retrofitInstance
-            val getDataService = retrofit.create(GetDataCategory::class.java)
-            getDataService.getAllCategorys(SaveItem.getItem(activity.applicationContext, SaveItem.USER_COOKIE, "")).enqueue(object : Callback<List<CategoryModel>?> {
+            val getDataService = retrofit!!.create(GetDataCategory::class.java)
+            getDataService.getAllCategorys(SaveItem.getItem(activity.applicationContext, SaveItem.USER_COOKIE, ""))?.enqueue(object : Callback<List<CategoryModel?>?> {
                 override fun onResponse(call: Call<List<CategoryModel>?>, response: Response<List<CategoryModel>?>) {
 //                Log.e("msg",response.body().toString());
                     if (response.isSuccessful) {

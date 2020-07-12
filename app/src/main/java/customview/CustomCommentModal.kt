@@ -60,7 +60,7 @@ class CustomCommentModal {
         window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
     }
 
-    private fun sendComment(context: Context, postId: String, name: String, email: String, comment: String) {
+    private fun sendComment(context: Context, postId: String?, name: String, email: String, comment: String) {
         if (name.isEmpty() || email.isEmpty() || comment.isEmpty()) {
             MDToast.makeText(context, context.getString(R.string.full_all_fields), 2500, MDToast.TYPE_WARNING).show()
             return

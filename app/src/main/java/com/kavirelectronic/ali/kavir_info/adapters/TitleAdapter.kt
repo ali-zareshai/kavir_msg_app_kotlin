@@ -20,13 +20,13 @@ class TitleAdapter(private val context: Context, private val tiltlePostsModels: 
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val postsModel = tiltlePostsModels[position]
+        val postsModel = tiltlePostsModels!![position]
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.titleTv.text = Html.fromHtml(postsModel.title, Html.FROM_HTML_MODE_COMPACT)
-            holder.contentTv.text = Html.fromHtml(postsModel.content, Html.FROM_HTML_MODE_COMPACT)
+            holder.titleTv.text = Html.fromHtml(postsModel!!.title, Html.FROM_HTML_MODE_COMPACT)
+            holder.contentTv.text = Html.fromHtml(postsModel!!.content, Html.FROM_HTML_MODE_COMPACT)
         } else {
-            holder.titleTv.text = Html.fromHtml(postsModel.title)
-            holder.contentTv.text = Html.fromHtml(postsModel.content)
+            holder.titleTv.text = Html.fromHtml(postsModel!!.title)
+            holder.contentTv.text = Html.fromHtml(postsModel!!.content)
         }
         holder.autherTv.text = postsModel.author
         holder.dateTv.text = FormatHelper.toPersianNumber(postsModel.date)
@@ -37,7 +37,7 @@ class TitleAdapter(private val context: Context, private val tiltlePostsModels: 
     }
 
     override fun getItemCount(): Int {
-        return tiltlePostsModels.size
+        return tiltlePostsModels!!.size
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
