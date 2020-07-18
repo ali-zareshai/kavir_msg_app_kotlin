@@ -3,7 +3,7 @@ package com.kavirelectronic.ali.kavir_info.db.models
 import io.realm.RealmObject
 import io.realm.annotations.Required
 
-class Post : RealmObject {
+open class Post : RealmObject {
     @Required
     var id: String? = null
     var title: String? = null

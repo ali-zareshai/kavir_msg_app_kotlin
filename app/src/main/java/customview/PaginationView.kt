@@ -111,7 +111,7 @@ class PaginationView : RelativeLayout {
     }
 
     fun setOnPagerUpdate(onPagerUpdate: (Nothing, Nothing) -> Unit) {
-        mOnPagerUpdate = onPagerUpdate
+        mOnPagerUpdate = onPagerUpdate as OnPagerUpdate?
     }
 
     fun updatePosition(progress: Int) {
