@@ -37,7 +37,7 @@ class CategoryFragment : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var loading: SpinKitView? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
-    private var categoryModelList: List<CategoryModel>? = null
+    private var categoryModelList: List<CategoryModel?>? = null
     private var dialog: AlertDialog? = null
     override fun onCreate(savedInstanceState: Bundle) {
         super.onCreate(savedInstanceState)
@@ -74,18 +74,18 @@ class CategoryFragment : Fragment() {
             val retrofit = RetrofitClientInstance.retrofitInstance
             val getDataService = retrofit!!.create(GetDataCategory::class.java)
             getDataService.getAllCategorys(SaveItem.getItem(activity.applicationContext, SaveItem.USER_COOKIE, ""))?.enqueue(object : Callback<List<CategoryModel?>?> {
-                override fun onResponse(call: Call<List<CategoryModel>?>, response: Response<List<CategoryModel>?>) {
+                override fun onResponse(call: Call<List<CategoryModel?>?>, response: Response<List<CategoryModel?>?>) {
 //                Log.e("msg",response.body().toString());
                     if (response.isSuccessful) {
                         categoryModelList = response.body()
-                        generateDataList(categoryModelList)
+                        generateDataList(categoryModelList as List<CategoryModel>)
                         loading!!.visibility = View.GONE
                         hideSwipRefresh()
                     }
                     dialog!!.dismiss()
                 }
 
-                override fun onFailure(call: Call<List<CategoryModel>?>, t: Throwable) {
+                override fun onFailure(call: Call<List<CategoryModel?>?>, t: Throwable) {
                     Log.e("onFailure:", t.message)
                     val builder = CFAlertDialog.Builder(activity)
                             .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
@@ -101,26 +101,26 @@ class CategoryFragment : Fragment() {
                 }
             })
             categoryRecycler!!.addOnItemTouchListener(RecyclerTouchListener(activity.applicationContext,
-                    categoryRecycler, object : ClickListener {
-                override fun onClick(view: View, position: Int) {
+                    categoryRecycler!!, object : ClickListener {
+                override fun onClick(view: View?, position: Int) {
                     dialog!!.show()
                     val model = categoryModelList!![position]
-                    setCountPostCount(model.id.toString() + "", categoryModelList!![position].post_count)
-                    if (model.subCount > 0) {
+                    setCountPostCount(model?.id.toString() + "", categoryModelList!![position]!!.post_count)
+                    if (model!!.subCount > 0) {
                         val intent = Intent(activity, SubCategoryActivity::class.java)
                         val bundle = Bundle()
-                        bundle.putString("parentId", model.id.toString() + "")
-                        bundle.putString("parentName", model.title)
+                        bundle.putString("parentId", model?.id.toString() + "")
+                        bundle.putString("parentName", model?.title)
                         intent.putExtras(bundle)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
-                    } else if (model.subCount == 0 && model.post_count > 0) {
+                    } else if (model?.subCount == 0 && model?.post_count > 0) {
                         val intent = Intent(activity, TitlePostsActivity::class.java)
                         intent.putExtra("post_only", true)
-                        intent.putExtra("cat_id", model.id.toString() + "")
-                        intent.putExtra("cat_name", model.title)
-                        intent.putExtra("post_size", model.post_count)
+                        intent.putExtra("cat_id", model?.id.toString() + "")
+                        intent.putExtra("cat_name", model?.title)
+                        intent.putExtra("post_size", model?.post_count)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         startActivity(intent)
@@ -130,12 +130,12 @@ class CategoryFragment : Fragment() {
                     dialog!!.dismiss()
                 }
 
-                override fun onLongClick(view: View, position: Int) {}
+                override fun onLongClick(view: View?, position: Int) {}
             }))
         }
 
-    private fun generateDataList(categoryModelList: List<CategoryModel>?) {
-        categoryAdapter = CategoryAdapter(activity, categoryModelList!!)
+    private fun generateDataList(categoryModelList: List<CategoryModel>) {
+        categoryAdapter = CategoryAdapter(activity, categoryModelList)
         categoryRecycler!!.adapter = categoryAdapter
     }
 
