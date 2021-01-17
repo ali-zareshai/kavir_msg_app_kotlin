@@ -4,10 +4,11 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.SearchView
 import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -53,7 +54,7 @@ class SearchActivity : AppCompatActivity() {
                 return false
             }
         })
-        val searchEditText = searchView!!.findViewById<View>(android.support.v7.appcompat.R.id.search_src_text) as EditText
+        val searchEditText = searchView!!.findViewById<View>(androidx.appcompat.R.id.search_src_text) as EditText
         //        searchEditText.setTextColor(getResources().getColor(R.color.white));
         searchEditText.textSize = 24f
         //        searchEditText.setActivated(true);
@@ -82,7 +83,7 @@ class SearchActivity : AppCompatActivity() {
         val getPostsServer = retrofit!!.create(GetPostsServer::class.java)
         getPostsServer.getSearch(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), query)!!.enqueue(object : Callback<List<PostsModel?>?> {
             override fun onFailure(call: Call<List<PostsModel?>?>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("fail search actiity,",t.message)
             }
 
             override fun onResponse(call: Call<List<PostsModel?>?>, response: Response<List<PostsModel?>?>) {

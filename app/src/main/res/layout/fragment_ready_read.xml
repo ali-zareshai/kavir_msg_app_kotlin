@@ -18,17 +18,17 @@
             android:layout_gravity="center"
             android:layout_centerInParent="true"
             app:SpinKit_Color="@color/colorAccent" />
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swip_refresh_ready_red"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/ready_read_recyclerview"
                     android:clipToPadding="false"
                     android:scrollbars="vertical"
                     android:layout_height="match_parent"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
 </FrameLayout>

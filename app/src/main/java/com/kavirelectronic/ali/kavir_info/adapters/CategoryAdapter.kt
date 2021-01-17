@@ -1,7 +1,7 @@
 package com.kavirelectronic.ali.kavir_info.adapters
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +45,6 @@ class CategoryAdapter(private val context: Context, private val categoryModelLis
                 .load(Setting.CATEGORY_IMAGES_URL + categoryModel.id + ".png")
                 .override(90, 90)
                 .centerCrop()
-                .crossFade()
                 .transform(CircleTransform(context))
                 .error(R.drawable.no_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

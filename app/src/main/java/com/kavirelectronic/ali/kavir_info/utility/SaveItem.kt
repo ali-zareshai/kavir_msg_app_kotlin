@@ -38,7 +38,7 @@ object SaveItem {
     @JvmStatic
     fun getItem(context: Context?, key: String?, defaultVal: String): String {
         val v = getSP(context).getString(key, "")
-        return if (v == "" || v.isEmpty()) {
+        return if (v == "" || v?.isEmpty()!!) {
             defaultVal.trim { it <= ' ' }
         } else v.trim { it <= ' ' }
     }

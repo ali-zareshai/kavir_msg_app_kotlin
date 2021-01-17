@@ -1,7 +1,7 @@
 package customview
 
 import android.content.Context
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -110,8 +110,8 @@ class PaginationView : RelativeLayout {
         setPager(totalCount, pageSize)
     }
 
-    fun setOnPagerUpdate(onPagerUpdate: (Nothing, Nothing) -> Unit) {
-        mOnPagerUpdate = onPagerUpdate as OnPagerUpdate?
+    fun setOnPagerUpdate(onPagerUpdate: OnPagerUpdate ) {
+        mOnPagerUpdate = onPagerUpdate
     }
 
     fun updatePosition(progress: Int) {

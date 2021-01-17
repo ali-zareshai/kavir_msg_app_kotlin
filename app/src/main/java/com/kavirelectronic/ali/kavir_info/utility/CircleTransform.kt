@@ -2,17 +2,25 @@ package com.kavirelectronic.ali.kavir_info.utility
 
 import android.content.Context
 import android.graphics.*
+import android.util.Log
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
+import java.security.MessageDigest
 
-class CircleTransform(context: Context?) : BitmapTransformation(context) {
+class CircleTransform(context: Context?) : BitmapTransformation() {
+    override fun updateDiskCacheKey(messageDigest: MessageDigest) {
+        Log.e("updateDiskCacheKey:","....")
+    }
+
     override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap {
         return circleCrop(pool, toTransform)!!
     }
 
-    override fun getId(): String {
+    fun getId(): String {
         return javaClass.name
     }
+
+
 
     companion object {
         private fun circleCrop(pool: BitmapPool, source: Bitmap?): Bitmap? {

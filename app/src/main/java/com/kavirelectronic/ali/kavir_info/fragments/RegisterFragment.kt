@@ -30,12 +30,12 @@ class RegisterFragment : Fragment(), View.OnClickListener {
     private var passEd: EditText? = null
     private var registerBtn: TextView? = null
     private var loadingProgressBar: ProgressBar? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
-                              savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         Utility.getSecretCode(activity)
         val view = inflater.inflate(R.layout.fragment_register, container, false)

@@ -5,9 +5,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -27,7 +27,6 @@ import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 
 class SubCategoryActivity : Activity(), View.OnClickListener {
@@ -47,7 +46,8 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
     private var dialog: AlertDialog? = null
     private var isSending = false
     private var lastList: String? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sub_category)
         subCategoryRecycler = findViewById<View>(R.id.sub_category_recyclerview) as RecyclerView
@@ -143,10 +143,6 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
                 isSending = false
             }
         })
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     private fun startTitlePostActivity(slug: String?, postSize: Int) {

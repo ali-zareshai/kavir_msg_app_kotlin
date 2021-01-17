@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.constraint.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -32,7 +32,7 @@ class CustomCommentModal {
         //////
 
         //
-        commentDialog!!.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        commentDialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val nameEdit = commentDialog!!.findViewById<View>(R.id.name_comment_dialog) as EditText
         val emailEdit = commentDialog!!.findViewById<View>(R.id.email_comment_dialog) as EditText
         val commentEdit = commentDialog!!.findViewById<View>(R.id.comment_comment_dialog) as EditText
@@ -57,7 +57,7 @@ class CustomCommentModal {
 //        commentDialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
         commentDialog!!.show()
         val window = commentDialog!!.window
-        window.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        window?.setLayout(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT)
     }
 
     private fun sendComment(context: Context, postId: String?, name: String, email: String, comment: String) {

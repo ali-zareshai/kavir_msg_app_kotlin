@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.text.ClipboardManager
+import android.content.ClipboardManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +23,12 @@ class ActiveFragment : Fragment() {
     private var activeCode: TextView? = null
     private var scanCodeBtn: Button? = null
     private var saveClipBoradBtn: ImageButton? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
-                              savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_active, container, false)
         scanCodeBtn = view.findViewById<View>(R.id.scan_code_btn) as Button
         activeCode = view.findViewById<View>(R.id.active_code_tv) as TextView
@@ -56,14 +56,13 @@ class ActiveFragment : Fragment() {
     //
     //    }
     private fun setClipboard(context: Context, text: String) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.text = text
-        } else {
-            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-            val clip = ClipData.newPlainText("Copied Text", text)
-            clipboard.primaryClip = clip
-        }
+        val myClipboard: ClipboardManager = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val myClip:ClipData = ClipData.newPlainText("Copied Text", text)
+        myClipboard.setPrimaryClip(myClip)
+
+//            var clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+//            var clip = ClipData.newPlainText("Copied Text", text)
+//            clipboard.primaryClip = clip
     }
 
     companion object {

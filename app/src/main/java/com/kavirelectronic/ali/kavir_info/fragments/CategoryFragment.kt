@@ -4,9 +4,9 @@ import android.app.AlertDialog
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -39,12 +39,12 @@ class CategoryFragment : Fragment() {
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var categoryModelList: List<CategoryModel?>? = null
     private var dialog: AlertDialog? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
-                              savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_category, container, false)
         Setting.isVistied = false
         categoryRecycler = view.findViewById<View>(R.id.category_recyclerview) as RecyclerView

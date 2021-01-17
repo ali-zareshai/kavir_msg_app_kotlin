@@ -7,8 +7,8 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import com.google.zxing.Result
 import com.kavirelectronic.ali.kavir_info.R
@@ -23,7 +23,6 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class QrCodeScanerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private var mScannerView: ZXingScannerView? = null
@@ -87,9 +86,6 @@ class QrCodeScanerActivity : AppCompatActivity(), ZXingScannerView.ResultHandler
         }
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 
     private fun finishPage(msg: String?) {
         ActiveFragment.message_tv!!.text = msg

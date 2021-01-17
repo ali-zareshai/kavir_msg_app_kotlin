@@ -3,9 +3,9 @@ package com.kavirelectronic.ali.kavir_info.fragments
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,12 +28,12 @@ class ReadyReadFragment : Fragment() {
     private var loading: SpinKitView? = null
     private var modelListDb: List<Post>? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
-                              savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_ready_read, container, false)
         categoryRecycler = view.findViewById<View>(R.id.ready_read_recyclerview) as RecyclerView
         loading = view.findViewById<View>(R.id.spin_cat) as SpinKitView

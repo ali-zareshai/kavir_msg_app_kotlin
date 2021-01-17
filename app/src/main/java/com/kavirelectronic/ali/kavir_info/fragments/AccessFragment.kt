@@ -2,9 +2,9 @@ package com.kavirelectronic.ali.kavir_info.fragments
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -29,12 +29,12 @@ class AccessFragment : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var accessAdapter: AccessAdapter? = null
     private var notAccessActiveTv: TextView? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
-                              savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_access, container, false)
         recyclerView = view.findViewById<View>(R.id.access_recyclerview) as RecyclerView
         swipeRefreshLayout = view.findViewById<View>(R.id.swip_refresh_access) as SwipeRefreshLayout

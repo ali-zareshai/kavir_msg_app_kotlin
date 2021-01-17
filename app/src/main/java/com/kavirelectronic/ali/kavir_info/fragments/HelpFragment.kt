@@ -10,12 +10,12 @@ import com.kavirelectronic.ali.kavir_info.R
 
 class HelpFragment : Fragment() {
     private var webView: WebView? = null
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup,
-                              savedInstanceState: Bundle): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_help, container, false)
         webView = view.findViewById<View>(R.id.webview_help) as WebView
         //        webView.getSettings().setJavaScriptEnabled(true);

@@ -7,10 +7,10 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.text.Html
 import android.text.Spannable
 import android.text.SpannableString
@@ -39,7 +39,6 @@ import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
 
 class PostActivity : AppCompatActivity(), View.OnClickListener {
@@ -63,7 +62,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
         initViews()
-        intents
+        intents()
         backBtn!!.setOnClickListener(this)
         sendComment!!.setOnClickListener(this)
         showComments!!.setOnClickListener(this)
@@ -74,9 +73,6 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(mTopToolbar)
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.post_menu, menu)
@@ -126,12 +122,12 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         val realm = Realm.getDefaultInstance()
         val post = realm.where(Post::class.java).equalTo("id", postId).findFirst()
         postModel = PostModel()
-        postModel!!.id = post.id
-        postModel!!.title = post.title
-        postModel!!.author = post.author
-        postModel!!.content = post.content
-        postModel!!.date = post.date
-        postModel!!.url = post.url
+        postModel!!.id = post?.id
+        postModel!!.title = post?.title
+        postModel!!.author = post?.author
+        postModel!!.content = post?.content
+        postModel!!.date = post?.date
+        postModel!!.url = post?.url
         postModel!!.commentModelList = ArrayList()
         setViews()
     }
@@ -193,21 +189,21 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         commentRv!!.visibility = View.VISIBLE
     }
 
-    private val intents: Unit
-        private get() {
-            postId = intent.extras.getString("postId")
-            if (intent.extras.getString("source").equals("net", ignoreCase = true)) {
-                fetchDataNet()
-                deleteBtn!!.isEnabled = false
-                deleteBtn!!.visibility = View.GONE
-                checkSaved()
-            } else {
-                fetchDataDb()
-                (findViewById<View>(R.id.rel_comments) as RelativeLayout).visibility = View.GONE
-                saveBtn!!.isEnabled = false
-                saveBtn!!.visibility = View.GONE
-            }
+    private fun intents(){
+        postId = intent.extras?.getString("postId")
+        if (intent.extras?.getString("source").equals("net", ignoreCase = true)) {
+            fetchDataNet()
+            deleteBtn!!.isEnabled = false
+            deleteBtn!!.visibility = View.GONE
+            checkSaved()
+        } else {
+            fetchDataDb()
+            (findViewById<View>(R.id.rel_comments) as RelativeLayout).visibility = View.GONE
+            saveBtn!!.isEnabled = false
+            saveBtn!!.visibility = View.GONE
         }
+    }
+
 
     private fun checkSaved(): Boolean {
         val realm = Realm.getDefaultInstance()

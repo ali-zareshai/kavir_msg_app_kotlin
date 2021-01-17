@@ -4,10 +4,10 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.CardView
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
@@ -27,7 +27,6 @@ import dmax.dialog.SpotsDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
     private var recyclerView: RecyclerView? = null
@@ -39,7 +38,7 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
     private var notExistPostcardView: CardView? = null
     private var paginationView: PaginationView? = null
     private var dialog: AlertDialog? = null
-    private var isPostOnly = false
+    private var isPostOnly:Boolean? = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_title_posts)
@@ -55,19 +54,23 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
                 .setContext(this)
                 .setMessage(R.string.please_wait)
                 .build()
-        isPostOnly = intent.extras.getBoolean("post_only")
-        if (isPostOnly) {
-            catId = intent.extras.getString("cat_id")
-            slugTitle.text = intent.extras.getString("cat_name")
+        isPostOnly = intent.extras?.getBoolean("post_only")
+        if (isPostOnly!!) {
+            catId = intent.extras?.getString("cat_id")
+            slugTitle.text = intent.extras?.getString("cat_name")
         } else {
-            slugName = intent.extras.getString("slug")
+            slugName = intent.extras?.getString("slug")
             slugTitle.text = slugName // set name slug in toolbar
         }
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
         recyclerView!!.layoutManager = layoutManager
         getDataFromServer(1, 10)
-        paginationView!!.setPager(intent.extras.getInt("post_size"))
-        paginationView!!.setOnPagerUpdate { pageNumber, pageSize -> getDataFromServer(pageNumber.toInt().plus(1), pageSize) }
+        paginationView!!.setPager(intent.extras?.getInt("post_size")!!)
+        paginationView!!.setOnPagerUpdate(object:PaginationView.OnPagerUpdate{
+            override fun onUpdate(pageNumber: Int, pageSize: Int) {
+                getDataFromServer(pageNumber+1,pageSize)
+            }
+        })
         recyclerView!!.addOnItemTouchListener(RecyclerTouchListener(this, recyclerView!!, object : ClickListener {
             override fun onClick(view: View?, position: Int) {
                 if (dialog!!.isShowing()) {
@@ -95,7 +98,7 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
         val retrofit = RetrofitClientInstance.retrofitInstance
         val getPostsServer = retrofit!!.create(GetPostsServer::class.java)
         val tiltlePostsModelCall: Call<TiltlePostsModel?>?
-        tiltlePostsModelCall = if (isPostOnly) {
+        tiltlePostsModelCall = if (isPostOnly!!) {
             getPostsServer.getTitlePostByCatId(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), catId, pageNumber.toString(), pageSize.toString())
         } else {
             getPostsServer.getTiltlePostsBySlug(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), slugName, pageNumber.toString(), pageSize.toString())
@@ -139,9 +142,6 @@ class TitlePostsActivity : AppCompatActivity(), View.OnClickListener {
         //        finish();
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 
     private fun startHomePage() {
         finishAndRemoveTask()

@@ -7,12 +7,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import com.google.android.material.navigation.NavigationView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.text.Spannable
 import android.text.SpannableString
 import android.util.Log
@@ -28,7 +28,6 @@ import com.kavirelectronic.ali.kavir_info.utility.CustomTypeFaceSpan
 import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
 import com.kavirelectronic.ali.kavir_info.utility.SaveItem
 import com.kavirelectronic.ali.kavir_info.utility.Utility
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class CategoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var mTopToolbar: Toolbar? = null
@@ -163,7 +162,7 @@ class CategoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             toolbarTitle!!.text = getString(R.string.help)
             statusSearchBtn(View.VISIBLE)
         }
-        drawer!!.closeDrawer(Gravity.END)
+        drawer!!.closeDrawer(GravityCompat.END)
         return true
     }
 
@@ -198,9 +197,6 @@ class CategoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         SaveItem.setItem(this, SaveItem.USER_COOKIE, "")
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 
     private fun setNameLoginItem() {
         val menu = navigationView!!.menu
