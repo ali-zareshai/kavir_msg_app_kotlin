@@ -95,7 +95,8 @@ object Utility {
         val loginServer = retrofit!!.create(LoginServer::class.java)
         loginServer.getSecretCode(BuildConfig.VERSION_CODE.toString())!!.enqueue(object : Callback<SecretCodeModel?> {
             override fun onFailure(call: Call<SecretCodeModel?>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.e("fail get new version",t.message)
+                MDToast.makeText(context,context.getString(R.string.error_in_connection),MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show()
             }
 
             override fun onResponse(call: Call<SecretCodeModel?>, response: Response<SecretCodeModel?>) {

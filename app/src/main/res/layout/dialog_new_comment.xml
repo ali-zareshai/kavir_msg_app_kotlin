@@ -72,6 +72,7 @@
             android:padding="10dp"
             android:background="@drawable/border_edit_text"
             android:hint="@string/comment"
+            android:gravity="top"
             android:textDirection="rtl"
             android:lines="5"
             android:minLines="5"

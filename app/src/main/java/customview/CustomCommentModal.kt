@@ -75,7 +75,6 @@ class CustomCommentModal {
         Log.e("postId:", postId)
         comments.postNewComment(getItem(context, SaveItem.S_CODE, ""), getItem(context, SaveItem.APK_ID, ""), postId, name, email, comment)!!.enqueue(object : Callback<String?> {
             override fun onResponse(call: Call<String?>, response: Response<String?>) {
-                Log.e("onResponse", response.toString())
                 if (response.isSuccessful) {
                     try {
                         val jsonObject = JSONObject(response.body())
