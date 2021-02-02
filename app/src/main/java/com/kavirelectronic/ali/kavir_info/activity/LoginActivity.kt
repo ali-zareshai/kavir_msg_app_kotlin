@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import com.kavirelectronic.ali.kavir_info.R
-import com.kavirelectronic.ali.kavir_info.activity.CategoryActivity
 import com.kavirelectronic.ali.kavir_info.models.LoginModel
 import com.kavirelectronic.ali.kavir_info.server.LoginServer
 import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
@@ -104,10 +103,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         progressBarLogin!!.visibility = View.VISIBLE
         var scode: String? = ""
         if (username.equals(SaveItem.getItem(this, SaveItem.REGISTER_PHONE, ""), ignoreCase = true)) {
-            scode = Utility.calSCode(this, SaveItem.getItem(this, SaveItem.REGISTER_PHONE, "").split("").toTypedArray())
+            scode = Utility.calSCode(this, SaveItem.getItem(this, SaveItem.REGISTER_PHONE, "").split(""))
         } else {
-            scode = Utility.calSCode(this, username.split("").toTypedArray())
-            Log.e("phone:", username)
+            scode = Utility.calSCode(this, username.split(""))
+            Log.e("phone=>>>>:", username)
         }
         Log.e("scode:", scode)
         val retrofit = RetrofitClientInstance.retrofitInstance
@@ -118,6 +117,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onResponse(call: Call<LoginModel?>, response: Response<LoginModel?>) {
+                Log.e("onResponse login:",response.message())
                 if (response.isSuccessful) {
                     if (response.body()!!.result.equals("success", ignoreCase = true)) {
                         saveLoginData(response.body())
@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         SaveItem.setItem(this, SaveItem.USER_ID, body.userId)
         SaveItem.setItem(this, SaveItem.USER_COOKIE, body.cookie)
         SaveItem.setItem(this, SaveItem.MID_CODE, Utility.calMID(body.mobile!!.split("").toTypedArray()))
-        SaveItem.setItem(this, SaveItem.S_CODE, Utility.calSCode(this, body!!.mobile!!.split("").toTypedArray()))
+        SaveItem.setItem(this, SaveItem.S_CODE, Utility.calSCode(this, body!!.mobile!!.split("")))
         Utility.calApkId(this, body!!.mobile!!.split("").toTypedArray())
     }
 }

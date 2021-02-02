@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import android.telephony.TelephonyManager
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import com.kavirelectronic.ali.kavir_info.BuildConfig
 import com.kavirelectronic.ali.kavir_info.R
 import com.kavirelectronic.ali.kavir_info.models.SecretCodeModel
@@ -74,20 +75,17 @@ object Utility {
             return "02:00:00:00:00:00"
         }
 
-    fun calSCode(context: Context?, numberPhone: Array<String>): String {
-        return try {
-            val n10 = numberPhone[numberPhone.size - 1].toInt()
-            val n9 = numberPhone[numberPhone.size - 2].toInt()
+    fun calSCode(context: Context?, numberPhone: List<String>): String {
+            val n10 = numberPhone[numberPhone.lastIndex-1].toInt()
+            val n9 = numberPhone[numberPhone.lastIndex - 2].toInt()
             val sCode = getItem(context, SaveItem.raw_Scode, "")
-            Log.e("sCode:", sCode)
             if (sCode.length > 0) {
                 val index = n9 + n10
+                Log.e("cal:scode",sCode.substring(index, index + 10))
                 return sCode.substring(index, index + 10)
             }
-            ""
-        } catch (e: Exception) {
-            ""
-        }
+
+        return ""
     }
 
     fun getNewVersion(context: Activity) {
@@ -122,6 +120,7 @@ object Utility {
                 if (response.body()!!.result.equals("success", ignoreCase = true)) {
                     val s_raw = response.body()!!.secretCode!!.trim { it <= ' ' }
                     setItem(context, SaveItem.raw_Scode, s_raw.substring(0, 30))
+                    Log.e("raw code s",s_raw)
                 } else {
                     MDToast.makeText(context, response.body()!!.message, 2500, MDToast.TYPE_INFO).show()
                 }
@@ -152,19 +151,22 @@ object Utility {
                 .setTitleTypeface(Typeface.createFromAsset(context.assets, "fonts/Vazir.ttf"))
                 .setTextTypeface(Typeface.createFromAsset(context.assets, "fonts/sans.ttf"))
                 .setIcon(R.drawable.ic_notifications_black_24dp)
-                .setOnClickListener {
-                    val uri = Uri.parse(updateUrl)
-                    val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
-                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-                    try {
-                        context.startActivity(goToMarket)
-                    } catch (e: ActivityNotFoundException) {
-                        context.startActivity(Intent(Intent.ACTION_VIEW,
-                                Uri.parse(updateUrl)))
+                .setOnClickListener(object:View.OnClickListener{
+                    override fun onClick(p0: View?) {
+                        val uri = Uri.parse(updateUrl)
+                        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                        try {
+                            context.startActivity(goToMarket)
+                        } catch (e: ActivityNotFoundException) {
+                            context.startActivity(Intent(Intent.ACTION_VIEW,
+                                    Uri.parse(updateUrl)))
+                        }
                     }
-                }
+
+                })
                 .show()
     }
 

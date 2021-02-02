@@ -64,11 +64,11 @@ class RegisterFragment : Fragment(), View.OnClickListener {
 
     private fun sendData(name: String, email: String, phone: String, password: String) {
         loadingProgressBar!!.visibility = View.VISIBLE
-        Log.e("s:", Utility.calSCode(activity.applicationContext, phone.split("").toTypedArray()))
+        Log.e("s:", Utility.calSCode(activity.applicationContext, phone.split("")))
         Log.e("phone:", phone)
         val retrofit = RetrofitClientInstance.retrofitInstance
         val loginServer = retrofit!!.create(LoginServer::class.java)
-        loginServer!!.registerUser(name, phone, email, password, Utility.calMID(phone.split("").toTypedArray()), Utility.calSCode(activity.applicationContext, phone.split("").toTypedArray()))!!.enqueue(object : Callback<RegisterModel?> {
+        loginServer!!.registerUser(name, phone, email, password, Utility.calMID(phone.split("").toTypedArray()), Utility.calSCode(activity.applicationContext, phone.split("")))!!.enqueue(object : Callback<RegisterModel?> {
             override fun onResponse(call: Call<RegisterModel?>, response: Response<RegisterModel?>) {
                 if (response.body()!!.status.equals("success", ignoreCase = true)) {
                     SaveItem.setItem(activity.applicationContext, SaveItem.S_CODE, response.body()!!.scode)
