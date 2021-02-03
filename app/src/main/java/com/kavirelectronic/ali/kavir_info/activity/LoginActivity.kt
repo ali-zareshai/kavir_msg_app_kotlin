@@ -147,8 +147,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         SaveItem.setItem(this, SaveItem.USER_MOBILE, body.mobile)
         SaveItem.setItem(this, SaveItem.USER_ID, body.userId)
         SaveItem.setItem(this, SaveItem.USER_COOKIE, body.cookie)
-        SaveItem.setItem(this, SaveItem.MID_CODE, Utility.calMID(body.mobile!!.split("").toTypedArray()))
-        SaveItem.setItem(this, SaveItem.S_CODE, Utility.calSCode(this, body!!.mobile!!.split("")))
-        Utility.calApkId(this, body!!.mobile!!.split("").toTypedArray())
+        SaveItem.setItem(this, SaveItem.MID_CODE, Utility.calMID(body.mobile!!.split("")))
+        SaveItem.setItem(this, SaveItem.S_CODE, Utility.calSCode(this, body.mobile!!.split("")))
+        Utility.calApkId(this, body.mobile!!.split(""))
     }
 }

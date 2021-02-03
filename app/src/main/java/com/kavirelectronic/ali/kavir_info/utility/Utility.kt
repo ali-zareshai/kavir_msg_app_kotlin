@@ -42,7 +42,6 @@ object Utility {
             } else {
                 telephonyManager.deviceId
             }
-            Log.e("imei", "=$imei")
             return if (imei != null && !imei.isEmpty()) {
                 imei
             } else {
@@ -81,7 +80,6 @@ object Utility {
             val sCode = getItem(context, SaveItem.raw_Scode, "")
             if (sCode.length > 0) {
                 val index = n9 + n10
-                Log.e("cal:scode",sCode.substring(index, index + 10))
                 return sCode.substring(index, index + 10)
             }
 
@@ -120,7 +118,6 @@ object Utility {
                 if (response.body()!!.result.equals("success", ignoreCase = true)) {
                     val s_raw = response.body()!!.secretCode!!.trim { it <= ' ' }
                     setItem(context, SaveItem.raw_Scode, s_raw.substring(0, 30))
-                    Log.e("raw code s",s_raw)
                 } else {
                     MDToast.makeText(context, response.body()!!.message, 2500, MDToast.TYPE_INFO).show()
                 }
@@ -170,26 +167,29 @@ object Utility {
                 .show()
     }
 
-    fun calMID(numberPhone: Array<String>): String {
-        return try {
-            val n10 = numberPhone[numberPhone.size - 1].toInt()
-            val n9 = numberPhone[numberPhone.size - 2].toInt()
-            val mac = macAddr.split("").toTypedArray()
-            return n9.plus(mac[n9+1].toInt()).plus(n10).plus(mac[n10+1].toInt()).toString()
+    fun calMID(numberPhone: List<String>): String {
+        try {
+            val n10 = numberPhone[numberPhone.lastIndex-1].toInt()
+            val n9 = numberPhone[numberPhone.lastIndex-2].toInt()
+            val mac = macAddr.split("")
+            return "${n9}${mac[n9+1]}${n10}${mac[n10+1]}"
         } catch (e: Exception) {
-            ""
+            Log.e("eception:",e.message)
+            return ""
         }
     }
 
-    fun calApkId(context: Context?, numberPhone: Array<String>): String {
-        return try {
+    fun calApkId(context: Context?, numberPhone: List<String>): String {
+        try {
             val mid = calMID(numberPhone)
             val uid = getItem(context, SaveItem.USER_ID, "")
             val len = uid.length
-            setItem(context, SaveItem.APK_ID, mid + len + uid)
-            mid + len + uid
+            val apkId ="${mid}${len}${uid}"
+            setItem(context, SaveItem.APK_ID, apkId)
+            return apkId
         } catch (e: Exception) {
-            ""
+            Log.e("Exception", e.message)
+            return ""
         }
     }
 }
