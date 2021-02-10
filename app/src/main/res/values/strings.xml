@@ -51,7 +51,7 @@
     <string name="login_please">لطفا وارد شوید</string>
     <string name="qr_is_wrong">اشکال در کد QR</string>
     <string name="access_list">دسترسی ها</string>
-    <string name="please_wait">لطفا انتظار ...</string>
+    <string name="please_wait">در حال بارگذاری …</string>
     <string name="not_access_active">دسترسی فعالی برای شما وجود ندارد</string>
     <string name="loading_data">در حال بارگیری اطلاعات ...</string>
     <string name="sub_count">زیرشاخه ها:</string>
