@@ -26,6 +26,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:layoutDirection="rtl"
+            android:id="@+id/version_area"
             android:layout_height="wrap_content">
             <customviews.CustomTextView
                 android:layout_width="wrap_content"
@@ -44,6 +45,16 @@
                 android:padding="3dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:progressDrawable="@drawable/progress_style"
+            style="@style/progressBarStyle"
+            android:indeterminate="true"
+            android:layout_below="@+id/version_area"/>
 
 
     </RelativeLayout>

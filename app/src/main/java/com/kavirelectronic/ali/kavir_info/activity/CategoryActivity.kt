@@ -41,7 +41,6 @@ class CategoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
         context = this
-        Log.e("mac    ", Utility.macAddr)
         mTopToolbar = findViewById<View>(R.id.my_toolbar) as Toolbar
         toolbarTitle = findViewById<View>(R.id.category_title) as TextView
         searchBtn = findViewById<View>(R.id.search_btn) as ImageButton
@@ -84,7 +83,7 @@ class CategoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onResume() {
         try {
             val fragment = fragmentManager.findFragmentById(R.id.fragment) as CategoryFragment
-            fragment.dataFromServer
+            fragment.dataFromServer()
         } catch (e: Exception) {
             Log.e("onResume:", e.message)
         }

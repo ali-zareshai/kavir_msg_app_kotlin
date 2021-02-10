@@ -17,22 +17,22 @@ import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
 import com.kavirelectronic.ali.kavir_info.utility.SaveItem
 import com.kavirelectronic.ali.kavir_info.utility.Setting
 
-class CategoryAdapter(private val context: Context, private val categoryModelList: List<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.Holder>() {
+class CategoryAdapter(private val context: Context, private val categoryModelList: MutableList<CategoryModel?>?) : RecyclerView.Adapter<CategoryAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
         return Holder(view)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val categoryModel = categoryModelList[position]
-        holder.id.text = categoryModel.id.toString()
-        holder.title.text = categoryModel.title
-        holder.description.text = FormatHelper.toPersianNumber(categoryModel.description)
-        holder.postCount.text = FormatHelper.toPersianNumber(categoryModel.post_count.toString())
-        holder.subCount.text = FormatHelper.toPersianNumber(categoryModel.subCount.toString() + "")
+        val categoryModel:CategoryModel? = categoryModelList?.get(position)
+        holder.id.text = categoryModel?.id.toString()
+        holder.title.text = categoryModel?.title
+        holder.description.text = FormatHelper.toPersianNumber(categoryModel?.description)
+        holder.postCount.text = FormatHelper.toPersianNumber(categoryModel?.post_count.toString())
+        holder.subCount.text = FormatHelper.toPersianNumber(categoryModel?.subCount.toString() + "")
         var newPosts = ""
         try {
-            newPosts = getNewPosts(categoryModel.id.toString(), categoryModel.post_count)
+            newPosts = getNewPosts(categoryModel?.id.toString(), categoryModel?.post_count?:0)
         } catch (e: Exception) {
             Log.e("CategoryAdapter new:", e.message)
         }
@@ -42,7 +42,7 @@ class CategoryAdapter(private val context: Context, private val categoryModelLis
             holder.newPost.text = FormatHelper.toPersianNumber(newPosts)
         }
         Glide.with(context)
-                .load(Setting.CATEGORY_IMAGES_URL + categoryModel.id + ".png")
+                .load(Setting.CATEGORY_IMAGES_URL + categoryModel?.id + ".png")
                 .override(90, 90)
                 .centerCrop()
                 .transform(CircleTransform(context))
@@ -52,6 +52,9 @@ class CategoryAdapter(private val context: Context, private val categoryModelLis
     }
 
     override fun getItemCount(): Int {
+        if (categoryModelList==null){
+            return 0
+        }
         return categoryModelList.size
     }
 
