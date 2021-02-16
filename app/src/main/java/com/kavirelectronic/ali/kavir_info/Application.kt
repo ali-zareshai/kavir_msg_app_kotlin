@@ -10,7 +10,8 @@ class Application : Application() {
         Realm.init(this)
         val config = RealmConfiguration.Builder()
                 .name("kavirDb.realm")
-                .schemaVersion(1)
+                .schemaVersion(2)
+                .deleteRealmIfMigrationNeeded()
                 .build()
         Realm.setDefaultConfiguration(config)
     }

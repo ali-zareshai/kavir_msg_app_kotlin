@@ -17,7 +17,7 @@ import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
 import com.kavirelectronic.ali.kavir_info.utility.SaveItem
 import com.kavirelectronic.ali.kavir_info.utility.Setting
 
-class CategoryAdapter(private val context: Context, private val categoryModelList: MutableList<CategoryModel?>?) : RecyclerView.Adapter<CategoryAdapter.Holder>() {
+class CategoryAdapter(private val context: Context, private val categoryModelList: List<CategoryModel?>?) : RecyclerView.Adapter<CategoryAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
         return Holder(view)

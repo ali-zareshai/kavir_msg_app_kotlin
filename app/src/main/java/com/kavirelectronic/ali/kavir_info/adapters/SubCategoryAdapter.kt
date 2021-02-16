@@ -11,13 +11,14 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.kavirelectronic.ali.kavir_info.R
+import com.kavirelectronic.ali.kavir_info.models.CategoryModel
 import com.kavirelectronic.ali.kavir_info.models.SubCategoryModel
 import com.kavirelectronic.ali.kavir_info.utility.CircleTransform
 import com.kavirelectronic.ali.kavir_info.utility.FormatHelper
 import com.kavirelectronic.ali.kavir_info.utility.SaveItem
 import com.kavirelectronic.ali.kavir_info.utility.Setting
 
-class SubCategoryAdapter(private val context: Context, private val subCategoryModelList: List<SubCategoryModel?>?) : RecyclerView.Adapter<SubCategoryAdapter.Holder>() {
+class SubCategoryAdapter(private val context: Context, private val subCategoryModelList: List<CategoryModel?>?) : RecyclerView.Adapter<SubCategoryAdapter.Holder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
         return Holder(view)

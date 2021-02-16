@@ -7,6 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GetDataCategory {
+    @GET("get_cat_and_sub_all_apk/?type=cat&dev=0")
+    fun getAllCategorysAndSub(@Query("cookie") cookieValue: String?): Call<List<CategoryModel?>?>?
+
     @GET("get_cat_and_sub_apk/?type=cat&dev=0")
     fun getAllCategorys(@Query("cookie") cookieValue: String?): Call<List<CategoryModel?>?>?
 

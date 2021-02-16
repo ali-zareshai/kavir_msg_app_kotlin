@@ -22,6 +22,7 @@ import com.kavirelectronic.ali.kavir_info.db.models.Category
 import com.kavirelectronic.ali.kavir_info.interfaces.ClickListener
 import com.kavirelectronic.ali.kavir_info.models.CategoryModel
 import com.kavirelectronic.ali.kavir_info.utility.RecyclerTouchListener
+import com.kavirelectronic.ali.kavir_info.utility.RepositoryService
 import com.kavirelectronic.ali.kavir_info.utility.SaveItem
 import com.kavirelectronic.ali.kavir_info.utility.Setting
 import com.valdesekamdem.library.mdtoast.MDToast
@@ -34,7 +35,7 @@ class CategoryFragment : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var loading: SpinKitView? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
-    private var categoryModelList: MutableList<CategoryModel?> =ArrayList()
+    private var categoryModelList: List<CategoryModel?> =ArrayList()
     private var dialog: AlertDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,45 +101,38 @@ class CategoryFragment : Fragment() {
 
     public fun dataFromServer(){
         dialog!!.show()
-        val realm = Realm.getDefaultInstance()
-        val categories =realm?.where(Category::class.java)?.findAll()
-        if (categories?.size!! >0){
-            categoryModelList =ArrayList()
-            for (row in categories){
-                val cat =CategoryModel(
-                        id = row?.id!!,
-                        slug = row.slug,
-                        title = row.title,
-                        description = row.description,
-                        post_count = row.post_count!!,
-                        parent = row.parent!!,
-                        sub = row.subCount!!
-                )
-                categoryModelList.add(cat)
+        val rep = RepositoryService(activity)
+        rep.getCategory("0",object : RepositoryService.CategoryCallback{
+            override fun getCategoryList(categoryList: List<CategoryModel?>?) {
+                if (categoryList!=null){
+                    categoryModelList =categoryList
+                    generateDataList(categoryList)
+                    loading!!.visibility = View.GONE
+                    hideSwipRefresh()
+                    dialog!!.dismiss()
+                }else{
+                    val builder = CFAlertDialog.Builder(activity)
+                            .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
+                            .setTitle(getString(R.string.not_respone))
+                            .setIcon(R.drawable.access_server)
+                            .setTextGravity(Gravity.CENTER)
+                            .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER) { dialogInterface, i ->
+                                dataFromServer()
+                                dialogInterface.dismiss()
+                            }
+                    builder.show()
+                    dialog!!.dismiss()
+                }
+
             }
 
-            generateDataList(categoryModelList)
-            loading!!.visibility = View.GONE
-            hideSwipRefresh()
-            dialog!!.dismiss()
-        }else{
-            val builder = CFAlertDialog.Builder(activity)
-                    .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                    .setTitle(getString(R.string.not_respone))
-                    .setIcon(R.drawable.access_server)
-                    .setTextGravity(Gravity.CENTER)
-                    .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER) { dialogInterface, i ->
-                        dataFromServer()
-                        dialogInterface.dismiss()
-                    }
-            builder.show()
-            dialog!!.dismiss()
-        }
+        })
+
     }
 
 
 
-    private fun generateDataList(categoryModelList: MutableList<CategoryModel?>?) {
+    private fun generateDataList(categoryModelList: List<CategoryModel?>?) {
         Log.e("generateDataList:",categoryModelList?.size.toString())
         categoryAdapter = CategoryAdapter(activity, categoryModelList)
         categoryRecycler!!.adapter = categoryAdapter

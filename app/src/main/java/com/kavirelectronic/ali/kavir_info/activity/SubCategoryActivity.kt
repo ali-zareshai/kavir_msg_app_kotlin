@@ -17,17 +17,22 @@ import android.widget.TextView
 import com.crowdfire.cfalertdialog.CFAlertDialog
 import com.kavirelectronic.ali.kavir_info.R
 import com.kavirelectronic.ali.kavir_info.adapters.SubCategoryAdapter
+import com.kavirelectronic.ali.kavir_info.db.models.Category
 import com.kavirelectronic.ali.kavir_info.interfaces.ClickListener
+import com.kavirelectronic.ali.kavir_info.models.CategoryModel
 import com.kavirelectronic.ali.kavir_info.models.SubCategoryModel
 import com.kavirelectronic.ali.kavir_info.server.GetDataCategory
 import com.kavirelectronic.ali.kavir_info.utility.RecyclerTouchListener
+import com.kavirelectronic.ali.kavir_info.utility.RepositoryService
 import com.kavirelectronic.ali.kavir_info.utility.RetrofitClientInstance
 import com.kavirelectronic.ali.kavir_info.utility.SaveItem
 import dmax.dialog.SpotsDialog
+import io.realm.Realm
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
 
 class SubCategoryActivity : Activity(), View.OnClickListener {
     private var subCategoryRecycler: RecyclerView? = null
@@ -38,7 +43,7 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
     private var parentId: String? = null
     private var backBtn: ImageButton? = null
     private var homeBtn: ImageButton? = null
-    private var subCategoryModels: List<SubCategoryModel?>? = null
+    private var subCategoryModels: MutableList<SubCategoryModel?> =ArrayList()
     private var currentSlug: String? = null
     private var parentName: String? = null
     private var currentPageSize = 0
@@ -77,20 +82,20 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
                 subCategoryRecycler!!, object : ClickListener {
             override fun onClick(view: View?, position: Int) {
                 dialog!!.show()
-                //Values are passing to activity & to fragment as well
+
                 try {
-                    currentSlug = subCategoryModels!![position]!!.slug
-                    currentPageSize = subCategoryModels!![position]!!.post_count
-                    getSubCategoryFromServer(subCategoryModels!![position]!!.id.toString())
-                    setCountPostCount(subCategoryModels!![position]!!.id.toString(), subCategoryModels!![position]!!.post_count)
+                    currentSlug = subCategoryModels.get(position)?.slug
+                    currentPageSize = subCategoryModels.get(position)?.post_count?:0
+                    getSubCategoryFromServer(subCategoryModels.get(position)?.id.toString())
+                    setCountPostCount(subCategoryModels.get(position)?.id.toString(), subCategoryModels.get(position)?.post_count?:0)
                 } catch (e: Exception) {
-                    Log.e("Exception:", e.message)
+                    Log.e("Exception92:", e.message)
                 }
                 dialog!!.dismiss()
             }
 
             override fun onLongClick(view: View?, position: Int) {
-                TODO("Not yet implemented")
+                Log.e("long click:",position.toString())
             }
         }))
     }
@@ -109,44 +114,52 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
         }
         isSending = true
         dialog!!.show()
-        val retrofit = RetrofitClientInstance.retrofitInstance
-        val getDataService = retrofit!!.create(GetDataCategory::class.java)
-        getDataService.getAllSubCategorys(SaveItem.getItem(this, SaveItem.USER_COOKIE, ""), parentIdf)!!.enqueue(object : Callback<List<SubCategoryModel?>?> {
 
-            override fun onResponse(call: Call<List<SubCategoryModel?>?>, response: Response<List<SubCategoryModel?>?>) {
-                if (response.isSuccessful) {
-                    subCategoryModels = ArrayList()
-                    subCategoryModels = response.body()
-                    isSending = false
-                    if (subCategoryModels!![0]!!.id == 0) {
-                        startTitlePostActivity(currentSlug, currentPageSize)
-                    } else {
-                        lastList = parentIdf
-                        generateDataList(subCategoryModels)
-                    }
-                    dialog!!.dismiss()
-                }
-            }
-
-            override fun onFailure(call: Call<List<SubCategoryModel?>?>, t: Throwable) {
-                val builder = CFAlertDialog.Builder(this@SubCategoryActivity)
-                        .setDialogStyle(CFAlertDialog.CFAlertStyle.NOTIFICATION)
-                        .setTitle(getString(R.string.not_respone))
-                        .setIcon(R.drawable.access_server)
-                        .setTextGravity(Gravity.CENTER)
-                        .addButton(getString(R.string.refresh_page), -1, -1, CFAlertDialog.CFAlertActionStyle.DEFAULT, CFAlertDialog.CFAlertActionAlignment.CENTER) { dialogInterface, i ->
-                            getSubCategoryFromServer(parentId)
-                            dialogInterface.dismiss()
-                        }
-                builder.show()
-                dialog!!.dismiss()
+        val rep = RepositoryService(this)
+        rep.getCategory(parentIdf!!,object : RepositoryService.CategoryCallback{
+            override fun getCategoryList(categoryList: List<CategoryModel?>?) {
                 isSending = false
+                if (categoryList?.get(0)?.id == 0) {
+                    startTitlePostActivity(currentSlug, currentPageSize)
+                } else {
+                    lastList = parentIdf
+                    generateDataList(categoryList)
+                }
+                dialog!!.dismiss()
             }
+
         })
+
+        val realm = Realm.getDefaultInstance()
+        val categories =realm?.where(Category::class.java)?.equalTo("parent",parentIdf?.toInt())?.findAll()
+        if (categories?.size!! >0){
+            subCategoryModels =ArrayList()
+            for (row in categories){
+                val cat = SubCategoryModel(
+                        id = row?.id!!,
+                        slug = row.slug,
+                        title = row.title,
+                        description = row.description,
+                        post_count = row.post_count!!,
+                        parent = row.parent!!,
+                        sub = row.subCount!!
+                )
+                subCategoryModels.add(cat)
+            }
+
+            Log.e("subCategoryModels sizw",subCategoryModels.size.toString())
+
+
+
+
+//            generateDataList(subCategoryModels)
+//            loading!!.visibility = View.GONE
+//            hideSwipRefresh()
+//            dialog!!.dismiss()
+        }
     }
 
     private fun startTitlePostActivity(slug: String?, postSize: Int) {
-        Log.e("startTitlePostActivity:", "l188")
         if (slug != null) {
             val intent = Intent(this@SubCategoryActivity, TitlePostsActivity::class.java)
             intent.putExtra("post_only", false)
@@ -161,7 +174,7 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
         }
     }
 
-    private fun generateDataList(subCategoryModelList: List<SubCategoryModel?>?) {
+    private fun generateDataList(subCategoryModelList: List<CategoryModel?>?) {
         subCategoryAdapter = null
         subCategoryAdapter = SubCategoryAdapter(applicationContext, subCategoryModelList)
         subCategoryRecycler!!.adapter = subCategoryAdapter

@@ -21,7 +21,7 @@ class SubCategoryModel {
     @SerializedName("parent")
     var parent = 0
 
-    constructor(id: Int, slug: String?, title: String?, description: String?, post_count: Int, parent: Int) {
+    constructor(id: Int, slug: String?, title: String?, description: String?, post_count: Int, parent: Int, sub: Int) {
         this.id = id
         this.slug = slug
         this.title = title
