@@ -34,13 +34,14 @@ class SplashActivity : AppCompatActivity() {
 
         val rep = RepositoryService(this)
         rep.clearDatabase()
-
-        Handler().postDelayed(object :Runnable{
-            override fun run() {
-                startNextActivity()
+        rep.getCategory("0",object:RepositoryService.CategoryCallback{
+            override fun getCategoryList(categoryList: List<CategoryModel?>?) {
+                if (categoryList!=null && categoryList.size>0){
+                    startNextActivity()
+                }
             }
+        })
 
-        },4000)
     }
 
 
