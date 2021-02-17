@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:id="@+id/logo_kavir"
-            android:src="@drawable/kavir_logo_splash"
+            android:src="@drawable/kavir_logo"
             android:background="@color/toolbar_color"
             android:padding="2dp"
             android:scaleType="fitCenter"
