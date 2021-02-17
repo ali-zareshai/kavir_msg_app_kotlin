@@ -102,7 +102,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, Uri.parse(postModel!!.url))
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, postModel!!.url)
         startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_via)))
     }
 
