@@ -82,7 +82,6 @@ class CustomCommentModal {
                 comment)!!.enqueue(object : Callback<String?> {
             override fun onResponse(call: Call<String?>, response: Response<String?>) {
                 if (response.isSuccessful) {
-                    )
                     try {
                         val jsonObject = JSONObject(response.body())
                         if (jsonObject.getString("status") == "error") {

@@ -123,6 +123,21 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
                     startTitlePostActivity(currentSlug, currentPageSize)
                 } else {
                     lastList = parentIdf
+                    if (categoryList?.size!! >0){
+                        subCategoryModels =ArrayList()
+                        for (row in categoryList){
+                            val cat = SubCategoryModel(
+                                    id = row?.id!!,
+                                    slug = row.slug,
+                                    title = row.title,
+                                    description = row.description,
+                                    post_count = row.post_count,
+                                    parent = row.parent,
+                                    sub = row.subCount
+                            )
+                            subCategoryModels.add(cat)
+                        }
+                    }
                     generateDataList(categoryList)
                 }
                 dialog!!.dismiss()
@@ -130,33 +145,6 @@ class SubCategoryActivity : Activity(), View.OnClickListener {
 
         })
 
-        val realm = Realm.getDefaultInstance()
-        val categories =realm?.where(Category::class.java)?.equalTo("parent",parentIdf?.toInt())?.findAll()
-        if (categories?.size!! >0){
-            subCategoryModels =ArrayList()
-            for (row in categories){
-                val cat = SubCategoryModel(
-                        id = row?.id!!,
-                        slug = row.slug,
-                        title = row.title,
-                        description = row.description,
-                        post_count = row.post_count!!,
-                        parent = row.parent!!,
-                        sub = row.subCount!!
-                )
-                subCategoryModels.add(cat)
-            }
-
-            Log.e("subCategoryModels sizw",subCategoryModels.size.toString())
-
-
-
-
-//            generateDataList(subCategoryModels)
-//            loading!!.visibility = View.GONE
-//            hideSwipRefresh()
-//            dialog!!.dismiss()
-        }
     }
 
     private fun startTitlePostActivity(slug: String?, postSize: Int) {
