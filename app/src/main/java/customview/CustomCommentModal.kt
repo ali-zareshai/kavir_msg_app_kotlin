@@ -72,10 +72,17 @@ class CustomCommentModal {
         dialog.show()
         val retrofit = retrofitInstance
         val comments = retrofit!!.create(Comments::class.java)
-        Log.e("postId:", postId)
-        comments.postNewComment(getItem(context, SaveItem.S_CODE, ""), getItem(context, SaveItem.APK_ID, ""), postId, name, email, comment)!!.enqueue(object : Callback<String?> {
+        comments.postNewComment(
+                getItem(context,SaveItem.USER_COOKIE,""),
+                getItem(context, SaveItem.S_CODE, ""),
+                getItem(context, SaveItem.APK_ID, ""),
+                postId,
+                name,
+                email,
+                comment)!!.enqueue(object : Callback<String?> {
             override fun onResponse(call: Call<String?>, response: Response<String?>) {
                 if (response.isSuccessful) {
+                    )
                     try {
                         val jsonObject = JSONObject(response.body())
                         if (jsonObject.getString("status") == "error") {
